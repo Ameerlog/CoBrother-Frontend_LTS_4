@@ -126,7 +126,7 @@ export default function VentureAuctionPage() {
                 <StatusBadge status={auction.status} />
               </div>
               {brand.industry && (
-                <div style={{ fontSize: '0.82rem', color: '#d0d0e0', marginBottom: '0.4rem', fontWeight: 600 }}>
+                <div style={{ fontSize: '0.82rem', color: '#d0d0e0', marginBottom: '0.4rem' }}>
                   {brand.industry.replace(/_/g, ' ')}
                   {venture.stage && ` · ${venture.stage.replace(/_/g, ' ')}`}
                 </div>
@@ -184,7 +184,7 @@ export default function VentureAuctionPage() {
                       : 'No bids yet'}
                   </div>
                   {auction.currentWinnerName && (
-                    <div style={{ fontSize: '0.78rem', color: '#c0c0d0', marginTop: '0.25rem', fontWeight: 600 }}>
+                    <div style={{ fontSize: '0.78rem', color: '#c0c0d0', marginTop: '0.25rem' }}>
                       Leading: {auction.currentWinnerName}
                     </div>
                   )}
@@ -221,7 +221,7 @@ export default function VentureAuctionPage() {
               <div style={{ padding: '1.25rem', background: 'rgba(255,255,255,0.02)',
                             border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12 }}>
                 <div style={statLabel}>About the Venture</div>
-                <p style={{ color: '#d0d0e0', fontSize: '0.875rem', lineHeight: 1.7, margin: '0.5rem 0 0', fontWeight: 500 }}>
+                <p style={{ color: '#d0d0e0', fontSize: '0.875rem', lineHeight: 1.7, margin: '0.5rem 0 0' }}>
                   {brand.description}
                 </p>
                 {venture.stage && (
@@ -252,14 +252,14 @@ export default function VentureAuctionPage() {
                             borderBottom: '1px solid rgba(255,255,255,0.07)',
                             fontWeight: 600, color: '#e0e0f0', fontSize: '0.9rem' }}>
                 Bid History
-                <span style={{ color: '#c0c0d0', fontWeight: 600, marginLeft: '0.5rem', fontSize: '0.8rem' }}>
+                <span style={{ color: '#c0c0d0', fontWeight: 400, marginLeft: '0.5rem', fontSize: '0.8rem' }}>
                   ({bids.length} bids)
                 </span>
               </div>
               <div ref={bidListRef} style={{ maxHeight: 360, overflowY: 'auto', padding: '0.5rem 0' }}>
                 {bids.length === 0 ? (
                   <div style={{ padding: '2rem', textAlign: 'center',
-                                color: '#d0d0e0', fontSize: '0.875rem', fontWeight: 600 }}>
+                                color: '#d0d0e0', fontSize: '0.875rem' }}>
                     No bids yet. Be the first to bid!
                   </div>
                 ) : (
@@ -277,7 +277,7 @@ export default function VentureAuctionPage() {
                 <div style={{ fontWeight: 600, color: '#c8a96e', marginBottom: '0.5rem' }}>
                   Auction ended with no bids
                 </div>
-                <p style={{ color: '#d0d0e0', fontSize: '0.875rem', marginBottom: '1rem', fontWeight: 500 }}>
+                <p style={{ color: '#d0d0e0', fontSize: '0.875rem', marginBottom: '1rem' }}>
                   You can re-auction with new settings, or close the listing.
                 </p>
                 <div style={{ display: 'flex', gap: '0.75rem' }}>
@@ -313,7 +313,7 @@ export default function VentureAuctionPage() {
                     ₹{Number(auction.currentHighestBid).toLocaleString('en-IN')}
                   </strong>
                 </p>
-                <p style={{ fontSize: '0.82rem', color: '#d0d0e0', marginTop: '0.5rem', fontWeight: 500 }}>
+                <p style={{ fontSize: '0.82rem', color: '#d0d0e0', marginTop: '0.5rem' }}>
                   Our admin team will coordinate the equity transfer.
                 </p>
               </div>
@@ -358,7 +358,7 @@ export default function VentureAuctionPage() {
 
                 <div className="form-group" style={{ marginBottom: '1rem' }}>
                   <label style={{ fontSize: '0.78rem', color: '#c0c0d0',
-                                  marginBottom: '0.5rem', display: 'block', fontWeight: 600 }}>
+                                  marginBottom: '0.5rem', display: 'block' }}>
                     Your Bid Amount (₹)
                   </label>
                   <input
@@ -395,7 +395,7 @@ export default function VentureAuctionPage() {
                 </button>
 
                 <p style={{ fontSize: '0.72rem', color: '#c0c0d0', marginTop: '0.75rem',
-                            textAlign: 'center', lineHeight: 1.5, fontWeight: 500 }}>
+                            textAlign: 'center', lineHeight: 1.5 }}>
                   By bidding you commit to acquiring the equity/stake if you win.
                   Each bid must be at least 5% above the current highest bid.
                 </p>
@@ -407,7 +407,7 @@ export default function VentureAuctionPage() {
                             border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14,
                             textAlign: 'center' }}>
                 <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>👑</div>
-                <p style={{ color: '#d0d0e0', fontSize: '0.875rem', fontWeight: 600 }}>
+                <p style={{ color: '#d0d0e0', fontSize: '0.875rem' }}>
                   This is your auction. You cannot bid on your own venture.
                 </p>
               </div>
@@ -487,7 +487,7 @@ function BidRow({ bid, isLatest, isWinner }) {
                            color: '#c8a96e', fontWeight: 700 }}>WINNER</span>
           )}
         </div>
-        <div style={{ fontSize: '0.72rem', color: '#c0c0d0', fontWeight: 600 }}>{bidTimeStr}</div>
+        <div style={{ fontSize: '0.72rem', color: '#c0c0d0' }}>{bidTimeStr}</div>
       </div>
       <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.1rem',
                     fontWeight: 700, color: isLatest ? '#6ec896' : '#c8a96e', flexShrink: 0 }}>
@@ -521,8 +521,8 @@ function StatusBadge({ status }) {
 function InfoRow({ label, value }) {
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem' }}>
-      <span style={{ color: '#c0c0d0', fontWeight: 600 }}>{label}</span>
-      <span style={{ color: '#e0e0f0', fontWeight: 600 }}>{value || '—'}</span>
+      <span style={{ color: '#c0c0d0' }}>{label}</span>
+      <span style={{ color: '#e0e0f0', fontWeight: 500 }}>{value || '—'}</span>
     </div>
   );
 }
@@ -591,6 +591,6 @@ function ReAuctionModal({ auctionId, onClose, onSuccess }) {
 }
 
 const statLabel = {
-  fontSize: '0.72rem', fontWeight: 700, color: '#c0c0d0',
+  fontSize: '0.72rem', fontWeight: 600, color: '#c0c0d0',
   textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.3rem',
 };
