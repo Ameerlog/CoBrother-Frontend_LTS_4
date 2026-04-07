@@ -11,7 +11,19 @@ export default function ProfileCompletionModal({ forceOpen = false }) {
   const [error, setError] = useState('');
   const [step, setStep] = useState(1); // 1 = name, 2 = phone (optional)
 
+<<<<<<< HEAD
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+=======
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'phoneNumber') {
+      const numericValue = value.replace(/\D/g, '');
+      setForm({ ...form, [name]: numericValue });
+    } else {
+      setForm({ ...form, [name]: value });
+    }
+  };
+>>>>>>> 3b774bd2a4e001096d952836f914779d448a42e4
 
   const handleSubmit = async (e) => {
     e.preventDefault();

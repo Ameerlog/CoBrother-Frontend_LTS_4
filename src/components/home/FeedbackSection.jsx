@@ -1,13 +1,9 @@
-<<<<<<< HEAD
 import { useState } from 'react';
 import { ThumbsUp, ThumbsDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { feedbackAPI } from '../../api/services';
-import DomainsSection from '../home/DomainsSection';
-import VenturesSection from '../home/VenturesSection';
-import TechnologySection from '../home/TechnologySection';
 
-export default function ExploreSection() {
+export default function FeedbackSection() {
   const { t } = useTranslation();
   const [feedbackType, setFeedbackType] = useState(null);
   const [feedbackMessage, setFeedbackMessage] = useState('');
@@ -44,38 +40,9 @@ export default function ExploreSection() {
     }
   };
 
-
-=======
-import DomainsSection from '../home/DomainsSection';
-import VenturesSection from '../home/VenturesSection';
-import TechnologySection from '../home/TechnologySection';
-import FeedbackSection from '../home/FeedbackSection';
-
-export default function ExploreSection() {
->>>>>>> 3b774bd2a4e001096d952836f914779d448a42e4
   return (
-    <>
-      {/* ═══════════════════════════════════════════════════════════════════
-          DOMAINS SECTION (Separate Component)
-      ═══════════════════════════════════════════════════════════════════ */}
-      <DomainsSection />
-
-      {/* ═══════════════════════════════════════════════════════════════════
-          VENTURES SECTION (Separate Component)
-      ═══════════════════════════════════════════════════════════════════ */}
-      <VenturesSection />
-
-      {/* ═══════════════════════════════════════════════════════════════════
-          TECHNOLOGY SECTION (Separate Component)
-      ═══════════════════════════════════════════════════════════════════ */}
-      <TechnologySection />
-
-      {/* ═══════════════════════════════════════════════════════════════════
-<<<<<<< HEAD
-          FEEDBACK WIDGET
-      ═══════════════════════════════════════════════════════════════════ */}
-      <section className="bg-white py-10 px-8">
-        <div className="max-w-[1200px] mx-auto p-6 bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-100 rounded-xl">
+    <section className="bg-white py-10 px-8">
+      <div className="max-w-[1200px] mx-auto p-6 bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-100 rounded-xl">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex-1">
             <p className="text-base font-semibold text-gray-900 mb-1">{t('feedbackQuestion')}</p>
@@ -133,13 +100,7 @@ export default function ExploreSection() {
             </div>
           </div>
         )}
-        </div>
-      </section>
-=======
-          FEEDBACK WIDGET (Separate Component)
-      ═══════════════════════════════════════════════════════════════════ */}
-      <FeedbackSection />
->>>>>>> 3b774bd2a4e001096d952836f914779d448a42e4
-    </>
+      </div>
+    </section>
   );
 }

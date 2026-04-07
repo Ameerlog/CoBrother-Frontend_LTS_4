@@ -8,9 +8,16 @@ export default function TopNavbar() {
   const [languageOpen, setLanguageOpen] = useState(false);
 
   const languages = [
+<<<<<<< HEAD
     { code: 'en', name: 'English (IND)', currency: '₹' },
     { code: 'hi', name: 'Hindi', currency: '₹' },
     { code: 'en-US', name: 'English (US)', currency: '₹' },
+=======
+    { code: 'en', name: 'English', currency: '₹' },
+    { code: 'en-GB', name: 'UK English', currency: '₹' },
+    { code: 'en-US', name: 'US English', currency: '₹' },
+    { code: 'hi', name: 'हिन्दी', currency: '₹' },
+>>>>>>> 3b774bd2a4e001096d952836f914779d448a42e4
     { code: 'zh', name: '中文', currency: '$' },
     { code: 'ur', name: 'اردو', currency: '$' },
     { code: 'fr', name: 'Français', currency: '$' },
