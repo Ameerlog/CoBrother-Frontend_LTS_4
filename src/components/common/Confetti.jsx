@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 const COLORS = ['#9440dd', '#7c3aed', '#6366f1', '#00C3FF', '#fbbf24', '#ec4899', '#10b981', '#f97316'];
 const SHAPES = ['circle', 'square', 'rectangle'];
 
@@ -6,17 +8,31 @@ function randomBetween(a, b) {
 }
 
 export default function Confetti({ show }) {
-  if (!show) return null;
+  const [visible, setVisible] = useState(show);
+  const [fading, setFading] = useState(false);
+
+  useEffect(() => {
+    if (show) {
+      setVisible(true);
+      setFading(false);
+    } else {
+      setFading(true);
+      const timer = setTimeout(() => setVisible(false), 800);
+      return () => clearTimeout(timer);
+    }
+  }, [show]);
+
+  if (!visible) return null;
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden">
+    <div className={`fixed inset-0 pointer-events-none z-[9999] overflow-hidden transition-opacity duration-700 ease-out ${fading ? 'opacity-0' : 'opacity-100'}`}>
       {[...Array(120)].map((_, i) => {
         const shape = SHAPES[i % SHAPES.length];
         const color = COLORS[i % COLORS.length];
         const size = randomBetween(6, 14);
         const left = randomBetween(0, 100);
         const delay = randomBetween(0, 1.2);
-        const duration = randomBetween(3.5, 6);
+        const duration = randomBetween(6, 10);
         const rotation = randomBetween(-360, 360);
 
         const style = {

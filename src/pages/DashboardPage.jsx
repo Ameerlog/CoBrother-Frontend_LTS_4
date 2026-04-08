@@ -93,7 +93,7 @@ export default function DashboardPage() {
               <img src={DomainsIcon} alt="Domains" style={{width: '20px', height: '20px'}} /> Manage Domains
             </Link>
             <Link to="/cocreation" className="btn-professional flex items-center justify-center gap-2">
-              <img src={TechnologyIcon} alt="Technology" style={{width: '20px', height: '20px'}} /> Distribute Softwares
+              <img src={TechnologyIcon} alt="Technology" style={{width: '20px', height: '20px'}} /> Explore Technologies
             </Link>
           </div>
         </div>

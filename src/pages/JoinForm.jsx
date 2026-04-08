@@ -7,7 +7,8 @@ import {
   Network, Sparkles, Package, Store, ShieldCheck,
   Smartphone, MessageCircle, Laptop, MapPin, Workflow,
   Bell, MonitorCheck, Rocket, BadgeIndianRupee,
-  ChevronDown, Timer, BadgePercent, Check, AlertCircle, ArrowLeft
+  ChevronDown, Timer, BadgePercent, Check, AlertCircle, ArrowLeft,
+  Loader2
 } from 'lucide-react';
 
 const SKILL_ENUM_MAP = {
@@ -85,7 +86,7 @@ const JoinForm = () => {
         message: 'Thank you! Our team will contact you soon.'
       });
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 5000);
+      setTimeout(() => setShowConfetti(false), 12000);
       setFormData({
         fullName: '',
         email: '',
@@ -344,10 +345,17 @@ const JoinForm = () => {
 
                   <button
                     type="submit"
-                    className="w-full px-6 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-6 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     disabled={submitState.status === 'loading'}
                   >
-                    {submitState.status === 'loading' ? 'Submitting...' : 'START EARNING 60% →'}
+                    {submitState.status === 'loading' ? (
+                      <>
+                        <Loader2 size={20} className="animate-spin" />
+                        <span>Processing...</span>
+                      </>
+                    ) : (
+                      'START EARNING 60% →'
+                    )}
                   </button>
 
                   {submitState.status === 'success' && (

@@ -31,10 +31,10 @@ export default function HomeNavbar({
           <div className="flex items-center gap-4 max-md:hidden">
             <div className="relative">
               <button
-                className={`flex items-center gap-2 px-4 py-2 border-none rounded-lg text-sm font-medium cursor-pointer transition-all duration-200 ${
+                className={`flex items-center gap-2 px-4 py-2 border-none rounded-lg text-[15px] font-semibold cursor-pointer transition-all duration-200 ${
                   openDropdown === 'domains' 
                     ? 'bg-purple-100 text-purple' 
-                    : 'bg-transparent text-gray-700 hover:bg-gray-100 hover:text-purple'
+                    : 'bg-transparent text-gray-900 hover:bg-gray-100 hover:text-purple'
                 }`}
                 onClick={() => setOpenDropdown(openDropdown === 'domains' ? null : 'domains')}
               >
@@ -52,10 +52,10 @@ export default function HomeNavbar({
 
             <div className="relative">
               <button
-                className={`flex items-center gap-2 px-4 py-2 border-none rounded-lg text-sm font-medium cursor-pointer transition-all duration-200 ${
+                className={`flex items-center gap-2 px-4 py-2 border-none rounded-lg text-[15px] font-semibold cursor-pointer transition-all duration-200 ${
                   openDropdown === 'venture' 
                     ? 'bg-purple-100 text-purple' 
-                    : 'bg-transparent text-gray-700 hover:bg-gray-100 hover:text-purple'
+                    : 'bg-transparent text-gray-900 hover:bg-gray-100 hover:text-purple'
                 }`}
                 onClick={() => setOpenDropdown(openDropdown === 'venture' ? null : 'venture')}
               >
@@ -77,10 +77,10 @@ export default function HomeNavbar({
 
             <div className="relative">
               <button
-                className={`flex items-center gap-2 px-4 py-2 border-none rounded-lg text-sm font-medium cursor-pointer transition-all duration-200 ${
+                className={`flex items-center gap-2 px-4 py-2 border-none rounded-lg text-[15px] font-semibold cursor-pointer transition-all duration-200 ${
                   openDropdown === 'technology' 
                     ? 'bg-purple-100 text-purple' 
-                    : 'bg-transparent text-gray-700 hover:bg-gray-100 hover:text-purple'
+                    : 'bg-transparent text-gray-900 hover:bg-gray-100 hover:text-purple'
                 }`}
                 onClick={() => setOpenDropdown(openDropdown === 'technology' ? null : 'technology')}
               >
@@ -98,10 +98,10 @@ export default function HomeNavbar({
 
             <div className="relative">
               <button
-                className={`flex items-center gap-2 px-4 py-2 border-none rounded-lg text-sm font-medium cursor-pointer transition-all duration-200 ${
+                className={`flex items-center gap-2 px-4 py-2 border-none rounded-lg text-[15px] font-semibold cursor-pointer transition-all duration-200 ${
                   openDropdown === 'auctions' 
                     ? 'bg-purple-100 text-purple' 
-                    : 'bg-transparent text-gray-700 hover:bg-gray-100 hover:text-purple'
+                    : 'bg-transparent text-gray-900 hover:bg-gray-100 hover:text-purple'
                 }`}
                 onClick={() => setOpenDropdown(openDropdown === 'auctions' ? null : 'auctions')}
               >

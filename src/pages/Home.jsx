@@ -1,10 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Globe, Rocket, Terminal, Gavel } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import searchIcon from '../assets/Cobrother_Profile.png';
 import communityIcon from '../assets/cobrother_community_profil.png';
 import cobrotherProfile from '../assets/Community-profileicon.png';
+import coBrandingIcon from '../assets/CoBranding.png';
+import coVentureIcon from '../assets/Coventure_logo.png';
+import coCreationIcon from '../assets/CoCreation.png';
+import auctionIcon from '../assets/Auction.png';
 import TopNavbar from '../components/common/TopNavbar';
 import HomeNavbar from '../components/common/HomeNavbar';
 import HeroGlow from '../components/common/HeroGlow';
@@ -95,25 +98,25 @@ export default function Home() {
   
   const features = [
     {
-      icon: <Globe size={40} strokeWidth={1.5} />,
+      icon: <img src={coBrandingIcon} alt="Domain" className="w-10 h-10 object-contain" />,
       titleKey: 'domainTitle',
       descKey: 'domainDesc',
       link: '/domains'
     },
     {
-      icon: <Rocket size={40} strokeWidth={1.5} />,
+      icon: <img src={coVentureIcon} alt="Venture" className="w-10 h-10 object-contain" />,
       titleKey: 'ventureTitle',
       descKey: 'ventureDesc',
       link: '/ventures'
     },
     {
-      icon: <Terminal size={40} strokeWidth={1.5} />,
+      icon: <img src={coCreationIcon} alt="Technology" className="w-10 h-10 object-contain" />,
       titleKey: 'technologyTitle',
       descKey: 'technologyDesc',
       link: '/cocreation'
     },
     {
-      icon: <Gavel size={40} strokeWidth={1.5} />,
+      icon: <img src={auctionIcon} alt="Auctions" className="w-10 h-10 object-contain" />,
       titleKey: 'auctionsTitle',
       descKey: 'auctionsDesc',
       link: '/auctions'
