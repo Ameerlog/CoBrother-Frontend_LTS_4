@@ -94,21 +94,21 @@ export default function CoCreationPage() {
             <p className="text-gray-600">Buy and sell software products built by the community.</p>
           </div>
           <div className="flex gap-3">
-            <button className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:border-purple hover:bg-purple-50" onClick={() => navigate('/cocreation/dashboard')}>
+            <button className="btn-glow btn-glow-sm flex items-center gap-2" onClick={() => navigate('/cocreation/dashboard')}>
               <LayoutDashboard size={16} /> Dashboard
             </button>
             {user?.role === 'ADMIN' && (
-              <button className="flex items-center gap-2 px-5 py-2 bg-white border-2 border-purple-400 text-purple-600 rounded-full text-sm font-semibold transition-all duration-200 hover:bg-purple-50" onClick={() => setShowForm(true)}>
-                <Plus size={16} /> List Software
+              <button className="btn-glow btn-glow-sm flex items-center gap-2" onClick={() => setShowForm(true)}>
+                <Plus size={16} /> List Technology
               </button>
             )}
           </div>
         </div>
 
         <div className="flex gap-2 mb-6">
-          <button className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${filterTab === 'all' ? 'bg-purple text-white' : 'bg-white border border-gray-300 text-gray-700 hover:border-purple hover:bg-purple-50'}`}
-            onClick={() => setFilterTab('all')}>All Software</button>
-          <button className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${filterTab === 'mine' ? 'bg-purple text-white' : 'bg-white border border-gray-300 text-gray-700 hover:border-purple hover:bg-purple-50'}`}
+          <button className={`btn-glow btn-glow-sm ${filterTab === 'all' ? 'bg-gray-900 text-white border-gray-900' : ''}`}
+            onClick={() => setFilterTab('all')}>All Technology</button>
+          <button className={`btn-glow btn-glow-sm ${filterTab === 'mine' ? 'bg-gray-900 text-white border-gray-900' : ''}`}
             onClick={() => setFilterTab('mine')}>My Listings</button>
         </div>
 
@@ -151,7 +151,7 @@ export default function CoCreationPage() {
             <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">
               {activeFilterCount > 0 ? 'No software matches your filters' :
                filterTab === 'mine' ? 'You have no listings' :
-               'No software listed yet'}
+               'No Technology listed yet'}
             </h3>
             <p className="text-gray-600 mb-6">
               {activeFilterCount > 0
@@ -159,7 +159,7 @@ export default function CoCreationPage() {
                 : 'Check back soon for new software listings.'}
             </p>
             {activeFilterCount > 0 && (
-              <button className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white border-2 border-gray-300 text-gray-700 font-semibold text-sm rounded-full cursor-pointer transition-all hover:border-indigo-400 hover:bg-indigo-50" onClick={clearAll}>Clear Filters</button>
+              <button className="btn-glow btn-glow-sm" onClick={clearAll}>Clear Filters</button>
             )}
           </div>
         ) : (
@@ -286,7 +286,7 @@ function SoftwareCard({ item, isOwner, onView, onBuy, onDelete, likeState, onLik
               Remove
             </button>
           ) : item.softwareStatus === 'AVAILABLE' ? (
-            <button className="inline-flex items-center justify-center px-3 py-1.5 bg-indigo-600 text-white font-semibold text-xs rounded-lg cursor-pointer transition-colors hover:bg-indigo-700"
+            <button className="btn-glow btn-glow-sm"
               onClick={e => { e.stopPropagation(); onBuy(); }}>
               Buy Now →
             </button>
@@ -326,7 +326,7 @@ function SoftwareForm({ onSaved, onCancel }) {
       const { data } = await cocreationAPI.create(form);
       setSavedSoftware(data);
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to list software.');
+      setError(err.response?.data?.error || 'Failed to list Technology.');
     } finally { setLoading(false); }
   };
 
@@ -393,11 +393,11 @@ function SoftwareForm({ onSaved, onCancel }) {
           )}
           {imageError && <div className="text-sm text-red-500 mb-3">{imageError}</div>}
           <div className="flex gap-3">
-            <button type="button" className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-indigo-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            <button type="button" className="btn-glow flex-1"
               disabled={!imageFile || imageUploading} onClick={handleImageUpload}>
-              {imageUploading ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin inline-block" /> : 'Upload Image →'}
+              {imageUploading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> : 'Upload Image →'}
             </button>
-            <button type="button" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-transparent text-gray-500 font-semibold text-sm rounded-[10px] border border-gray-200 cursor-pointer transition-colors hover:bg-gray-100" onClick={handleSkip}>Skip</button>
+            <button type="button" className="btn-glow" onClick={handleSkip}>Skip</button>
           </div>
         </div>
       </div>
@@ -406,8 +406,8 @@ function SoftwareForm({ onSaved, onCancel }) {
 
   return (
     <div className="p-8 bg-white border border-gray-200 rounded-[18px] shadow-sm">
-      <h3 className="font-display text-2xl text-gray-900 font-semibold">List Software</h3>
-      <p className="text-gray-500 text-sm mt-1">Add a new software product to the CoCreation marketplace.</p>
+      <h3 className="font-display text-2xl text-gray-900 font-semibold">List Technology</h3>
+      <p className="text-gray-500 text-sm mt-1">Add a new technology product to the CoCreation marketplace.</p>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-5">
         <div className="flex flex-col gap-1.5">
@@ -507,17 +507,17 @@ function SoftwareForm({ onSaved, onCancel }) {
         {error && <div className="text-sm text-red-500">{error}</div>}
 
         <div className="flex gap-3 mt-2">
-          <button type="submit" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-purple-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading}>
-            {loading ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin inline-block" /> : 'List Software →'}
+          <button type="submit" className="btn-glow flex-1" disabled={loading}>
+            {loading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> : 'List Technology →'}
           </button>
-          <button type="button" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-transparent text-gray-500 font-semibold text-sm rounded-[10px] border border-gray-200 cursor-pointer transition-colors hover:bg-gray-100" onClick={onCancel}>Cancel</button>
+          <button type="button" className="btn-glow" onClick={onCancel}>Cancel</button>
         </div>
       </form>
     </div>
   );
 }
 
-// ─── Buy Software Modal ── UPGRADED with CoBrother opt-in + billing breakdown ─
+// ─── Buy Technology Modal ── UPGRADED with CoBrother opt-in + billing breakdown ─
 function BuySoftwareModal({ item, user, onClose, onSuccess }) {
   const [form, setForm] = useState({
     buyerFullName: `${user?.firstname || ''} ${user?.lastname || ''}`.trim(),
@@ -681,11 +681,11 @@ function BuySoftwareModal({ item, user, onClose, onSuccess }) {
         {error && <div className="text-sm text-red-500 mb-4">{error}</div>}
 
         <div className="flex gap-3">
-          <button className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-indigo-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed" onClick={handlePay} disabled={loading}>
-            {loading ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin inline-block" /> :
+          <button className="btn-glow flex-1" onClick={handlePay} disabled={loading}>
+            {loading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> :
               `Pay ₹${Number(totalPrice).toLocaleString('en-IN')} →`}
           </button>
-          <button className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-transparent text-gray-500 font-semibold text-sm rounded-[10px] border border-gray-200 cursor-pointer transition-colors hover:bg-gray-100" onClick={onClose}>Cancel</button>
+          <button className="btn-glow" onClick={onClose}>Cancel</button>
         </div>
       </div>
     </div>
@@ -741,7 +741,7 @@ function PurchaseSuccessModal({ item, onClose }) {
           </p>
         </div>
 
-        <button className="w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-indigo-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-indigo-700" onClick={onClose}>
+        <button className="btn-glow w-full" onClick={onClose}>
           Go to Dashboard →
         </button>
       </div>
@@ -876,11 +876,11 @@ function SoftwareDetailModal({ item, isOwner, onClose, onBuy, likeState, onLike 
 
             <div className="flex gap-3 mt-6 flex-wrap items-center">
               {!isOwner && d.softwareStatus === 'AVAILABLE' && (
-                <button className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-indigo-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-indigo-700" onClick={onBuy}>Buy Now →</button>
+                <button className="btn-glow btn-glow-sm" onClick={onBuy}>Buy Now →</button>
               )}
               <LikeButton liked={likeState?.liked} count={likeState?.count}
                           onToggle={onLike} size="md" />
-              <button className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-transparent text-gray-500 font-semibold text-sm rounded-[10px] border border-gray-200 cursor-pointer transition-colors hover:bg-gray-100" onClick={onClose}>Close</button>
+              <button className="btn-glow btn-glow-sm" onClick={onClose}>Close</button>
             </div>
           </>
         )}

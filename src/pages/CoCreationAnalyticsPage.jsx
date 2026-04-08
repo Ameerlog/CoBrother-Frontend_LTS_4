@@ -17,7 +17,7 @@ export default function CoCreationAnalyticsPage() {
       .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <AppLayout><div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" /></div></AppLayout>;
+  if (loading) return <AppLayout><div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" /></div></AppLayout>;
   if (error)   return <AppLayout><div className="text-center py-20"><p className="text-red-600">{error}</p></div></AppLayout>;
   if (!data)   return null;
 
@@ -35,7 +35,7 @@ export default function CoCreationAnalyticsPage() {
             <h1 className="font-display text-3xl font-bold text-gray-900 m-0">{data.softwareName}</h1>
             <p className="text-gray-600 mt-1">Analytics overview for this software listing.</p>
           </div>
-          <button className="px-4 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:border-purple hover:bg-purple-50" onClick={() => navigate('/cocreation/dashboard')}>
+          <button className="btn-glow btn-glow-sm" onClick={() => navigate('/cocreation/dashboard')}>
             ← Dashboard
           </button>
         </div>

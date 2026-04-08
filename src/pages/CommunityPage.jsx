@@ -108,7 +108,7 @@ export default function CommunityPage() {
     return (
       <AppLayout>
         <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
-          <div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" />
+          <div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" />
           <p className="text-gray-400 text-sm">
             Connecting your LinkedIn profile…
           </p>
@@ -141,10 +141,10 @@ export default function CommunityPage() {
           <div className="flex gap-3 flex-wrap items-center">
             {myProfile ? (
               <div className="flex gap-3">
-                <button className="px-4 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:border-purple hover:bg-purple-50" onClick={() => navigate('/profile/analytics')}>
+                <button className="btn-glow btn-glow-sm" onClick={() => navigate('/profile/analytics')}>
                   📈 Analytics
                 </button>
-                <button className="px-4 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:border-purple hover:bg-purple-50" onClick={() => setShowForm(v => !v)}>
+                <button className="btn-glow btn-glow-sm" onClick={() => setShowForm(v => !v)}>
                   ✏ Edit Profile
                 </button>
               </div>
@@ -181,7 +181,7 @@ export default function CommunityPage() {
         )}
 
         {loading ? (
-          <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" /></div>
+          <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" /></div>
         ) : profiles.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-4">◉</div>
@@ -291,9 +291,9 @@ function CommunityDetailModal({ profile, isMe, onClose, onEdit }) {
 
             <div className="flex gap-3 mt-6">
               {isMe && (
-                <button className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white border-2 border-gray-300 text-gray-700 font-semibold text-sm rounded-[10px] cursor-pointer transition-all hover:border-indigo-400 hover:bg-indigo-50" onClick={onEdit}>✏ Edit Profile</button>
+                <button className="btn-glow" onClick={onEdit}>✏ Edit Profile</button>
               )}
-              <button className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-transparent text-gray-500 font-semibold text-sm rounded-[10px] border border-gray-200 cursor-pointer transition-colors hover:bg-gray-100 hover:text-gray-700" onClick={onClose}>Close</button>
+              <button className="btn-glow" onClick={onClose}>Close</button>
             </div>
           </>
         )}
@@ -413,10 +413,10 @@ function CommunityProfileForm({ initial, onSaved, onCancel }) {
         {error && <div className="text-sm text-red-500">{error}</div>}
 
         <div className="flex gap-3">
-          <button type="submit" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-indigo-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading}>
-            {loading ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin inline-block" /> : 'Save Profile →'}
+          <button type="submit" className="btn-glow" disabled={loading}>
+            {loading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> : 'Save Profile →'}
           </button>
-          <button type="button" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-transparent text-gray-500 font-semibold text-sm rounded-[10px] border border-gray-200 cursor-pointer transition-colors hover:bg-gray-100 hover:text-gray-700" onClick={onCancel}>Cancel</button>
+          <button type="button" className="btn-glow" onClick={onCancel}>Cancel</button>
         </div>
       </form>
     </div>
@@ -434,7 +434,7 @@ function CommunityCard({ profile, isMe, onView, onEdit, likeState, onLike }) {
       onClick={onView}
     >
       {isMe && (
-        <button className="absolute top-3.5 right-3.5 inline-flex items-center justify-center w-7 h-7 bg-indigo-50 border border-indigo-200 rounded-full text-indigo-500 p-0 cursor-pointer transition-all hover:bg-indigo-100" onClick={e => { e.stopPropagation(); onEdit(); }} title="Edit profile">✏</button>
+        <button className="absolute top-3.5 right-3.5 inline-flex items-center justify-center w-7 h-7 bg-gray-50 border border-gray-200 rounded-full text-gray-500 p-0 cursor-pointer transition-all hover:bg-gray-100" onClick={e => { e.stopPropagation(); onEdit(); }} title="Edit profile">✏</button>
       )}
       <div className="flex items-center gap-3">
         {profile.imageUrl

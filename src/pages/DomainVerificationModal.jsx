@@ -89,7 +89,7 @@ export default function DomainVerificationModal({ domain, onClose, onVerified })
               {METHODS.map(m => (
                 <div key={m.id}
                   onClick={() => !loading && handleInit(m.id)}
-                  className={`p-4 rounded-[10px] border border-gray-200 bg-gray-50 transition-all duration-150 hover:bg-purple-50 hover:border-purple-300 ${loading ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'}`}
+                  className={`p-4 rounded-[10px] border border-gray-200 bg-gray-50 transition-all duration-150 hover:bg-gray-50 hover:border-gray-400 ${loading ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'}`}
                 >
                   <div className="flex items-center gap-3 mb-1">
                     <span className="text-xl">{m.icon}</span>
@@ -186,13 +186,13 @@ export default function DomainVerificationModal({ domain, onClose, onVerified })
             {error && <div className="relative z-10 px-8 mb-4"><div className="p-3 bg-red-100 border border-red-200 rounded-lg text-sm text-red-600">{error}</div></div>}
 
             <div className="relative z-10 px-8 pb-8 flex gap-3">
-              <button className="flex-1 px-5 py-2 bg-white border-2 border-purple-400 text-purple-600 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2" onClick={handleCheck} disabled={loading}>
+              <button className="btn-glow flex-1 flex items-center justify-center gap-2" onClick={handleCheck} disabled={loading}>
                 {loading
-                  ? <><span className="w-4 h-4 border-2 border-purple-300 border-t-purple-600 rounded-full animate-spin" /> Checking…</>
+                  ? <><span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin" /> Checking…</>
                   : method === 'WHOIS_EMAIL' ? 'Verify Code →' : 'Check Verification →'
                 }
               </button>
-              <button className="px-5 py-2 bg-white border-2 border-gray-300 text-gray-600 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-gray-50" onClick={() => { setStep('choose'); setCheckResult(null); setError(''); }}>
+              <button className="btn-glow" onClick={() => { setStep('choose'); setCheckResult(null); setError(''); }}>
                 ← Back
               </button>
             </div>
@@ -218,7 +218,7 @@ export default function DomainVerificationModal({ domain, onClose, onVerified })
               <strong className="text-green-600">{fullDomain}</strong> is now verified.
               Your listing shows a verified badge to buyers.
             </p>
-            <button className="w-full px-6 py-2.5 bg-white border-2 border-purple-400 text-purple-600 rounded-full font-semibold text-sm transition-all duration-200 hover:bg-purple-50" onClick={onClose}>Done</button>
+            <button className="btn-glow w-full" onClick={onClose}>Done</button>
           </div>
         )}
       </div>

@@ -1,30 +1,17 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import cobrotherProfile from '../../assets/Community-profileicon.png';
+import cobrotherProfile from '../../assets/CoBrother_profileW.png';
 
 export default function TopNavbar() {
   const { t, i18n } = useTranslation();
   const [languageOpen, setLanguageOpen] = useState(false);
 
   const languages = [
-<<<<<<< HEAD
-<<<<<<< HEAD
-    { code: 'en', name: 'English (IND)', currency: '₹' },
-    { code: 'hi', name: 'Hindi', currency: '₹' },
-    { code: 'en-US', name: 'English (US)', currency: '₹' },
-=======
-    { code: 'en', name: 'English', currency: '₹' },
-    { code: 'en-GB', name: 'UK English', currency: '₹' },
-    { code: 'en-US', name: 'US English', currency: '₹' },
-    { code: 'hi', name: 'हिन्दी', currency: '₹' },
->>>>>>> 3b774bd2a4e001096d952836f914779d448a42e4
-=======
     { code: 'en', name: 'English (IND)', currency: '₹' },
     { code: 'hi', name: 'Hindi', currency: '₹' },
     { code: 'en-US', name: 'English (US)', currency: '$' },
     { code: 'ur', name: 'Urdu', currency: '₹' },
->>>>>>> Kedits
     { code: 'zh', name: '中文', currency: '$' },
     { code: 'fr', name: 'Français', currency: '$' },
     { code: 'pt', name: 'Português', currency: '$' }
@@ -45,7 +32,7 @@ export default function TopNavbar() {
           {/* Language Selector */}
           <div className="relative">
             <button 
-              className="text-white text-sm font-normal no-underline flex items-center gap-1 px-3 py-2 rounded transition-colors duration-200 cursor-pointer bg-transparent border-none font-body hover:bg-purple/15 hover:text-purple-light"
+              className="text-white text-sm font-normal no-underline flex items-center gap-1 px-3 py-2 rounded transition-colors duration-200 cursor-pointer bg-transparent border-none font-body hover:bg-white/15 hover:text-gray-200"
               onClick={() => setLanguageOpen(!languageOpen)}
             >
               <Globe size={16} /> {currentLanguageName} <ChevronDown size={14} />
@@ -71,21 +58,21 @@ export default function TopNavbar() {
 
           {/* Contact Us */}
           <div className="relative md:block hidden">
-            <a href="/contact" className="text-white text-sm font-normal no-underline flex items-center gap-1 px-3 py-2 rounded transition-colors duration-200 cursor-pointer bg-transparent border-none font-body hover:bg-purple/15 hover:text-purple-light">
+            <a href="/contact" className="text-white text-sm font-normal no-underline flex items-center gap-1 px-3 py-2 rounded transition-colors duration-200 cursor-pointer bg-transparent border-none font-body hover:bg-white/15 hover:text-gray-200">
               {t('contactUs')}
             </a>
           </div>
 
           {/* My Account */}
           <div className="relative md:block hidden">
-            <a href="/account" className="text-white text-sm font-normal no-underline flex items-center gap-1 px-3 py-2 rounded transition-colors duration-200 cursor-pointer bg-transparent border-none font-body hover:bg-purple/15 hover:text-purple-light">
+            <a href="/account" className="text-white text-sm font-normal no-underline flex items-center gap-1 px-3 py-2 rounded transition-colors duration-200 cursor-pointer bg-transparent border-none font-body hover:bg-white/15 hover:text-gray-200">
               {t('myAccount')}
             </a>
           </div>
 
           {/* Profile Icon */}
           <div className="relative ml-2">
-            <a href="/profile" className="w-9 h-9 rounded-full flex items-center justify-center text-white bg-transparent border-2 border-white/30 cursor-pointer relative transition-all duration-300 no-underline hover:text-purple-light hover:scale-105 hover:shadow-[0_0_12px_rgba(147,51,234,0.4)] group">
+            <a href="/profile" className="w-9 h-9 rounded-full flex items-center justify-center text-white bg-transparent border-2 border-white/30 cursor-pointer relative transition-all duration-300 no-underline hover:text-gray-200 hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.2)] group">
               <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0 rounded-full opacity-0 transition-all duration-300 -z-10 group-hover:w-[60px] group-hover:h-[60px] group-hover:opacity-100"
                     style={{ background: 'radial-gradient(circle, rgba(147, 51, 234, 0.5) 0%, rgba(59, 130, 246, 0.25) 50%, transparent 70%)' }}></span>
               <img src={cobrotherProfile} alt="Profile" className="w-full h-full object-contain p-1.5" />

@@ -11,9 +11,6 @@ export default function ProfileCompletionModal({ forceOpen = false }) {
   const [error, setError] = useState('');
   const [step, setStep] = useState(1); // 1 = name, 2 = phone (optional)
 
-<<<<<<< HEAD
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-=======
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'phoneNumber') {
@@ -23,7 +20,6 @@ export default function ProfileCompletionModal({ forceOpen = false }) {
       setForm({ ...form, [name]: value });
     }
   };
->>>>>>> 3b774bd2a4e001096d952836f914779d448a42e4
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -108,7 +104,7 @@ export default function ProfileCompletionModal({ forceOpen = false }) {
 
           <button 
             type="submit" 
-            className="w-full px-6 py-3 bg-white border-2 border-purple-400 text-purple-600 rounded-full font-semibold text-sm cursor-pointer transition-all duration-200 hover:bg-purple-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="btn-glow w-full"
             disabled={loading}
           >
             {loading ? (

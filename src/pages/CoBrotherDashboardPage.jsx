@@ -58,7 +58,7 @@ export default function CoBrotherDashboardPage() {
         </div>
 
         {loading ? (
-          <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" /></div>
+          <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" /></div>
         ) : requests.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-4">◆</div>

@@ -225,7 +225,7 @@ export default function BeTheCoBrother() {
           <div>
             <img src={coBrotherLogo} alt="CoBrother" className="h-10" />
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-purple-600 transition-colors rounded-lg hover:bg-purple-50 font-semibold" onClick={() => navigate('/')}>
+          <button className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 transition-colors rounded-lg hover:bg-gray-100 font-semibold" onClick={() => navigate('/')}>
             <ArrowLeft size={16} /> Home
           </button>
         </div>
@@ -335,7 +335,7 @@ export default function BeTheCoBrother() {
                           <button
                             key={option.value}
                             type="button"
-                            className={`w-full px-4 py-3 text-left hover:bg-purple-50 transition-colors ${formData.topSkill === option.value ? 'bg-purple-100 text-purple-700 font-semibold' : 'text-gray-700'}`}
+                            className={`w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors ${formData.topSkill === option.value ? 'bg-gray-100 text-gray-900 font-semibold' : 'text-gray-700'}`}
                             onClick={() => {
                               handleChange({ target: { name: 'topSkill', value: option.value } });
                               setSkillDropdownOpen(false);
@@ -367,7 +367,7 @@ export default function BeTheCoBrother() {
 
                 <button
                   type="submit"
-                  className="w-full px-6 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-glow btn-glow-lg w-full"
                   disabled={submitState.status === 'loading'}
                 >
                   {submitState.status === 'loading' ? 'Submitting…' : 'START EARNING 60% →'}

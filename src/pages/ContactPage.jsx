@@ -50,7 +50,7 @@ export default function ContactPage() {
             onClick={() => navigate('/')}
           />
           <button 
-            className="px-5 py-2 bg-purple border-2 border-purple text-white rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-dark hover:shadow-lg"
+            className="btn-glow btn-glow-sm"
             onClick={() => navigate('/')}
           >
             Back to Home
@@ -81,7 +81,7 @@ export default function ContactPage() {
             {contactInfo.map((item, index) => {
               const Icon = item.icon;
               const content = (
-                <div className="p-8 bg-white border border-gray-200 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:border-purple flex flex-col items-center text-center h-full max-md:p-6">
+                <div className="p-8 bg-white border border-gray-200 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:border-gray-400 flex flex-col items-center text-center h-full max-md:p-6">
                   <div className={`w-16 h-16 ${item.bgColor} rounded-full flex items-center justify-center mb-5 max-md:w-14 max-md:h-14 max-md:mb-4`}>
                     <Icon className={item.color} size={28} strokeWidth={2} />
                   </div>
@@ -142,13 +142,13 @@ export default function ContactPage() {
             </p>
             <div className="flex gap-4 justify-center max-md:flex-col">
               <button
-                className="px-8 py-3 bg-white text-purple-600 rounded-full font-semibold transition-all duration-200 hover:bg-purple-50 hover:shadow-lg active:scale-95"
+                className="btn-glow"
                 onClick={() => navigate('/login')}
               >
                 Sign In
               </button>
               <button
-                className="px-8 py-3 bg-transparent border-2 border-white text-white rounded-full font-semibold transition-all duration-200 hover:bg-white/10 hover:shadow-lg active:scale-95"
+                className="btn-glow"
                 onClick={() => navigate('/join-form')}
               >
                 Join Us

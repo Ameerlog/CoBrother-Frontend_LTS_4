@@ -62,17 +62,15 @@ export default function ConfirmDialog({
         <div className="flex gap-3 justify-center items-center w-full max-w-[360px] mx-auto relative z-10">
           <button
             onClick={onConfirm}
-            className={`flex-1 min-w-0 h-[42px] rounded-full font-semibold text-base inline-flex items-center justify-center border-2 transition-colors duration-200 ${
-              danger 
-                ? 'border-red-400 text-red-600 bg-white hover:bg-red-50' 
-                : 'border-purple-400 text-purple-600 bg-white hover:bg-purple-50'
+            className={`btn-glow flex-1 min-w-0 ${
+              danger ? 'border-red-400 text-red-600' : ''
             }`}
           >
             {confirmLabel}
           </button>
           <button 
             onClick={onCancel} 
-            className="flex-1 min-w-0 h-[42px] rounded-full font-semibold text-base inline-flex items-center justify-center border border-gray-300 text-gray-700 bg-white hover:border-gray-400 hover:bg-gray-50 transition-colors duration-200"
+            className="btn-glow flex-1 min-w-0"
           >
             {cancelLabel}
           </button>

@@ -103,13 +103,19 @@ export default function LoginPage() {
       </div>
 
       <div className="relative z-10 w-full max-w-[440px] bg-white/92 p-10 rounded-[20px] shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-white/60 backdrop-blur-xl">
+        <button
+          onClick={() => navigate('/')}
+          className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-600 bg-white/80 border border-gray-200 rounded-lg backdrop-blur-sm hover:bg-gray-50 hover:text-gray-900 hover:border-gray-300 hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-200"
+        >
+          ← Back
+        </button>
         <div className="text-center mb-8">
-          <img src={coBrotherLogo} alt="CoBrother" className="w-[100px] h-auto object-contain mx-auto mb-4 block" />
+          <img src={coBrotherLogo} alt="CoBrother" className="w-[200px] h-auto object-contain mx-auto mb-4 block" />
           <h1 className="font-display text-[2rem] font-semibold text-gray-900">Welcome to CoBrother</h1>
           <p className="text-gray-600 text-[0.95rem] mt-1.5">Where ventures find their co-pilots</p>
         </div>
 
-        <button className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border-2 border-gray-200 text-gray-700 text-sm font-medium rounded-xl cursor-pointer transition-all duration-200 shadow-sm hover:border-purple hover:bg-purple-50 hover:shadow-[0_10px_24px_rgba(148,64,221,0.12)]" onClick={handleGoogleLogin}>
+        <button className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border-2 border-gray-200 text-gray-700 text-sm font-medium rounded-xl cursor-pointer transition-all duration-200 shadow-sm hover:border-gray-400 hover:bg-gray-50 hover:shadow-[0_10px_24px_rgba(0,0,0,0.06)]" onClick={handleGoogleLogin}>
           <svg width="20" height="20" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>

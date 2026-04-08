@@ -28,13 +28,13 @@ export default class ErrorBoundary extends Component {
           <div className="flex gap-3 mt-2">
             <button
               onClick={() => window.location.reload()}
-              className="bg-white border-2 border-purple-400 text-purple-600 rounded-full px-5 py-2.5 cursor-pointer text-sm font-semibold hover:bg-purple-50 transition-all duration-200"
+              className="btn-glow"
             >
               ↺ Refresh
             </button>
             <button
               onClick={() => { this.setState({ hasError: false }); window.location.href = '/dashboard'; }}
-              className="bg-white border-2 border-gray-300 text-gray-700 rounded-full px-5 py-2.5 cursor-pointer text-sm font-semibold hover:bg-gray-50 transition-all duration-200"
+              className="btn-glow"
             >
               ← Dashboard
             </button>

@@ -28,17 +28,17 @@ export default function Button({
 }) {
   // Professional button variants (purple border with hover fill)
   const professionalVariants = {
-    'professional': 'btn-professional',
-    'professional-sm': 'btn-professional-sm',
-    'professional-lg': 'btn-professional-lg',
+    'professional': 'btn-glow',
+    'professional-sm': 'btn-glow btn-glow-sm',
+    'professional-lg': 'btn-glow btn-glow-lg',
   };
 
   // Legacy button variants
   const legacyVariants = {
-    'primary': 'px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg',
-    'secondary': 'px-6 py-2.5 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all',
-    'danger': 'px-6 py-2.5 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-all shadow-md hover:shadow-lg',
-    'ghost': 'px-6 py-2.5 text-gray-700 font-semibold rounded-lg hover:bg-gray-100 transition-all',
+    'primary': 'btn-glow',
+    'secondary': 'btn-glow',
+    'danger': 'btn-glow border-red-400 text-red-600',
+    'ghost': 'btn-glow',
   };
 
   // Size variants for legacy buttons
@@ -61,7 +61,7 @@ export default function Button({
     }
   } else {
     // Default to professional
-    buttonClasses = 'btn-professional';
+    buttonClasses = 'btn-glow';
   }
 
   // Add disabled styles

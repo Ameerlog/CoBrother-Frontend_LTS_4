@@ -75,7 +75,7 @@ export default function DashboardPage() {
               </div>
               <h3 className="font-display text-xl font-bold text-gray-900 mb-2">{c.title}</h3>
               <p className="text-sm text-gray-600 mb-4 flex-1">{c.desc}</p>
-              <Link to={c.to} className="btn-professional-sm">{c.cta} →</Link>
+              <Link to={c.to} className="btn-glow btn-glow-sm">{c.cta} →</Link>
             </div>
           ))}
         </div>
@@ -83,16 +83,16 @@ export default function DashboardPage() {
         <div className="p-6 bg-white border border-gray-200 rounded-[14px] shadow-sm">
           <h2 className="font-display text-2xl font-bold text-gray-900 mb-5">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Link to="/ventures/new" className="btn-professional flex items-center justify-center gap-2">
+            <Link to="/ventures/new" className="btn-glow flex items-center justify-center gap-2">
               <span>+</span> List Ventures
             </Link>
-            <Link to="/community" className="btn-professional flex items-center justify-center gap-2">
+            <Link to="/community" className="btn-glow flex items-center justify-center gap-2">
               <img src={CommunityIcon} alt="Community" style={{width: '20px', height: '20px'}} /> View Communities
             </Link>
-            <Link to="/domains" className="btn-professional flex items-center justify-center gap-2">
+            <Link to="/domains" className="btn-glow flex items-center justify-center gap-2">
               <img src={DomainsIcon} alt="Domains" style={{width: '20px', height: '20px'}} /> Manage Domains
             </Link>
-            <Link to="/cocreation" className="btn-professional flex items-center justify-center gap-2">
+            <Link to="/cocreation" className="btn-glow flex items-center justify-center gap-2">
               <img src={TechnologyIcon} alt="Technology" style={{width: '20px', height: '20px'}} /> Explore Technologies
             </Link>
           </div>

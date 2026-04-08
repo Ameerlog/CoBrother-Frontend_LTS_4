@@ -87,19 +87,19 @@ export default function DomainsPage() {
             <p className="text-gray-600 mt-1">Buy and sell premium domain names.</p>
           </div>
           <div className="flex gap-3">
-            <button className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:border-purple hover:bg-purple-50" onClick={() => navigate('/domains/dashboard')}>
+            <button className="btn-glow btn-glow-sm flex items-center gap-2" onClick={() => navigate('/domains/dashboard')}>
               <LayoutDashboard size={16} /> Dashboard
             </button>
-            <button className="flex items-center gap-2 px-5 py-2 bg-purple-600 text-white rounded-full text-sm font-semibold transition-all duration-200 hover:bg-purple-700 hover:shadow-lg cursor-pointer border-none" onClick={() => setShowForm(true)}>
+            <button className="btn-glow btn-glow-sm flex items-center gap-2" onClick={() => setShowForm(true)}>
               <Plus size={16} /> List Domain
             </button>
           </div>
         </div>
 
         <div className="flex gap-2 mb-6">
-          <button className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${filterTab === 'all' ? 'bg-purple text-white' : 'bg-white border border-gray-300 text-gray-700 hover:border-purple hover:bg-purple-50'}`}
+          <button className={`btn-glow btn-glow-sm ${filterTab === 'all' ? 'bg-gray-900 text-white border-gray-900' : ''}`}
             onClick={() => setFilterTab('all')}>All Domains</button>
-          <button className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${filterTab === 'mine' ? 'bg-purple text-white' : 'bg-white border border-gray-300 text-gray-700 hover:border-purple hover:bg-purple-50'}`}
+          <button className={`btn-glow btn-glow-sm ${filterTab === 'mine' ? 'bg-gray-900 text-white border-gray-900' : ''}`}
             onClick={() => setFilterTab('mine')}>My Listings</button>
         </div>
 
@@ -148,8 +148,8 @@ export default function DomainsPage() {
                 : 'Be the first to list a domain for sale.'}
             </p>
             {activeFilterCount > 0
-              ? <button className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white border-2 border-gray-300 text-gray-700 font-semibold text-sm rounded-full cursor-pointer transition-all hover:border-purple hover:bg-purple-50" onClick={clearAll}>Clear Filters</button>
-              : <button className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-purple-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-purple-700" onClick={() => setShowForm(true)}>
+              ? <button className="btn-glow btn-glow-sm" onClick={clearAll}>Clear Filters</button>
+              : <button className="btn-glow btn-glow-sm" onClick={() => setShowForm(true)}>
                   List a Domain
                 </button>
             }
@@ -228,7 +228,7 @@ export default function DomainsPage() {
             <p className="text-gray-500 mb-6">
               Our team will review your request and get back to you shortly.
             </p>
-            <button className="w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-purple-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-purple-700" onClick={() => setEnquireSuccess(false)}>Done</button>
+            <button className="btn-glow w-full" onClick={() => setEnquireSuccess(false)}>Done</button>
           </div>
         </div>
       )}
@@ -350,7 +350,7 @@ function DomainCard({ domain, isOwner, onView, onBuy, onEnquire, onViewAuction,
           auctionLive ? (
             <button
               onClick={e => { e.stopPropagation(); onViewAuction(); }}
-              className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-purple-50 border border-purple-300 text-purple-700 font-semibold text-sm rounded-lg cursor-pointer transition-colors hover:bg-purple-600 hover:text-white hover:border-purple-600 min-h-[42px]">
+              className="btn-glow btn-glow-sm flex-1 flex items-center justify-center gap-1.5 min-h-[42px]">
               <Gavel size={14} /> Bid Now →
             </button>
           ) : (
@@ -364,11 +364,11 @@ function DomainCard({ domain, isOwner, onView, onBuy, onEnquire, onViewAuction,
           isHighValue ? (
             <button
               onClick={e => { e.stopPropagation(); onEnquire(); }}
-              className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-white border border-purple-400 text-gray-900 font-semibold text-sm rounded-lg cursor-pointer transition-colors hover:bg-purple-600 hover:text-white hover:border-purple-600 min-h-[42px]">
+              className="btn-glow btn-glow-sm flex-1 flex items-center justify-center gap-1.5 min-h-[42px]">
               <MessageSquare size={14} /> Enquire Now →
             </button>
           ) : (
-            <button className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-purple-600 text-white font-semibold text-xs rounded-lg cursor-pointer transition-colors hover:bg-purple-700"
+            <button className="btn-glow btn-glow-sm"
               onClick={e => { e.stopPropagation(); onBuy(); }}>
               <ShoppingCart size={14} /> Buy Now →
             </button>
@@ -479,7 +479,7 @@ function DomainForm({ onSaved, onCancel }) {
           <div
             onClick={() => fileInputRef.current?.click()}
             className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all mb-3 ${
-              imagePreview ? 'border-purple-300 bg-purple-50/50' : 'border-gray-200 bg-gray-50 hover:border-purple-300'
+              imagePreview ? 'border-gray-400 bg-gray-50' : 'border-gray-200 bg-gray-50 hover:border-gray-400'
             }`}
           >
             {imagePreview ? (
@@ -499,11 +499,11 @@ function DomainForm({ onSaved, onCancel }) {
           )}
           {imageError && <div className="text-sm text-red-500 mb-3">{imageError}</div>}
           <div className="flex gap-3">
-            <button type="button" className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-purple-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            <button type="button" className="btn-glow flex-1"
               disabled={!imageFile || imageUploading} onClick={handleImageUpload}>
-              {imageUploading ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin inline-block" /> : 'Upload Logo →'}
+              {imageUploading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> : 'Upload Logo →'}
             </button>
-            <button type="button" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-transparent text-gray-500 font-semibold text-sm rounded-[10px] border border-gray-200 cursor-pointer transition-colors hover:bg-gray-100" onClick={handleSkip}>Skip</button>
+            <button type="button" className="btn-glow" onClick={handleSkip}>Skip</button>
           </div>
         </div>
       </div>
@@ -643,11 +643,11 @@ function DomainForm({ onSaved, onCancel }) {
         {error && <div className="text-sm text-red-500">{error}</div>}
 
         <div className="flex gap-3 mt-2">
-          <button type="submit" className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-purple-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading}>
-            {loading ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin inline-block" /> :
+          <button type="submit" className="btn-glow flex-1" disabled={loading}>
+            {loading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> :
               isAuction ? 'List for Auction →' : 'List Domain →'}
           </button>
-          <button type="button" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-transparent text-gray-500 font-semibold text-sm rounded-[10px] border border-gray-200 cursor-pointer transition-colors hover:bg-gray-100" onClick={onCancel}>Cancel</button>
+          <button type="button" className="btn-glow" onClick={onCancel}>Cancel</button>
         </div>
       </form>
     </div>
@@ -709,11 +709,11 @@ function BuyDomainModal({ domain, onClose, onSuccess }) {
         </div>
         {error && <div className="text-sm text-red-500 mb-4">{error}</div>}
         <div className="flex gap-3">
-          <button type="button" className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-purple-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed" onClick={handleBuy} disabled={loading}>
-            {loading ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin inline-block" /> :
+          <button type="button" className="btn-glow flex-1" onClick={handleBuy} disabled={loading}>
+            {loading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> :
               `Pay ₹${Number(domain.askingPrice).toLocaleString('en-IN')} →`}
           </button>
-          <button type="button" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-transparent text-gray-500 font-semibold text-sm rounded-[10px] border border-gray-200 cursor-pointer transition-colors hover:bg-gray-100" onClick={onClose}>Cancel</button>
+          <button type="button" className="btn-glow" onClick={onClose}>Cancel</button>
         </div>
       </div>
     </div>
@@ -736,7 +736,7 @@ function PurchaseSuccessModal({ domain, onClose }) {
           ⏳ A confirmation email has been sent. The seller will initiate the domain transfer
           within <strong>24 hours</strong>.
         </div>
-        <button className="w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-purple-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-purple-700" onClick={onClose}>Done</button>
+        <button className="btn-glow w-full" onClick={onClose}>Done</button>
       </div>
     </div>
   );
@@ -883,7 +883,7 @@ function DomainDetailModal({ domain, isOwner, onClose, onBuy, onEnquire,
                   auctionLive ? (
                     <button
                       onClick={onViewAuction}
-                      className="inline-flex items-center gap-1.5 px-5 py-2 bg-purple-50 border border-purple-300 text-purple-700 font-semibold text-sm rounded-lg cursor-pointer transition-colors hover:bg-purple-600 hover:text-white hover:border-purple-600">
+                      className="btn-glow btn-glow-sm">
                       🔨 Go to Auction →
                     </button>
                   ) : null
@@ -891,17 +891,17 @@ function DomainDetailModal({ domain, isOwner, onClose, onBuy, onEnquire,
                   isHighValue ? (
                     <button
                       onClick={onEnquire}
-                      className="inline-flex items-center gap-1.5 px-5 py-2 bg-white border border-purple-400 text-gray-900 font-semibold text-sm rounded-lg cursor-pointer transition-colors hover:bg-purple-600 hover:text-white hover:border-purple-600">
+                      className="btn-glow btn-glow-sm">
                       Enquire Now →
                     </button>
                   ) : (
-                    <button className="inline-flex items-center gap-2 px-5 py-2.5 bg-purple-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-purple-700" onClick={onBuy}>Buy Now →</button>
+                    <button className="btn-glow btn-glow-sm" onClick={onBuy}>Buy Now →</button>
                   )
                 ) : null
               )}
               <LikeButton liked={likeState?.liked} count={likeState?.count}
                           onToggle={onLike} size="md" />
-              <button className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-transparent text-gray-500 font-semibold text-sm rounded-[10px] border border-gray-200 cursor-pointer transition-colors hover:bg-gray-100" onClick={onClose}>Close</button>
+              <button className="btn-glow btn-glow-sm" onClick={onClose}>Close</button>
             </div>
           </>
         )}
@@ -982,10 +982,10 @@ function DomainEnquiryModal({ domain, user, onClose, onSuccess }) {
           </div>
           {error && <div className="text-sm text-red-500">{error}</div>}
           <div className="flex gap-3 mt-1">
-            <button type="submit" className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-purple-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading}>
-              {loading ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin inline-block" /> : 'Submit Enquiry →'}
+            <button type="submit" className="btn-glow flex-1" disabled={loading}>
+              {loading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> : 'Submit Enquiry →'}
             </button>
-            <button type="button" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-transparent text-gray-500 font-semibold text-sm rounded-[10px] border border-gray-200 cursor-pointer transition-colors hover:bg-gray-100" onClick={onClose}>Cancel</button>
+            <button type="button" className="btn-glow" onClick={onClose}>Cancel</button>
           </div>
         </form>
       </div>

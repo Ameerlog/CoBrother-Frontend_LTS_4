@@ -252,7 +252,7 @@ export default function VentureForm({ initialData, onSubmit, loading, error, sub
                         className="w-14 h-14 rounded-[10px] object-cover border border-gray-200"
                     />
                 )}
-                <label className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-purple-200 text-purple rounded-full text-sm font-medium cursor-pointer transition-all duration-200 hover:text-white hover:border-transparent hover:bg-gradient-to-br hover:from-purple-700 hover:to-purple-500 hover:shadow-lg">
+                <label className="btn-glow btn-glow-sm cursor-pointer">
                     📷 {imagePreview ? 'Change Image' : 'Upload Image'}
                     <input
                         type="file"
@@ -356,8 +356,8 @@ export default function VentureForm({ initialData, onSubmit, loading, error, sub
 
       {error && <div className="px-4 py-3 bg-red-500/10 border border-red-500/30 rounded-[10px] text-red-400 text-sm mb-4">{error}</div>}
 
-      <button type="submit" className="min-h-[46px] px-6 py-3 rounded-full text-sm font-semibold bg-purple-600 border border-purple-600 text-white cursor-pointer transition-all duration-200 hover:bg-purple-700 hover:border-purple-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2" disabled={loading}>
-        {loading ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : submitLabel}
+      <button type="submit" className="btn-glow" disabled={loading}>
+        {loading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin" /> : submitLabel}
       </button>
     </form>
   );

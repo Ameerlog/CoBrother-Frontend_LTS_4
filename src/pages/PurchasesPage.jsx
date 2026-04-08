@@ -65,7 +65,7 @@ export default function PurchasesPage() {
             { id: 'software', label: `Software (${completedSoftware.length})` },
           ].map(t => (
             <button key={t.id}
-              className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${tab === t.id ? 'bg-purple text-white' : 'bg-white border border-gray-300 text-gray-700 hover:border-purple hover:bg-purple-50'}`}
+              className={`btn-glow btn-glow-sm ${tab === t.id ? 'bg-gray-900 text-white border-gray-900' : ''}`}
               onClick={() => setTab(t.id)}>
               {t.label}
             </button>
@@ -73,15 +73,15 @@ export default function PurchasesPage() {
         </div>
 
         {loading ? (
-          <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" /></div>
+          <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" /></div>
         ) : displayItems.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-4">🛒</div>
             <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">No purchases yet</h3>
             <p className="text-gray-600 mb-6">Browse domains and software to make your first purchase.</p>
             <div className="flex gap-3 justify-center">
-              <button className="px-5 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:border-purple hover:bg-purple-50" onClick={() => navigate('/domains')}>Browse Domains</button>
-              <button className="px-5 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:border-purple hover:bg-purple-50" onClick={() => navigate('/cocreation')}>Browse Software</button>
+              <button className="btn-glow btn-glow-sm" onClick={() => navigate('/domains')}>Browse Domains</button>
+              <button className="btn-glow btn-glow-sm" onClick={() => navigate('/cocreation')}>Browse Software</button>
             </div>
           </div>
         ) : (
@@ -123,7 +123,7 @@ export default function PurchasesPage() {
               <div className="px-3.5 py-3 bg-green-500/8 border border-green-500/20 rounded-[10px] mb-6 text-xs text-green-400">
                 ✓ ₹1,000 paid · CoBrother assigned · Expect contact via email
               </div>
-              <button className="w-full px-6 py-2.5 bg-white border-2 border-purple-400 text-purple-600 rounded-full font-semibold text-sm transition-all duration-200 hover:bg-purple-50" onClick={() => setHelpSuccess(null)}>Done</button>
+              <button className="btn-glow w-full" onClick={() => setHelpSuccess(null)}>Done</button>
             </div>
           </div>
         </div>
@@ -195,7 +195,7 @@ function SoftwarePurchaseRow({ purchase, onGetHelp }) {
       {sw.githubLink && (
         <div className="mt-3.5 p-4 bg-gray-100 border border-gray-200 rounded-lg flex items-center justify-between">
           <span className="text-xs text-gray-600">🔗 GitHub Repository</span>
-          <a href={sw.githubLink} target="_blank" rel="noreferrer" className="text-xs text-purple-600 font-bold hover:text-purple-700 transition-all duration-200">
+          <a href={sw.githubLink} target="_blank" rel="noreferrer" className="text-xs text-gray-700 font-bold hover:text-gray-900 transition-all duration-200">
             Open →
           </a>
         </div>
@@ -221,7 +221,7 @@ function SoftwarePurchaseRow({ purchase, onGetHelp }) {
                 Get a dedicated CoBrother to guide you through setup and deployment.
               </div>
             </div>
-            <button onClick={onGetHelp} className="px-5 py-2 bg-purple-100 border border-purple-200 text-purple-700 rounded-full text-sm font-bold cursor-pointer transition-all duration-200 hover:bg-purple-200">
+            <button onClick={onGetHelp} className="btn-glow btn-glow-sm">
               Get Help — ₹1,000
             </button>
           </div>
@@ -301,10 +301,10 @@ function CoBrotherHelpModal({ purchase, onClose, onSuccess }) {
           </div>
           {error && <div className="p-4 bg-red-100 border border-red-200 rounded-lg text-xs text-red-600 mb-6">{error}</div>}
           <div className="flex gap-3">
-            <button className="w-full px-6 py-2.5 bg-purple-100 border border-purple-200 text-purple-700 rounded-full text-sm font-bold cursor-pointer transition-all duration-200 hover:bg-purple-200" onClick={handlePay} disabled={loading}>
-              {loading ? <span className="spinner" /> : 'Pay ₹1,000 — Get Help →'}
+            <button className="btn-glow w-full" onClick={handlePay} disabled={loading}>
+              {loading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> : 'Pay ₹1,000 — Get Help →'}
             </button>
-            <button className="w-full px-6 py-2.5 bg-gray-100 border border-gray-200 text-gray-700 rounded-full text-sm font-bold cursor-pointer transition-all duration-200 hover:bg-gray-200" onClick={onClose}>Cancel</button>
+            <button className="btn-glow w-full" onClick={onClose}>Cancel</button>
           </div>
         </div>
       </div>

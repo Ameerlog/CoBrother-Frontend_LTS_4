@@ -130,7 +130,7 @@ const JoinForm = () => {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <button onClick={() => navigate('/')} className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-purple-600 transition-colors rounded-lg hover:bg-purple-50">
+          <button onClick={() => navigate('/')} className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 transition-colors rounded-lg hover:bg-gray-100">
             <ArrowLeft size={18} />
             <span className="font-semibold">Back to Home</span>
           </button>
@@ -345,7 +345,7 @@ const JoinForm = () => {
 
                   <button
                     type="submit"
-                    className="w-full px-6 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="btn-glow w-full btn-glow-lg"
                     disabled={submitState.status === 'loading'}
                   >
                     {submitState.status === 'loading' ? (
@@ -400,7 +400,7 @@ const JoinForm = () => {
 };
 
 const DetailCard = ({ icon: Icon, title, items }) => (
-  <div className="p-5 bg-gray-50 rounded-xl border border-gray-200 hover:border-purple-300 transition-colors">
+  <div className="p-5 bg-gray-50 rounded-xl border border-gray-200 hover:border-gray-400 transition-colors">
     <div className="flex items-center gap-3 mb-4">
       <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
         <Icon size={18} className="text-purple-600" />

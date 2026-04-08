@@ -78,11 +78,11 @@ export default function DomainEnquiryModal({ domain, user, onClose, onSuccess })
 
           <div className="flex gap-3 mt-4">
             <button type="submit" disabled={loading}
-              className="flex-1 px-6 py-2.5 bg-white border-2 border-purple-400 text-purple-600 rounded-full font-semibold text-sm cursor-pointer transition-all duration-200 hover:bg-purple-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-              {loading ? <span className="w-4 h-4 border-2 border-purple-300 border-t-purple-600 rounded-full animate-spin" /> : 'Submit Enquiry →'}
+              className="btn-glow flex-1 flex items-center justify-center gap-2">
+              {loading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin" /> : 'Submit Enquiry →'}
             </button>
             <button type="button" onClick={onClose}
-              className="px-6 py-2.5 bg-white border-2 border-gray-300 text-gray-600 rounded-full font-semibold text-sm cursor-pointer transition-all duration-200 hover:bg-gray-50">Cancel</button>
+              className="btn-glow">Cancel</button>
           </div>
         </form>
       </div>

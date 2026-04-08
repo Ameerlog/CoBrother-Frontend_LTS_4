@@ -17,7 +17,7 @@ export default function HomeNavbar({
       <div className="px-8 h-[70px] flex items-center justify-between relative max-md:px-4 max-md:h-[60px]">
         {/* Mobile Hamburger Menu */}
         <button 
-          className="hidden max-md:block absolute left-4 bg-transparent border-none text-gray-900 text-2xl cursor-pointer transition-colors duration-200 hover:text-purple"
+          className="hidden max-md:block absolute left-4 bg-transparent border-none text-gray-900 text-2xl cursor-pointer transition-colors duration-200 hover:text-gray-900"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -33,8 +33,8 @@ export default function HomeNavbar({
               <button
                 className={`flex items-center gap-2 px-4 py-2 border-none rounded-lg text-[15px] font-semibold cursor-pointer transition-all duration-200 ${
                   openDropdown === 'domains' 
-                    ? 'bg-purple-100 text-purple' 
-                    : 'bg-transparent text-gray-900 hover:bg-gray-100 hover:text-purple'
+                    ? 'bg-gray-100 text-gray-900' 
+                    : 'bg-transparent text-gray-900 hover:bg-gray-100 hover:text-gray-900'
                 }`}
                 onClick={() => setOpenDropdown(openDropdown === 'domains' ? null : 'domains')}
               >
@@ -43,7 +43,7 @@ export default function HomeNavbar({
               {openDropdown === 'domains' && (
                 <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg min-w-[180px] z-50 overflow-hidden">
                   <button 
-                    className="block w-full px-4 py-3 border-none text-left text-sm text-gray-700 bg-transparent cursor-pointer transition-all duration-200 hover:bg-gray-50 hover:text-purple"
+                    className="block w-full px-4 py-3 border-none text-left text-sm text-gray-700 bg-transparent cursor-pointer transition-all duration-200 hover:bg-gray-50 hover:text-gray-900"
                     onClick={() => { navigate('/domains?type=premium'); setOpenDropdown(null); }}
                   >{t('premiumDomains')}</button>
                 </div>
@@ -54,8 +54,8 @@ export default function HomeNavbar({
               <button
                 className={`flex items-center gap-2 px-4 py-2 border-none rounded-lg text-[15px] font-semibold cursor-pointer transition-all duration-200 ${
                   openDropdown === 'venture' 
-                    ? 'bg-purple-100 text-purple' 
-                    : 'bg-transparent text-gray-900 hover:bg-gray-100 hover:text-purple'
+                    ? 'bg-gray-100 text-gray-900' 
+                    : 'bg-transparent text-gray-900 hover:bg-gray-100 hover:text-gray-900'
                 }`}
                 onClick={() => setOpenDropdown(openDropdown === 'venture' ? null : 'venture')}
               >
@@ -64,11 +64,11 @@ export default function HomeNavbar({
               {openDropdown === 'venture' && (
                 <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg min-w-[180px] z-50 overflow-hidden">
                   <button 
-                    className="block w-full px-4 py-3 border-none text-left text-sm text-gray-700 bg-transparent cursor-pointer transition-all duration-200 hover:bg-gray-50 hover:text-purple"
+                    className="block w-full px-4 py-3 border-none text-left text-sm text-gray-700 bg-transparent cursor-pointer transition-all duration-200 hover:bg-gray-50 hover:text-gray-900"
                     onClick={() => { navigate('/ventures'); setOpenDropdown(null); }}
                   >{t('allVentures')}</button>
                   <button 
-                    className="block w-full px-4 py-3 border-none text-left text-sm text-gray-700 bg-transparent cursor-pointer transition-all duration-200 hover:bg-gray-50 hover:text-purple"
+                    className="block w-full px-4 py-3 border-none text-left text-sm text-gray-700 bg-transparent cursor-pointer transition-all duration-200 hover:bg-gray-50 hover:text-gray-900"
                     onClick={() => { navigate('/ventures/new'); setOpenDropdown(null); }}
                   >{t('listVenture')}</button>
                 </div>
@@ -79,8 +79,8 @@ export default function HomeNavbar({
               <button
                 className={`flex items-center gap-2 px-4 py-2 border-none rounded-lg text-[15px] font-semibold cursor-pointer transition-all duration-200 ${
                   openDropdown === 'technology' 
-                    ? 'bg-purple-100 text-purple' 
-                    : 'bg-transparent text-gray-900 hover:bg-gray-100 hover:text-purple'
+                    ? 'bg-gray-100 text-gray-900' 
+                    : 'bg-transparent text-gray-900 hover:bg-gray-100 hover:text-gray-900'
                 }`}
                 onClick={() => setOpenDropdown(openDropdown === 'technology' ? null : 'technology')}
               >
@@ -89,7 +89,7 @@ export default function HomeNavbar({
               {openDropdown === 'technology' && (
                 <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg min-w-[180px] z-50 overflow-hidden">
                   <button 
-                    className="block w-full px-4 py-3 border-none text-left text-sm text-gray-700 bg-transparent cursor-pointer transition-all duration-200 hover:bg-gray-50 hover:text-purple"
+                    className="block w-full px-4 py-3 border-none text-left text-sm text-gray-700 bg-transparent cursor-pointer transition-all duration-200 hover:bg-gray-50 hover:text-gray-900"
                     onClick={() => { navigate('/cocreation'); setOpenDropdown(null); }}
                   >{t('exploreSoftware')}</button>
                 </div>
@@ -100,8 +100,8 @@ export default function HomeNavbar({
               <button
                 className={`flex items-center gap-2 px-4 py-2 border-none rounded-lg text-[15px] font-semibold cursor-pointer transition-all duration-200 ${
                   openDropdown === 'auctions' 
-                    ? 'bg-purple-100 text-purple' 
-                    : 'bg-transparent text-gray-900 hover:bg-gray-100 hover:text-purple'
+                    ? 'bg-gray-100 text-gray-900' 
+                    : 'bg-transparent text-gray-900 hover:bg-gray-100 hover:text-gray-900'
                 }`}
                 onClick={() => setOpenDropdown(openDropdown === 'auctions' ? null : 'auctions')}
               >
@@ -110,7 +110,7 @@ export default function HomeNavbar({
               {openDropdown === 'auctions' && (
                 <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg min-w-[180px] z-50 overflow-hidden">
                   <button 
-                    className="block w-full px-4 py-3 border-none text-left text-sm text-gray-700 bg-transparent cursor-pointer transition-all duration-200 hover:bg-gray-50 hover:text-purple"
+                    className="block w-full px-4 py-3 border-none text-left text-sm text-gray-700 bg-transparent cursor-pointer transition-all duration-200 hover:bg-gray-50 hover:text-gray-900"
                     onClick={() => { navigate('/auctions'); setOpenDropdown(null); }}
                   >{t('ongoingAuctions')}</button>
                 </div>
@@ -120,13 +120,13 @@ export default function HomeNavbar({
         </div>
         <div className="flex items-center gap-3 max-md:gap-2 max-md:absolute max-md:right-4">
           <button 
-            className="px-5 py-2 bg-transparent border-2 border-purple text-purple rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple hover:text-white max-md:px-3 max-md:py-1.5 max-md:text-xs"
+            className="btn-glow btn-glow-sm"
             onClick={() => navigate('/join-form')}
           >
             {t('joinUs')}
           </button>
           <button 
-            className="px-5 py-2 bg-purple border-2 border-purple text-white rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-dark hover:shadow-[0_8px_20px_rgba(148,64,221,0.25)] max-md:px-3 max-md:py-1.5 max-md:text-xs"
+            className="btn-glow btn-glow-sm"
             onClick={() => navigate('/login')}
           >
             {t('signIn')}
@@ -153,31 +153,31 @@ export default function HomeNavbar({
             </div>
             <div className="flex flex-col py-4">
               <button 
-                className="w-full px-6 py-4 border-none text-left text-base text-gray-700 bg-transparent cursor-pointer transition-all duration-200 border-l-[3px] border-l-transparent hover:bg-gray-50 hover:text-purple hover:border-l-purple"
+                className="w-full px-6 py-4 border-none text-left text-base text-gray-700 bg-transparent cursor-pointer transition-all duration-200 border-l-[3px] border-l-transparent hover:bg-gray-50 hover:text-gray-900 hover:border-l-gray-900"
                 onClick={() => { navigate('/domains'); setMobileMenuOpen(false); }}
               >
                 {t('domains')}
               </button>
               <button 
-                className="w-full px-6 py-4 border-none text-left text-base text-gray-700 bg-transparent cursor-pointer transition-all duration-200 border-l-[3px] border-l-transparent hover:bg-gray-50 hover:text-purple hover:border-l-purple"
+                className="w-full px-6 py-4 border-none text-left text-base text-gray-700 bg-transparent cursor-pointer transition-all duration-200 border-l-[3px] border-l-transparent hover:bg-gray-50 hover:text-gray-900 hover:border-l-gray-900"
                 onClick={() => { navigate('/ventures'); setMobileMenuOpen(false); }}
               >
                 {t('venture')}
               </button>
               <button 
-                className="w-full px-6 py-4 border-none text-left text-base text-gray-700 bg-transparent cursor-pointer transition-all duration-200 border-l-[3px] border-l-transparent hover:bg-gray-50 hover:text-purple hover:border-l-purple"
+                className="w-full px-6 py-4 border-none text-left text-base text-gray-700 bg-transparent cursor-pointer transition-all duration-200 border-l-[3px] border-l-transparent hover:bg-gray-50 hover:text-gray-900 hover:border-l-gray-900"
                 onClick={() => { navigate('/cocreation'); setMobileMenuOpen(false); }}
               >
                 {t('technologies')}
               </button>
               <button 
-                className="w-full px-6 py-4 border-none text-left text-base text-gray-700 bg-transparent cursor-pointer transition-all duration-200 border-l-[3px] border-l-transparent hover:bg-gray-50 hover:text-purple hover:border-l-purple"
+                className="w-full px-6 py-4 border-none text-left text-base text-gray-700 bg-transparent cursor-pointer transition-all duration-200 border-l-[3px] border-l-transparent hover:bg-gray-50 hover:text-gray-900 hover:border-l-gray-900"
                 onClick={() => { navigate('/contact'); setMobileMenuOpen(false); }}
               >
                 Contact Us
               </button>
               <button 
-                className="w-full px-6 py-4 border-none text-left text-base text-gray-700 bg-transparent cursor-pointer transition-all duration-200 border-l-[3px] border-l-transparent hover:bg-gray-50 hover:text-purple hover:border-l-purple"
+                className="w-full px-6 py-4 border-none text-left text-base text-gray-700 bg-transparent cursor-pointer transition-all duration-200 border-l-[3px] border-l-transparent hover:bg-gray-50 hover:text-gray-900 hover:border-l-gray-900"
                 onClick={() => { navigate('/account'); setMobileMenuOpen(false); }}
               >
                 My Account

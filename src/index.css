@@ -4288,3 +4288,59 @@ body.home-page-body {
   color: #ffffff !important;
   border-color: #9440dd !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GLOW BUTTON — Premium
+   White fill + dark border. On hover: cyan→purple glow OUTSIDE only.
+   Uses box-shadow (physically cannot color the interior).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.btn-glow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 9999px;
+  border: 1px solid #1f2937;
+  background: #ffffff;
+  color: #1f2937;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+/* No pseudo-elements — box-shadow only */
+.btn-glow::before,
+.btn-glow::after {
+  content: none;
+}
+
+.btn-glow:hover {
+  color: #000000;
+  box-shadow:
+    -18px 0 28px -8px rgba(0, 195, 255, 0.5),
+     18px 0 28px -8px rgba(147, 51, 234, 0.45),
+      0   0 18px -4px rgba(120, 80, 220, 0.3);
+}
+
+.btn-glow:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-glow:disabled:hover {
+  box-shadow: none;
+}
+
+/* Size variants */
+.btn-glow-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+}
+
+.btn-glow-lg {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+}

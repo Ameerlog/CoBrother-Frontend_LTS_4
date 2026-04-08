@@ -46,7 +46,7 @@ export default function TechnologySection() {
             {t('technologySoftware')}
           </h3>
           <div className="flex items-center justify-center py-20">
-            <div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" />
+            <div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" />
           </div>
         </div>
       </section>
@@ -140,7 +140,7 @@ export default function TechnologySection() {
                   <div className="flex items-center gap-3 text-sm text-gray-600">
                     <span title="Views">👁 {item.views || 0}</span>
                   </div>
-                  <button className="px-3 py-1.5 bg-white border-2 border-indigo-400 text-indigo-600 rounded-lg text-xs font-semibold transition-all duration-200 hover:bg-indigo-50">
+                  <button className="btn-glow btn-glow-sm">
                     View Details
                   </button>
                 </div>

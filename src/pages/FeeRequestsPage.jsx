@@ -41,7 +41,7 @@ export default function FeeRequestsPage() {
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" /></div>
+        <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" /></div>
       ) : requests.length === 0 ? (
         <div className="text-center py-20">
           <div className="text-6xl mb-4">◆</div>
@@ -73,11 +73,11 @@ export default function FeeRequestsPage() {
                 <div className="flex gap-3 flex-wrap">
                   {r.status === 'PAYMENT_PENDING' && (
                     <>
-                      <button className="px-4 py-2 bg-white border-2 border-purple-400 text-purple-600 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-50"
+                      <button className="btn-glow btn-glow-sm"
                         onClick={() => setPayTarget(r)}>
                         Pay ₹1,000 →
                       </button>
-                      <button className="px-4 py-2 bg-white border-2 border-gray-300 text-gray-600 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-gray-50"
+                      <button className="btn-glow btn-glow-sm"
                         onClick={() => handleCancel(r.id)}>
                         Cancel
                       </button>
@@ -173,11 +173,11 @@ function FeePaymentModal({ request, onClose, onSuccess }) {
 
         <div className="relative z-10 px-8 pb-8 flex gap-3">
           <button onClick={handlePay} disabled={loading}
-            className="flex-1 px-6 py-2.5 bg-white border-2 border-purple-400 text-purple-600 rounded-full font-semibold text-sm cursor-pointer transition-all duration-200 hover:bg-purple-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-            {loading ? <span className="w-4 h-4 border-2 border-purple-300 border-t-purple-600 rounded-full animate-spin" /> : 'Pay ₹1,000 →'}
+            className="btn-glow flex-1 flex items-center justify-center gap-2">
+            {loading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin" /> : 'Pay ₹1,000 →'}
           </button>
           <button onClick={onClose}
-            className="px-6 py-2.5 bg-white border-2 border-gray-300 text-gray-600 rounded-full font-semibold text-sm cursor-pointer transition-all duration-200 hover:bg-gray-50">Cancel</button>
+            className="btn-glow">Cancel</button>
         </div>
       </div>
     </div>

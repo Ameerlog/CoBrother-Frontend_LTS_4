@@ -87,7 +87,7 @@ export default function AuctionsPage() {
             { id: 'domains',  label: `◇ Domains (${domainAuctions.length})` },
           ].map(t => (
             <button key={t.id}
-              className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${section === t.id ? 'bg-purple text-white' : 'bg-white border border-gray-300 text-gray-700 hover:border-purple hover:bg-purple-50'}`}
+              className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${section === t.id ? 'bg-gray-900 text-white' : 'bg-white border border-gray-300 text-gray-700 hover:border-gray-400 hover:bg-gray-50'}`}
               onClick={() => setSection(t.id)}>
               {t.label}
             </button>
@@ -102,7 +102,7 @@ export default function AuctionsPage() {
             { id: 'no_bids',      label: '🆕 No Bids Yet' },
           ].map(t => (
             <button key={t.id}
-              className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${filter === t.id ? 'bg-purple text-white' : 'bg-white border border-gray-300 text-gray-700 hover:border-purple hover:bg-purple-50'}`}
+              className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${filter === t.id ? 'bg-gray-900 text-white' : 'bg-white border border-gray-300 text-gray-700 hover:border-gray-400 hover:bg-gray-50'}`}
               onClick={() => setFilter(t.id)}>
               {t.label}
             </button>
@@ -121,7 +121,7 @@ export default function AuctionsPage() {
             <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">No auctions match your filters</h3>
             <p className="text-gray-600 mb-6">Check back soon — new auctions go live regularly.</p>
             {(section !== 'all' || filter !== 'all') && (
-              <button className="px-5 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:border-purple hover:bg-purple-50" onClick={() => { setSection('all'); setFilter('all'); }}>
+              <button className="btn-glow btn-glow-sm" onClick={() => { setSection('all'); setFilter('all'); }}>
                 View All Auctions
               </button>
             )}
@@ -243,7 +243,7 @@ function VentureAuctionCard({ auction, onClick }) {
           </div>
         </div>
         <button onClick={e => { e.stopPropagation(); onClick(); }}
-          className="px-5 py-2 bg-transparent border-2 border-purple text-purple rounded-lg text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple hover:text-white">
+          className="btn-glow btn-glow-sm">
           Bid Now →
         </button>
       </div>
@@ -337,7 +337,7 @@ function DomainAuctionCard({ auction, onClick }) {
         </div>
         <button
           onClick={e => { e.stopPropagation(); onClick(); }}
-          className="px-5 py-2 bg-transparent border-2 border-purple text-purple rounded-lg text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple hover:text-white">
+          className="btn-glow btn-glow-sm">
           Bid Now →
         </button>
       </div>

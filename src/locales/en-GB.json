@@ -34,13 +34,8 @@
   "noDomains": "No domains available yet.",
   "noVentures": "No ventures available yet.",
   "noSoftware": "No software available yet.",
-<<<<<<< HEAD
-  "coVentures": "CoVentures",
-  "technologySoftware": "Technology & Software",
-=======
   "coVentures": "Ventures",
-  "technologySoftware": "Technology",
->>>>>>> 3b774bd2a4e001096d952836f914779d448a42e4
+  "technologySoftware": "Technologies",
   "exploreBtn": "Explore",
   "domainTitle": "Domain",
   "domainDesc": "Find the perfect identity for your next big tech project",

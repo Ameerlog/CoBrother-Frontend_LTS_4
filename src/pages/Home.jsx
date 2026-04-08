@@ -14,6 +14,7 @@ import HeroGlow from '../components/common/HeroGlow';
 import ExploreSection from '../components/common/ExploreSection';
 import DomainSearchBar from '../components/common/DomainSearchBar';
 import HomeFooter from '../components/common/HomeFooter';
+import GlowButton from '../components/common/GlowButton';
 
 export const searchDomainRedirect = (domainQuery, selectedExtension = '.com') => {
   const value = domainQuery.trim().toLowerCase();
@@ -115,12 +116,12 @@ export default function Home() {
       descKey: 'technologyDesc',
       link: '/cocreation'
     },
-    {
-      icon: <img src={auctionIcon} alt="Auctions" className="w-10 h-10 object-contain" />,
-      titleKey: 'auctionsTitle',
-      descKey: 'auctionsDesc',
-      link: '/auctions'
-    },
+    // {
+    //   icon: <img src={auctionIcon} alt="Auctions" className="w-10 h-10 object-contain" />,
+    //   titleKey: 'auctionsTitle',
+    //   descKey: 'auctionsDesc',
+    //   link: '/auctions'
+    // },
     {
       icon: <img src={cobrotherProfile} alt="Community" className="community-profile-icon" />,
       titleKey: 'communityTitle',
@@ -154,12 +155,9 @@ export default function Home() {
                 <div className="w-16 h-16 flex items-center justify-center text-purple mb-5">{feature.icon}</div>
                 <h3 className="font-display text-xl font-bold text-gray-900 mb-3">{t(feature.titleKey)}</h3>
                 <p className="text-sm text-gray-600 mb-6 flex-1 leading-relaxed">{t(feature.descKey)}</p>
-                <button
-                  className="px-6 py-2.5 bg-purple border border-purple text-white rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-dark hover:shadow-lg"
-                  onClick={() => navigate(feature.link)}
-                >
+                <GlowButton onClick={() => navigate(feature.link)}>
                   {t('exploreBtn')} →
-                </button>
+                </GlowButton>
               </div>
             ))}
           </div>

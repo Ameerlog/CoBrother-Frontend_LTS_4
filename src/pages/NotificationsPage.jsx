@@ -69,23 +69,23 @@ export default function NotificationsPage() {
             <p className="text-gray-600 mt-1">{unread.length} unread notification{unread.length !== 1 ? 's' : ''}</p>
           </div>
           {unread.length > 0 && (
-            <button className="px-5 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:border-purple hover:bg-purple-50" onClick={handleMarkAllRead}>
+            <button className="btn-glow btn-glow-sm" onClick={handleMarkAllRead}>
               ✓ Mark all as read
             </button>
           )}
         </div>
 
         <div className="flex gap-2 mb-6">
-          <button className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${filter === 'all' ? 'bg-purple text-white' : 'bg-white border border-gray-300 text-gray-700 hover:border-purple hover:bg-purple-50'}`} onClick={() => setFilter('all')}>
+          <button className={`btn-glow btn-glow-sm ${filter === 'all' ? 'bg-gray-900 text-white border-gray-900' : ''}`} onClick={() => setFilter('all')}>
             All ({notifications.length})
           </button>
-          <button className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${filter === 'unread' ? 'bg-purple text-white' : 'bg-white border border-gray-300 text-gray-700 hover:border-purple hover:bg-purple-50'}`} onClick={() => setFilter('unread')}>
+          <button className={`btn-glow btn-glow-sm ${filter === 'unread' ? 'bg-gray-900 text-white border-gray-900' : ''}`} onClick={() => setFilter('unread')}>
             Unread ({unread.length})
           </button>
         </div>
 
         {loading ? (
-          <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" /></div>
+          <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" /></div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-4">🔔</div>

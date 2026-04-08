@@ -102,21 +102,21 @@ export default function VenturesPage() {
             <p className="text-gray-600 mt-1">Discover and co-venture on exciting opportunities.</p>
           </div>
           <div className="flex gap-3 flex-wrap">
-            <button className="px-4 py-2 bg-white border-2 border-purple-400 text-purple-600 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-50 flex items-center gap-2" onClick={() => navigate('/ventures/dashboard')}>
+            <button className="btn-glow btn-glow-sm flex items-center gap-2" onClick={() => navigate('/ventures/dashboard')}>
               <img src={DashboardIcon} alt="Dashboard" style={{width: '18px', height: '18px'}} /> Dashboard
             </button>
-            <button className="px-4 py-2 bg-white border-2 border-purple-400 text-purple-600 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-50" onClick={() => navigate('/ventures/analytics')}>
+            <button className="btn-glow btn-glow-sm" onClick={() => navigate('/ventures/analytics')}>
               📈 Analytics    
             </button>
-            <Link to="/ventures/new" className="px-5 py-2 border-2 border-purple-400 text-purple-600 rounded-full text-sm font-semibold transition-all duration-200 hover:bg-purple hover:shadow-lg hover:text-white">+ List Venture</Link>
+            <Link to="/ventures/new" className="btn-glow btn-glow-sm">+ List Venture</Link>
           </div>
         </div>
 
         {/* ── Tabs ── */}
         <div className="flex gap-2 mb-6">
-          <button className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${filterTab === 'all' ? 'bg-purple-600 text-white border-2 border-purple-600' : 'bg-white border-2 border-purple-400 text-purple-600 hover:bg-purple-50'}`}
+          <button className={`btn-glow btn-glow-sm ${filterTab === 'all' ? 'bg-gray-900 text-white border-gray-900' : ''}`}
             onClick={() => setFilterTab('all')}>All Ventures</button>
-          <button className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${filterTab === 'mine' ? 'bg-purple-600 text-white border-2 border-purple-600' : 'bg-white border-2 border-purple-400 text-purple-600 hover:bg-purple-50'}`}
+          <button className={`btn-glow btn-glow-sm ${filterTab === 'mine' ? 'bg-gray-900 text-white border-gray-900' : ''}`}
             onClick={() => setFilterTab('mine')}>My Ventures</button>
         </div>
 
@@ -159,8 +159,8 @@ export default function VenturesPage() {
                 : 'Be the first to list a venture and attract co-venturers.'}
             </p>
             {activeFilterCount > 0
-              ? <button className="px-4 py-2 bg-white border-2 border-purple-400 text-purple-600 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-50" onClick={clearAll}>Clear Filters</button>
-              : <Link to="/ventures/new" className="px-5 py-2 bg-white border-2 border-purple-400 text-purple-600 rounded-full text-sm font-semibold transition-all duration-200 hover:bg-purple-50">+ List Venture</Link>
+              ? <button className="btn-glow btn-glow-sm" onClick={clearAll}>Clear Filters</button>
+              : <Link to="/ventures/new" className="btn-glow btn-glow-sm">+ List Venture</Link>
             }
           </div>
         ) : (
@@ -272,18 +272,18 @@ function VentureCard({ venture, isOwner, onView, onApply, onEdit, onDelete,
       <div className="flex gap-2 flex-wrap" onClick={e => e.stopPropagation()}>
         {isOwner ? (
           <>
-            <button className="px-3 py-1.5 bg-white border-2 border-purple-400 text-purple-600 rounded-lg text-xs font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-50" onClick={onEdit}>Edit</button>
+            <button className="btn-glow btn-glow-sm" onClick={onEdit}>Edit</button>
             <button className="px-3 py-1.5 bg-red-500 border border-red-500 text-white rounded-lg text-xs font-semibold cursor-pointer transition-all duration-200 hover:bg-red-600" onClick={onDelete}>Delete</button>
           </>
         ) : isAuction && auction?.id && auction.status !== 'DRAFT' ? (
-          <button className="px-3 py-1.5 bg-purple-50 border-2 border-purple-400 text-purple-600 rounded-lg text-xs font-semibold transition-all duration-200 hover:bg-purple-100"
+          <button className="btn-glow btn-glow-sm"
             onClick={() => navigate(`/venture-auction/${auction.id}`)}>🔨 Bid Now →</button>
         ) : !isAuction ? (
-          <button className="px-3 py-1.5 bg-white border-2 border-purple-400 text-purple-600 rounded-lg text-xs font-semibold transition-all duration-200 hover:bg-purple-50" onClick={onApply}>Co-Venture →</button>
+          <button className="btn-glow btn-glow-sm" onClick={onApply}>Co-Venture →</button>
         ) : null}
         {b.website && (
           <a href={b.website} target="_blank" rel="noreferrer"
-             className="px-3 py-1.5 bg-white border-2 border-purple-400 text-purple-600 rounded-lg text-xs font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-50 flex items-center justify-center" onClick={e => e.stopPropagation()}>
+             className="btn-glow btn-glow-sm flex items-center justify-center" onClick={e => e.stopPropagation()}>
             <ArrowUpRight size={17} />
           </a>
         )}
@@ -318,7 +318,7 @@ function VentureDetailModal({ venture, isOwner, onClose, onApply, onEdit, onDele
 
         {loading ? (
           <div className="flex justify-center p-12">
-            <div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" />
+            <div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" />
           </div>
         ) : (
           <>
@@ -387,11 +387,11 @@ function VentureDetailModal({ venture, isOwner, onClose, onApply, onEdit, onDele
                   <div className="flex gap-3 flex-wrap">
                     {b.website && (
                       <a href={b.website} target="_blank" rel="noreferrer"
-                         className="px-4 py-2 bg-white border-2 border-purple-400 text-purple-600 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-50">🌐 Website ↗</a>
+                         className="btn-glow btn-glow-sm">🌐 Website ↗</a>
                     )}
                     {b.videoUrl && (
                       <a href={b.videoUrl} target="_blank" rel="noreferrer"
-                         className="px-4 py-2 bg-white border-2 border-purple-400 text-purple-600 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-50">🎬 Video ↗</a>
+                         className="btn-glow btn-glow-sm">🎬 Video ↗</a>
                     )}
                   </div>
                 </Section>
@@ -446,11 +446,11 @@ function VentureDetailModal({ venture, isOwner, onClose, onApply, onEdit, onDele
             <div className="relative z-10 px-8 pb-8 flex gap-3 flex-wrap">
               {isOwner ? (
                 <>
-                  <button className="px-5 py-2 bg-white border-2 border-purple-400 text-purple-600 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-50" onClick={onEdit}>✏ Edit</button>
+                  <button className="btn-glow btn-glow-sm" onClick={onEdit}>✏ Edit</button>
                   <button className="px-5 py-2 bg-red-500 border border-red-500 text-white rounded-[10px] text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-red-600" onClick={onDelete}>Delete</button>
                 </>
               ) : (
-                <button className="px-5 py-2 bg-white border-2 border-purple-400 text-purple-600 rounded-full text-sm font-semibold transition-all duration-200 hover:bg-purple-50" onClick={onApply}>Co-Venture →</button>
+                <button className="btn-glow btn-glow-sm" onClick={onApply}>Co-Venture →</button>
               )}
               <button className="px-5 py-2 bg-white border-2 border-gray-300 text-gray-600 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-gray-50" onClick={onClose}>Close</button>
             </div>

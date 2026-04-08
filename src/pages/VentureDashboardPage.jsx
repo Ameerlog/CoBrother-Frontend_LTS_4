@@ -36,32 +36,32 @@ export default function VentureDashboardPage() {
             <h1 className="font-display text-3xl font-bold text-gray-900 m-0">Venture Dashboard</h1>
             <p className="text-gray-600 mt-1">Manage your venture listings, applications, and auctions.</p>
           </div>
-          <button className="px-4 py-2 bg-white border-2 border-purple-400 text-purple-600 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-50" onClick={() => navigate('/ventures')}>
+          <button className="btn-glow btn-glow-sm" onClick={() => navigate('/ventures')}>
             ← Back to Ventures
           </button>
         </div>
 
         <div className="flex gap-2 mb-6 flex-wrap">
           <button
-            className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${tab === 'listings' ? 'bg-purple-600 text-white border-2 border-purple-600' : 'bg-white border-2 border-purple-400 text-purple-600 hover:bg-purple-50'}`}
+            className={`btn-glow btn-glow-sm ${tab === 'listings' ? 'bg-gray-900 text-white border-gray-900' : ''}`}
             onClick={() => setTab('listings')}
           >
             📋 My Listings
           </button>
           <button
-            className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${tab === 'likes' ? 'bg-purple-600 text-white border-2 border-purple-600' : 'bg-white border-2 border-purple-400 text-purple-600 hover:bg-purple-50'}`}
+            className={`btn-glow btn-glow-sm ${tab === 'likes' ? 'bg-gray-900 text-white border-gray-900' : ''}`}
             onClick={() => setTab('likes')}
           >
             ❤️ Likes Received
           </button>
           <button
-            className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${tab === 'incoming' ? 'bg-purple-600 text-white border-2 border-purple-600' : 'bg-white border-2 border-purple-400 text-purple-600 hover:bg-purple-50'}`}
+            className={`btn-glow btn-glow-sm ${tab === 'incoming' ? 'bg-gray-900 text-white border-gray-900' : ''}`}
             onClick={() => setTab('incoming')}
           >
             📥 Incoming Applications
           </button>
           <button
-            className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${tab === 'applied' ? 'bg-purple-600 text-white border-2 border-purple-600' : 'bg-white border-2 border-purple-400 text-purple-600 hover:bg-purple-50'}`}
+            className={`btn-glow btn-glow-sm ${tab === 'applied' ? 'bg-gray-900 text-white border-gray-900' : ''}`}
             onClick={() => setTab('applied')}
           >
             🚀 My Applications
@@ -105,14 +105,14 @@ function MyListings() {
     if (venture?.auction?.id) navigate(`/venture-auction/${venture.auction.id}`);
   };
 
-  if (loading) return <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" /></div>;
+  if (loading) return <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" /></div>;
 
   if (ventures.length === 0) return (
     <div className="text-center py-20">
       <div className="text-6xl mb-4">📋</div>
       <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">No ventures listed yet</h3>
       <p className="text-gray-600 mb-4">List your first venture to start finding co-founders and collaborators.</p>
-      <button className="px-6 py-2.5 bg-purple-600 text-white rounded-full text-sm font-semibold" onClick={() => navigate('/ventures')}>
+      <button className="btn-glow" onClick={() => navigate('/ventures')}>
         List a Venture
       </button>
     </div>
@@ -221,14 +221,14 @@ function VentureListingRow({ venture, onVerify, onViewAuction, onListingChanged 
         )}
 
         {isAuction && auctionId && auction.status !== 'DRAFT' && (
-          <button className="px-3 py-1.5 text-xs font-semibold text-purple-600 bg-purple-50 border border-purple-200 rounded-lg hover:bg-purple-100 transition-colors"
+          <button className="btn-glow btn-glow-sm"
             onClick={() => onViewAuction(auctionId)}>
             🔨 View Auction →
           </button>
         )}
 
         {isAuction && !venture.verified && auction?.status === 'DRAFT' && !isInactive && (
-          <button className="px-3 py-1.5 text-xs font-semibold text-purple-600 bg-white border-2 border-purple-400 rounded-lg hover:bg-purple-50 transition-colors"
+          <button className="btn-glow btn-glow-sm"
             onClick={onVerify}>
             🔍 Verify GSTIN (Starts Auction)
           </button>
@@ -236,10 +236,10 @@ function VentureListingRow({ venture, onVerify, onViewAuction, onListingChanged 
 
         {isInactive && (
           <>
-            <button className="px-3 py-1.5 text-xs font-semibold bg-purple-600 text-white rounded-lg" onClick={handleReactivate}>
+            <button className="btn-glow btn-glow-sm" onClick={handleReactivate}>
               List again
             </button>
-            <button className="px-3 py-1.5 text-xs font-semibold text-purple-600 bg-white border-2 border-purple-400 rounded-lg" onClick={() => navigate(`/ventures/${venture.id}/edit`)}>
+            <button className="btn-glow btn-glow-sm" onClick={() => navigate(`/ventures/${venture.id}/edit`)}>
               Edit
             </button>
           </>
@@ -324,7 +324,7 @@ function IncomingApplications() {
           {['', 'PENDING', 'APPROVED', 'REJECTED'].map(s => (
             <button
               key={s}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold cursor-pointer transition-all duration-200 ${statusFilter === s ? 'bg-purple-600 text-white border-2 border-purple-600' : 'bg-white border-2 border-purple-400 text-purple-600 hover:bg-purple-50'}`}
+              className={`btn-glow btn-glow-sm ${statusFilter === s ? 'bg-gray-900 text-white border-gray-900' : ''}`}
               onClick={() => setStatusFilter(s)}
             >
               {s === '' ? 'All' : STATUS_META[s].label}
@@ -332,7 +332,7 @@ function IncomingApplications() {
           ))}
         </div>
         <button
-          className="ml-auto px-4 py-2 bg-white border-2 border-purple-400 text-purple-600 rounded-full text-xs font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-glow btn-glow-sm ml-auto"
           onClick={exportCSV}
           disabled={applications.length === 0}
         >
@@ -341,7 +341,7 @@ function IncomingApplications() {
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" /></div>
+        <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" /></div>
       ) : applications.length === 0 ? (
         <div className="text-center py-20">
           <div className="text-6xl mb-4">📋</div>
@@ -424,11 +424,11 @@ function ApplicationCard({ app, expanded, onToggle, onApprove, onReject, actionL
           {app.status === 'PENDING' && (
             <div className="flex gap-3 mt-2">
               <button
-                className="px-4 py-2 bg-white border-2 border-purple-400 text-purple-600 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                className="btn-glow btn-glow-sm flex items-center gap-2"
                 onClick={onApprove}
                 disabled={actionLoading !== null}
               >
-                {actionLoading === app.id + 'APPROVED' ? <span className="w-4 h-4 border-2 border-purple-300 border-t-purple-600 rounded-full animate-spin" /> : '✓ Approve'}
+                {actionLoading === app.id + 'APPROVED' ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin" /> : '✓ Approve'}
               </button>
               <button
                 className="px-4 py-2 bg-red-500 border border-red-500 text-white rounded-lg text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
@@ -463,7 +463,7 @@ function MyApplications() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" /></div>;
+  if (loading) return <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" /></div>;
 
   if (applications.length === 0) return (
     <div className="text-center py-20">
@@ -531,7 +531,7 @@ function LikesReceived() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" /></div>;
+  if (loading) return <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" /></div>;
 
   if (ventures.length === 0) return (
     <div className="text-center py-20">

@@ -24,7 +24,7 @@ export default function DomainSearchBar() {
         />
         <button
           type="submit"
-          className="px-7 py-2.5 bg-purple-600 text-white font-semibold text-sm rounded-full transition-all duration-200 hover:bg-purple-700 hover:shadow-md flex-shrink-0"
+          className="btn-glow flex-shrink-0"
         >
           Search
         </button>

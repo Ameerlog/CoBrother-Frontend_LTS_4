@@ -47,7 +47,7 @@ export default function VenturesSection() {
             {t('coVentures')}
           </h3>
           <div className="flex items-center justify-center py-20">
-            <div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" />
+            <div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" />
           </div>
         </div>
       </section>
@@ -136,7 +136,7 @@ export default function VenturesSection() {
                 </div>
 
                 <div className="flex gap-2 flex-wrap">
-                  <button className="flex-1 px-3 py-1.5 bg-white border-2 border-purple-400 text-purple-600 rounded-lg text-xs font-semibold transition-all duration-200 hover:bg-purple-50">
+                  <button className="btn-glow btn-glow-sm flex-1">
                     View Details
                   </button>
                 </div>

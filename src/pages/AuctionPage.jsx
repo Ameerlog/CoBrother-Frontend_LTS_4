@@ -93,7 +93,7 @@ export default function AuctionPage() {
   if (loading) return (
     <AppLayout>
       <div className="flex justify-center items-center py-20">
-        <div className="w-12 h-12 border-4 border-indigo-100 border-t-indigo-500 rounded-full animate-spin" />
+        <div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" />
       </div>
     </AppLayout>
   );
@@ -224,11 +224,11 @@ export default function AuctionPage() {
                   You can re-auction with new settings, or take the listing down.
                 </p>
                 <div className="flex gap-3">
-                  <button className="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-indigo-700"
+                  <button className="btn-glow"
                     onClick={() => setReAuctionModal(true)}>
                     ↺ Re-Auction
                   </button>
-                  <button className="inline-flex items-center gap-2 px-5 py-2.5 bg-red-50 text-red-600 font-semibold text-sm rounded-[10px] border border-red-200 cursor-pointer transition-colors hover:bg-red-100"
+                  <button className="btn-glow"
                     onClick={async () => {
                       try {
                         await auctionAPI.close(auction.id);
@@ -323,9 +323,9 @@ export default function AuctionPage() {
                   </div>
                 )}
 
-                <button className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-indigo-600 text-white font-semibold text-base rounded-[10px] border-none cursor-pointer transition-colors hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed" onClick={handleBid}
+                <button className="btn-glow w-full" onClick={handleBid}
                   disabled={bidLoading || !bidAmount}>
-                  {bidLoading ? <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin inline-block" /> :
+                  {bidLoading ? <span className="w-5 h-5 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> :
                     `Place Bid${bidAmount
                       ? ` — ₹${Number(bidAmount).toLocaleString('en-IN')}`
                       : ''} →`}
@@ -522,10 +522,10 @@ function ReAuctionModal({ auctionId, onClose, onSuccess }) {
           </div>
           {error && <div className="text-sm text-red-500">{error}</div>}
           <div className="flex gap-3 mt-1">
-            <button type="submit" className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-indigo-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading}>
-              {loading ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin inline-block" /> : 'Start Re-Auction →'}
+            <button type="submit" className="btn-glow flex-1" disabled={loading}>
+              {loading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> : 'Start Re-Auction →'}
             </button>
-            <button type="button" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-transparent text-gray-500 font-semibold text-sm rounded-[10px] border border-gray-200 cursor-pointer transition-colors hover:bg-gray-100" onClick={onClose}>Cancel</button>
+            <button type="button" className="btn-glow" onClick={onClose}>Cancel</button>
           </div>
         </form>
       </div>

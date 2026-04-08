@@ -54,7 +54,7 @@ export default function DomainsDashboardPage() {
             <h1 className="text-3xl font-bold text-gray-900 mb-0">Domains Dashboard</h1>
             <p className="text-gray-600 mt-1">Manage your domain listings and purchases.</p>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:border-indigo-400 hover:bg-indigo-50" onClick={() => navigate('/domains')}>
+          <button className="btn-glow btn-glow-sm" onClick={() => navigate('/domains')}>
             <ArrowLeft size={16} /> Back to Domains
           </button>
         </div>
@@ -93,23 +93,23 @@ export default function DomainsDashboardPage() {
         </div>
 
         <div className="flex gap-2 mb-6">
-          <button className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${tab === 'listings' ? 'bg-indigo-600 text-white' : 'bg-white border border-gray-300 text-gray-700 hover:border-indigo-400 hover:bg-indigo-50'}`} onClick={() => setTab('listings')}>
+          <button className={`btn-glow btn-glow-sm ${tab === 'listings' ? 'bg-gray-900 text-white border-gray-900' : ''}`} onClick={() => setTab('listings')}>
             My Listings ({listings.length})
           </button>
-          <button className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${tab === 'purchases' ? 'bg-indigo-600 text-white' : 'bg-white border border-gray-300 text-gray-700 hover:border-indigo-400 hover:bg-indigo-50'}`} onClick={() => setTab('purchases')}>
+          <button className={`btn-glow btn-glow-sm ${tab === 'purchases' ? 'bg-gray-900 text-white border-gray-900' : ''}`} onClick={() => setTab('purchases')}>
             My Purchases ({purchases.length})
           </button>
         </div>
 
         {loading ? (
-          <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-indigo-100 border-t-indigo-500 rounded-full animate-spin" /></div>
+          <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" /></div>
         ) : tab === 'listings' ? (
           listings.length === 0 ? (
             <div className="text-center py-20">
               <div className="text-6xl mb-4">◇</div>
               <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">No listings yet</h3>
               <p className="text-gray-600 mb-6">List your first domain to start selling.</p>
-              <button className="px-5 py-2 bg-indigo-600 text-white rounded-full text-sm font-semibold transition-all duration-200 hover:bg-indigo-700 hover:shadow-lg border-none cursor-pointer" onClick={() => navigate('/domains')}>List a Domain</button>
+              <button className="btn-glow" onClick={() => navigate('/domains')}>List a Domain</button>
             </div>
           ) : (
             <div className="flex flex-col gap-3">
@@ -129,7 +129,7 @@ export default function DomainsDashboardPage() {
               <div className="text-6xl mb-4">🛒</div>
               <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">No purchases yet</h3>
               <p className="text-gray-600 mb-6">Browse domains and make your first purchase.</p>
-              <button className="px-5 py-2 bg-indigo-600 text-white rounded-full text-sm font-semibold transition-all duration-200 hover:bg-indigo-700 hover:shadow-lg border-none cursor-pointer" onClick={() => navigate('/domains')}>Browse Domains</button>
+              <button className="btn-glow" onClick={() => navigate('/domains')}>Browse Domains</button>
             </div>
           ) : (
             <div className="flex flex-col gap-3">
@@ -244,7 +244,7 @@ function DomainRow({ domain, type, onVerify }) {
 
         {/* Auction action buttons */}
         {type === 'listing' && isAuction && auctionId && (
-          <button className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border-2 border-gray-300 text-gray-700 font-semibold text-xs rounded-full cursor-pointer transition-all hover:border-indigo-400 hover:bg-indigo-50"
+          <button className="btn-glow btn-glow-sm"
             onClick={() => navigate(`/auction/${auctionId}`)}>
             <Gavel size={13} /> View Auction →
           </button>
@@ -258,7 +258,7 @@ function DomainRow({ domain, type, onVerify }) {
         )}
 
         {type === 'listing' && !domain.verified && domain.domainStatus === 'AVAILABLE' && (
-          <button className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border-2 border-gray-300 text-gray-700 font-semibold text-xs rounded-full cursor-pointer transition-all hover:border-indigo-400 hover:bg-indigo-50" onClick={onVerify}>
+          <button className="btn-glow btn-glow-sm" onClick={onVerify}>
             🔍 Verify
             {isAuction && auction?.status === 'DRAFT' && ' (Starts Auction)'}
           </button>

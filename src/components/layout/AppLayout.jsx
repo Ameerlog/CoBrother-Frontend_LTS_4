@@ -140,7 +140,7 @@ export default function AppLayout({ children }) {
               key={l.to}
               to={l.to}
               className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-[10px] text-sm font-medium text-gray-600 no-underline transition-all duration-200 hover:text-gray-900 hover:bg-gray-100 ${
-                location.pathname.startsWith(l.to) ? 'text-indigo-600 bg-[#eef2ff]' : ''
+                location.pathname.startsWith(l.to) ? 'text-gray-900 bg-gray-100' : ''
               }`}
               onClick={() => setMobileOpen(false)}
             >
@@ -156,11 +156,11 @@ export default function AppLayout({ children }) {
 
         <div className="relative" ref={bellRef}>
             <button 
-              className="relative bg-transparent border border-gray-200 cursor-pointer text-lg p-1.5 rounded-lg text-gray-600 transition-all duration-150 leading-none hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200"
+              className="relative bg-white border border-gray-200 cursor-pointer p-2 rounded-lg text-gray-600 transition-all duration-150 leading-none hover:bg-gray-100 hover:text-gray-900 hover:border-gray-300 flex items-center justify-center"
               onClick={handleBellOpen} 
               title="Notifications"
             >
-              <img src={NotificationIcon} alt="Notifications" style={{width: '20px', height: '20px'}} />
+              <img src={NotificationIcon} alt="Notifications" className="w-4 h-5 object-contain flex-shrink-0" />
               {unreadCount > 0 && (
                 <span className="absolute top-0 right-0 bg-[#c86e6e] text-white text-[0.6rem] font-bold min-w-[16px] h-4 rounded-lg flex items-center justify-center px-[3px] pointer-events-none">{unreadCount > 99 ? '99+' : unreadCount}</span>
               )}
@@ -172,7 +172,7 @@ export default function AppLayout({ children }) {
                   <span>Notifications</span>
                   {unreadCount > 0 && (
                     <button 
-                      className="bg-transparent border-none text-indigo-600 text-xs cursor-pointer p-0 hover:underline"
+                      className="bg-transparent border-none text-gray-700 text-xs cursor-pointer p-0 hover:underline"
                       onClick={handleMarkAllRead}
                     >
                       Mark all read
@@ -190,7 +190,7 @@ export default function AppLayout({ children }) {
                           !n.read ? 'bg-[#f8faff]' : ''
                         }`}
                         onClick={() => handleNotificationClick(n)}>
-                        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm bg-indigo-50 flex-shrink-0">
+                        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm bg-gray-100 flex-shrink-0">
                           {TYPE_ICONS[n.type] || '🔔'}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -198,7 +198,7 @@ export default function AppLayout({ children }) {
                           <div className="text-[0.77rem] text-gray-500 leading-snug whitespace-nowrap overflow-hidden text-ellipsis">{n.message}</div>
                           <div className="text-[0.7rem] text-gray-400 mt-1">{timeAgo(n.createdAt)}</div>
                         </div>
-                        {!n.read && <div className="w-[7px] h-[7px] rounded-full bg-indigo-600 flex-shrink-0 mt-1.5" />}
+                        {!n.read && <div className="w-[7px] h-[7px] rounded-full bg-gray-600 flex-shrink-0 mt-1.5" />}
                       </div>
                     ))
                   )}
@@ -208,7 +208,7 @@ export default function AppLayout({ children }) {
                   <Link 
                     to="/notifications" 
                     onClick={() => setBellOpen(false)}
-                    className="text-[0.78rem] text-indigo-600 no-underline hover:underline"
+                    className="text-[0.78rem] text-gray-700 no-underline hover:underline"
                   >
                     View all notifications →
                   </Link>
@@ -218,7 +218,7 @@ export default function AppLayout({ children }) {
           </div>
           
           <div className="flex items-center gap-2.5">
-            <div className="w-[34px] h-[34px] bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center font-semibold text-sm">
+            <div className="w-[34px] h-[34px] bg-gray-100 text-gray-700 rounded-full flex items-center justify-center font-semibold text-sm">
               {user?.firstname?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || '?'}
             </div>
             <span className="text-sm font-medium text-gray-700 max-md:hidden">{user?.firstname || user?.email?.split('@')[0]}</span>

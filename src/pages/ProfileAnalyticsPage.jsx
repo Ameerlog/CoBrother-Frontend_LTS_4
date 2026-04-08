@@ -70,11 +70,11 @@ export default function ProfileAnalyticsPage() {
             <h1 className="font-display text-4xl font-bold text-gold m-0">Profile Analytics</h1>
             <p className="text-gray-600 mt-1">See who's viewing your community profile.</p>
           </div>
-          <button className="px-4 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:border-purple hover:bg-purple-50" onClick={() => navigate('/community')}>← Back</button>
+          <button className="btn-glow btn-glow-sm" onClick={() => navigate('/community')}>← Back</button>
         </div>
 
         {loading ? (
-          <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" /></div>
+          <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" /></div>
         ) : error ? (
           <div className="p-4 bg-red-100 border border-red-200 rounded-lg text-sm text-red-600">{error}</div>
         ) : !analytics ? null : (

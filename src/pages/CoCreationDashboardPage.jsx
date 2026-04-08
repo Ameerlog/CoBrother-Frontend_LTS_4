@@ -53,8 +53,8 @@ export default function CoCreationDashboardPage() {
             <h1 className="font-display text-3xl font-bold text-gray-900 m-0">CoCreation Dashboard</h1>
             <p className="text-gray-600 mt-1">Manage your software listings and purchases.</p>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:border-indigo-400 hover:bg-indigo-50" onClick={() => navigate('/cocreation')}>
-            <ArrowLeft size={16} /> Back to CoCreation
+          <button className="btn-glow btn-glow-sm" onClick={() => navigate('/cocreation')}>
+            <ArrowLeft size={16} /> Back to Technology
           </button>
         </div>
 
@@ -75,11 +75,11 @@ export default function CoCreationDashboardPage() {
 
         {/* Tabs */}
         <div className="flex gap-2 mb-6">
-          <button className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 ${tab === 'listings' ? 'bg-indigo-600 text-white' : 'bg-white border border-gray-300 text-gray-700 hover:border-indigo-400 hover:bg-indigo-50'}`}
+          <button className={`btn-glow btn-glow-sm ${tab === 'listings' ? 'bg-gray-900 text-white border-gray-900' : ''}`}
             onClick={() => setTab('listings')}>
             My Listings ({listings.length})
           </button>
-          <button className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 relative ${tab === 'purchases' ? 'bg-indigo-600 text-white' : 'bg-white border border-gray-300 text-gray-700 hover:border-indigo-400 hover:bg-indigo-50'}`}
+          <button className={`btn-glow btn-glow-sm relative ${tab === 'purchases' ? 'bg-gray-900 text-white border-gray-900' : ''}`}
             onClick={() => setTab('purchases')}>
             My Purchases ({completedPurchases.length})
             {pendingConfirm > 0 && (
@@ -91,13 +91,13 @@ export default function CoCreationDashboardPage() {
         </div>
 
         {loading ? (
-          <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-indigo-100 border-t-indigo-500 rounded-full animate-spin" /></div>
+          <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" /></div>
         ) : tab === 'listings' ? (
           listings.length === 0 ? (
             <div className="text-center py-20">
               <div className="text-6xl mb-4">⟁</div>
               <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">No listings yet</h3>
-              <button className="px-5 py-2 bg-indigo-600 text-white rounded-full text-sm font-semibold transition-all duration-200 hover:bg-indigo-700 hover:shadow-lg border-none cursor-pointer" onClick={() => navigate('/cocreation')}>
+              <button className="btn-glow" onClick={() => navigate('/cocreation')}>
                 List Software
               </button>
             </div>
@@ -117,7 +117,7 @@ export default function CoCreationDashboardPage() {
             <div className="text-center py-20">
               <div className="text-6xl mb-4">🛒</div>
               <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">No purchases yet</h3>
-              <button className="px-5 py-2 bg-indigo-600 text-white rounded-full text-sm font-semibold transition-all duration-200 hover:bg-indigo-700 hover:shadow-lg border-none cursor-pointer" onClick={() => navigate('/cocreation')}>
+              <button className="btn-glow" onClick={() => navigate('/cocreation')}>
                 Browse Software
               </button>
             </div>
@@ -159,7 +159,7 @@ export default function CoCreationDashboardPage() {
                 {githubModal.link}
               </a>
             </div>
-            <button className="w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-indigo-600 text-white font-semibold text-sm rounded-[10px] border-none cursor-pointer transition-colors hover:bg-indigo-700" onClick={() => setGithubModal(null)}>
+            <button className="btn-glow w-full" onClick={() => setGithubModal(null)}>
               Done
             </button>
           </div>
@@ -314,10 +314,10 @@ function PurchaseRow({ purchase, onConfirm, confirming }) {
           <div className="flex gap-3 flex-wrap">
             {isPending && (
               <button
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 text-white font-semibold text-xs rounded-lg border-none cursor-pointer transition-colors hover:bg-indigo-700 disabled:opacity-50"
+                className="btn-glow btn-glow-sm"
                 onClick={onConfirm}
                 disabled={confirming}>
-                {confirming ? <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin inline-block" /> : '✓ Mark as Complete'}
+                {confirming ? <span className="w-3.5 h-3.5 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> : '✓ Mark as Complete'}
               </button>
             )}
             {isConfirmed && (

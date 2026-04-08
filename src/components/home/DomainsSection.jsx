@@ -40,7 +40,7 @@ export default function DomainsSection() {
             {t('premiumDomains')}
           </h3>
           <div className="flex items-center justify-center py-20">
-            <div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" />
+            <div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" />
           </div>
         </div>
       </section>
@@ -134,7 +134,7 @@ export default function DomainsSection() {
 
                 <div className="border-t border-gray-100 pt-3 flex items-center justify-between">
                   <span className="text-xs text-gray-500">{domain.domainExtension}</span>
-                  <button className="px-3 py-1.5 bg-white border-2 border-indigo-400 text-indigo-600 rounded-lg text-xs font-semibold transition-all duration-200 hover:bg-indigo-50">
+                  <button className="btn-glow btn-glow-sm">
                     View Details
                   </button>
                 </div>

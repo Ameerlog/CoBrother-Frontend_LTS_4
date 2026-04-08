@@ -98,7 +98,7 @@ export default function CoVentureModal({ venture, onClose }) {
               <strong>{b.brandName}</strong> is under review.
               We'll notify you once a decision is made.
             </p>
-            <button className="px-6 py-2.5 bg-purple border border-purple text-white rounded-[10px] font-semibold text-sm cursor-pointer transition-all duration-200 hover:bg-purple-dark" onClick={onClose}>Done</button>
+            <button className="btn-glow" onClick={onClose}>Done</button>
           </div>
         )}
 
@@ -178,8 +178,8 @@ export default function CoVentureModal({ venture, onClose }) {
 
               {error && <div className="px-4 py-3 bg-red-500/10 border border-red-500/30 rounded-[10px] text-red-400 text-sm">{error}</div>}
 
-              <button type="submit" className="w-full px-6 py-2.5 bg-purple border border-purple text-white rounded-[10px] font-semibold text-sm cursor-pointer transition-all duration-200 hover:bg-purple-dark flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading}>
-                {loading ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : 'Submit Application →'}
+              <button type="submit" className="btn-glow w-full" disabled={loading}>
+                {loading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin" /> : 'Submit Application →'}
               </button>
             </form>
           </>
@@ -226,7 +226,7 @@ function AlreadyApplied({ venture, status, typeLabel, onClose }) {
         You have already applied to this venture. Each venture allows only one application per user.
       </p>
 
-      <button className="w-full px-6 py-2.5 bg-purple border border-purple text-white rounded-[10px] font-semibold text-sm cursor-pointer transition-all duration-200 hover:bg-purple-dark" onClick={onClose}>
+      <button className="btn-glow w-full" onClick={onClose}>
         Close
       </button>
     </div>

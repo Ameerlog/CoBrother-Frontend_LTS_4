@@ -93,7 +93,7 @@ export default function VentureAnalyticsPage() {
             <h1 className="font-display text-4xl font-bold text-gold m-0">Venture Analytics</h1>
             <p className="text-gray-600 mt-1 font-medium">Track performance and applicant insights for your ventures.</p>
           </div>
-          <button className="px-4 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:border-purple hover:bg-purple-50" onClick={() => navigate('/ventures')}>← Back</button>
+          <button className="btn-glow btn-glow-sm" onClick={() => navigate('/ventures')}>← Back</button>
         </div>
 
         {/* Venture selector */}
@@ -103,10 +103,10 @@ export default function VentureAnalyticsPage() {
               <button
                 key={v.id}
                 onClick={() => setSelected(v.id)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all duration-200 ${
+                className={`btn-glow btn-glow-sm ${
                   selected === v.id
-                    ? 'bg-purple-600 text-white border-2 border-purple-600'
-                    : 'bg-white text-purple-600 border-2 border-purple-400 hover:bg-purple-50'
+                    ? 'bg-gray-900 text-white border-gray-900'
+                    : ''
                 }`}
               >
                 {v.brandDetails?.brandName || `Venture #${v.id}`}
@@ -116,7 +116,7 @@ export default function VentureAnalyticsPage() {
         )}
 
         {fetching || loading ? (
-          <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" /></div>
+          <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" /></div>
         ) : error ? (
           <div className="p-4 bg-red-100 border border-red-200 rounded-lg text-sm text-red-600">{error}</div>
         ) : !analytics ? null : (
@@ -225,7 +225,7 @@ export default function VentureAnalyticsPage() {
             <div className="text-6xl mb-4">📊</div>
             <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">No ventures listed yet</h3>
             <p className="text-gray-600 mb-6">List a venture to start tracking analytics.</p>
-            <button className="px-5 py-2 bg-white border-2 border-purple-400 text-purple-600 rounded-full text-sm font-semibold transition-all duration-200 hover:bg-purple-50" onClick={() => navigate('/ventures/new')}>List a Venture</button>
+            <button className="btn-glow" onClick={() => navigate('/ventures/new')}>List a Venture</button>
           </div>
         )}
       </div>

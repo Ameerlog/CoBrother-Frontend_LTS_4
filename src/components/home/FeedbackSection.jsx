@@ -53,13 +53,13 @@ export default function FeedbackSection() {
               !feedbackType ? (
                 <>
                   <button
-                    className="flex items-center gap-2 px-5 py-2.5 bg-white border border-gray-300 rounded-full text-sm font-medium text-gray-700 cursor-pointer transition-all duration-200 hover:border-purple hover:bg-purple-50 hover:text-purple"
+                    className="btn-glow btn-glow-sm flex items-center gap-2"
                     onClick={() => handleFeedbackTypeClick('like')}
                   >
                     {t('feedbackYes')} <ThumbsUp size={15} />
                   </button>
                   <button
-                    className="flex items-center gap-2 px-5 py-2.5 bg-white border border-gray-300 rounded-full text-sm font-medium text-gray-700 cursor-pointer transition-all duration-200 hover:border-purple hover:bg-purple-50 hover:text-purple"
+                    className="btn-glow btn-glow-sm flex items-center gap-2"
                     onClick={() => handleFeedbackTypeClick('dislike')}
                   >
                     {t('feedbackNo')} <ThumbsDown size={15} />
@@ -76,7 +76,7 @@ export default function FeedbackSection() {
         {feedbackType && !feedbackSubmitted && (
           <div className="mt-4">
             <textarea
-              className="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 placeholder:text-gray-400 outline-none transition-all duration-200 focus:border-purple focus:shadow-[0_0_0_3px_rgba(147,51,234,0.1)] resize-none"
+              className="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 placeholder:text-gray-400 outline-none transition-all duration-200 focus:border-gray-400 focus:shadow-[0_0_0_3px_rgba(0,0,0,0.06)] resize-none"
               placeholder={t('feedbackPlaceholder')}
               rows="2"
               value={feedbackMessage}
@@ -84,7 +84,7 @@ export default function FeedbackSection() {
             />
             <div className="flex gap-3 mt-3">
               <button
-                className="px-5 py-2.5 bg-purple text-white rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-purple-dark disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn-glow btn-glow-sm"
                 onClick={handleFeedbackSubmit}
                 disabled={feedbackSubmitting}
               >

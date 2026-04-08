@@ -57,7 +57,7 @@ export default function OAuthCallbackPage() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-50 to-indigo-50 text-purple-600 gap-6">
-      <div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin" />
+      <div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" />
       <p className="text-gray-500 font-body">Completing sign-in…</p>
     </div>
   );
