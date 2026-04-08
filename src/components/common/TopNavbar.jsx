@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { ChevronDown, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import cobrotherProfile from '../../assets/Community-profileicon.png';
@@ -8,12 +8,11 @@ export default function TopNavbar() {
   const [languageOpen, setLanguageOpen] = useState(false);
 
   const languages = [
-    { code: 'en', name: 'English', currency: '₹' },
-    { code: 'en-GB', name: 'UK English', currency: '₹' },
-    { code: 'en-US', name: 'US English', currency: '₹' },
-    { code: 'hi', name: 'हिन्दी', currency: '₹' },
+    { code: 'en', name: 'English (IND)', currency: '₹' },
+    { code: 'hi', name: 'Hindi', currency: '₹' },
+    { code: 'en-US', name: 'English (US)', currency: '$' },
+    { code: 'ur', name: 'Urdu', currency: '₹' },
     { code: 'zh', name: '中文', currency: '$' },
-    { code: 'ur', name: 'اردو', currency: '$' },
     { code: 'fr', name: 'Français', currency: '$' },
     { code: 'pt', name: 'Português', currency: '$' }
   ];
