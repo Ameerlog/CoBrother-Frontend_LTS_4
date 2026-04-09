@@ -67,7 +67,7 @@ export default function HomeFooter() {
           {t('footerCopyright')}
         </p>
         <p className="text-gray-500 text-sm my-0.5 font-body flex items-center justify-center gap-1.5">
-          Made with<Heart size={20} fill="#9440dd" stroke="none" className="text-purple-600 inline-block align-middle" />in India.
+          Made with<Heart size={20} fill="#fca5a5" stroke="none" className="text-red-300 inline-block align-middle" />in India.
         </p>
       </div>
     </footer>

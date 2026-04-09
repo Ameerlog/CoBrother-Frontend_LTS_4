@@ -160,7 +160,7 @@ export default function AppLayout({ children }) {
               onClick={handleBellOpen} 
               title="Notifications"
             >
-              <img src={NotificationIcon} alt="Notifications" className="w-4 h-5 object-contain flex-shrink-0" />
+              <img src={NotificationIcon} alt="Notifications" className="w-4 h-2 object-contain flex-shrink-0" />
               {unreadCount > 0 && (
                 <span className="absolute top-0 right-0 bg-[#c86e6e] text-white text-[0.6rem] font-bold min-w-[16px] h-4 rounded-lg flex items-center justify-center px-[3px] pointer-events-none">{unreadCount > 99 ? '99+' : unreadCount}</span>
               )}

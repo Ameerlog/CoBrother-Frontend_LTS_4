@@ -7,16 +7,10 @@ export default function HeroGlow() {
 
   return (
     <section className="relative py-12 px-8 border-b-0 overflow-hidden bg-transparent">
-      {/* Animated Gradient Background */}
-      <div 
-        className="absolute inset-0 z-0 pointer-events-none animate-[sunGlow_20s_ease-in-out_infinite_alternate]"
-        style={{
-          background: 'radial-gradient(ellipse 100% 90% at 45% 0%, rgba(147, 51, 234, 0.52) 0%, rgba(147, 51, 234, 0.28) 38%, rgba(147, 51, 234, 0.08) 62%, rgba(255, 255, 255, 0) 80%)'
-        }}
-      />
+
+      <div className="absolute inset-0 z-0 pointer-events-none glow-layer" />
 
       <div className="max-w-[1200px] mx-auto flex flex-col gap-12 relative z-10">
-        {/* Main Section */}
         <div className="flex flex-col gap-5">
           <h2 className="font-display text-[2.5rem] font-bold text-gray-900 m-0 leading-tight">
             {t('heroHeading')}
@@ -24,27 +18,38 @@ export default function HeroGlow() {
           <p className="text-lg text-gray-700 m-0 leading-relaxed max-w-[600px]">
             {t('heroSubtitle')}
           </p>
-          <button 
+          <button
             className="bg-[#232F3E] text-white border-none py-3.5 px-7 rounded-full text-base font-semibold cursor-pointer transition-all duration-200 self-start font-body hover:bg-white hover:text-gray-900 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
             onClick={() => navigate('/login')}
           >
             {t('exploreNowBtn')}
           </button>
         </div>
-
-        {/* Secondary Section */}
-        <div className="flex flex-col gap-4 pt-8 border-t border-purple/15">
-          <h3 className="font-display text-[1.75rem] font-bold text-gray-900 m-0 leading-snug">
-            {t('secondaryHeading')}
-          </h3>
-          <p className="text-base text-gray-600 m-0 leading-[1.7] max-w-[900px]">
-            {t('secondaryDescription')}
-          </p>
-        </div>
       </div>
 
-      {/* Mobile Responsive Styles */}
       <style>{`
+        @property --glow-hue {
+          syntax: '<number>';
+          initial-value: 270;
+          inherits: false;
+        }
+
+        @keyframes hueRotate {
+          from { --glow-hue: 270; }
+          to   { --glow-hue: 630; }
+        }
+
+        .glow-layer {
+          animation: hueRotate 24s linear infinite;
+          background: radial-gradient(
+            ellipse 100% 85% at 45% 0%,
+            hsl(var(--glow-hue), 80%, 62%, 0.30) 0%,
+            hsl(var(--glow-hue), 75%, 60%, 0.14) 40%,
+            hsl(var(--glow-hue), 70%, 58%, 0.04) 65%,
+            transparent 82%
+          );
+        }
+
         @media (max-width: 768px) {
           section {
             padding: 1.25rem 1rem;
@@ -52,7 +57,7 @@ export default function HeroGlow() {
           .gap-12 {
             gap: 1.25rem;
           }
-          .text-\[2\.5rem\] {
+          .text-\\[2\\.5rem\\] {
             font-size: 22px;
             line-height: 1.3;
             margin-bottom: 0.5rem;
@@ -69,21 +74,12 @@ export default function HeroGlow() {
             font-size: 16px;
             margin-top: 0.5rem;
           }
-          .pt-8 {
-            padding-top: 1rem;
-          }
-          .text-\[1\.75rem\] {
-            font-size: 1.125rem;
-            line-height: 1.4;
-          }
-          .text-base {
-            font-size: 0.875rem;
-            line-height: 1.6;
-          }
         }
-        @keyframes sunGlow {
-          0%   { filter: hue-rotate(0deg); }
-          100% { filter: hue-rotate(90deg); }
+
+        @media (prefers-reduced-motion: reduce) {
+          .glow-layer {
+            animation: none;
+          }
         }
       `}</style>
     </section>
