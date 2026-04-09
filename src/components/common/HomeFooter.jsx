@@ -45,10 +45,10 @@ export default function HomeFooter() {
   const { t } = useTranslation();
 
   return (
-    <footer className="bg-white border-t border-gray-200 py-8 mt-auto">
-      <div className="max-w-[1200px] mx-auto flex flex-col items-center gap-5 text-center px-4">
+    <footer className="bg-white border-t border-gray-200 py-6 md:py-8 mt-auto">
+      <div className="max-w-[1200px] mx-auto flex flex-col items-center gap-4 md:gap-5 text-center px-4 sm:px-6 lg:px-8">
         {/* Social Icons */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 md:gap-4 flex-wrap justify-center">
           {socials.map(({ href, label, Icon }) => (
             <a
               key={label}
@@ -56,17 +56,17 @@ export default function HomeFooter() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="w-5 h-5 text-gray-500 transition-all duration-200 hover:text-gray-900 hover:scale-110"
+              className="w-5 h-5 md:w-5 md:h-5 text-gray-500 transition-all duration-200 hover:text-gray-900 hover:scale-110"
             >
               <Icon />
             </a>
           ))}
         </div>
 
-        <p className="text-gray-500 text-sm my-0.5 font-body">
+        <p className="text-gray-500 text-xs sm:text-sm my-0.5 font-body px-2">
           {t('footerCopyright')}
         </p>
-        <p className="text-gray-500 text-sm my-0.5 font-body flex items-center justify-center gap-1.5">
+        <p className="text-gray-500 text-xs sm:text-sm my-0.5 font-body flex items-center justify-center gap-1.5 px-2">
           Made with<Heart size={20} fill="#fca5a5" stroke="none" className="text-red-300 inline-block align-middle" />in India.
         </p>
       </div>

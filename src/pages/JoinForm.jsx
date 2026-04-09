@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { joinUsAPI } from '../api/services';
 import TopNavbar from '../components/common/TopNavbar';
@@ -111,7 +111,7 @@ const JoinForm = () => {
     },
     {
       q: "When do I get paid?",
-      a: "Commission clears when the integration goes live — post setup and dashboard handover."
+      a: "Commission clears when the integration goes live - post setup and dashboard handover."
     },
     {
       q: "How will I receive leads?",
@@ -119,7 +119,7 @@ const JoinForm = () => {
     },
     {
       q: "Is there a joining fee?",
-      a: "No joining fee. No hidden charges. You only earn — we take nothing upfront."
+      a: "No joining fee. No hidden charges. You only earn - we take nothing upfront."
     }
   ];
 
@@ -142,47 +142,47 @@ const JoinForm = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="py-16 px-4">
+      <section className="py-10 sm:py-14 md:py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 border border-green-300 rounded-full text-sm font-semibold text-green-700 mb-6">
+          <div className="inline-flex items-center gap-2 px-3.5 py-2 bg-green-100 border border-green-300 rounded-full text-xs sm:text-sm font-semibold text-green-700 mb-5 sm:mb-6">
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
             Now open · Up to 60% commission
           </div>
-          <h1 className="font-display text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-4 sm:mb-6">
             Join the <span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">CoBrother Elite</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 sm:mb-10 md:mb-12 max-w-3xl mx-auto leading-relaxed">
             Small businesses in India are buying <strong className="text-gray-900">AI and SaaS</strong>, but can't install it. 
-            We provide the software — <strong className="text-gray-900">you provide the deployment</strong> and earn up to 60%.
+            We provide the software - <strong className="text-gray-900">you provide the deployment</strong> and earn up to 60%.
           </p>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto">
-            <div className="p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
-              <p className="text-4xl font-bold font-display text-purple-600 mb-2">60%</p>
-              <p className="text-sm text-gray-600 font-semibold">Commission</p>
+          <div className="grid grid-cols-3 gap-3 sm:gap-6 max-w-[560px] sm:max-w-2xl mx-auto">
+            <div className="p-3.5 sm:p-6 bg-white rounded-2xl shadow-lg border border-gray-200 flex flex-col items-center justify-center text-center min-h-[96px] sm:min-h-[120px]">
+              <p className="text-2xl sm:text-4xl font-bold font-display text-purple-600 leading-none tabular-nums mb-1.5 sm:mb-2">60%</p>
+              <p className="text-[11px] sm:text-sm text-gray-600 font-semibold leading-tight">Commission</p>
             </div>
-            <div className="p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
-              <p className="text-4xl font-bold font-display text-indigo-600 mb-2">48h</p>
-              <p className="text-sm text-gray-600 font-semibold">Onboarding</p>
+            <div className="p-3.5 sm:p-6 bg-white rounded-2xl shadow-lg border border-gray-200 flex flex-col items-center justify-center text-center min-h-[96px] sm:min-h-[120px]">
+              <p className="text-2xl sm:text-4xl font-bold font-display text-indigo-600 leading-none tabular-nums mb-1.5 sm:mb-2">48h</p>
+              <p className="text-[11px] sm:text-sm text-gray-600 font-semibold leading-tight">Onboarding</p>
             </div>
-            <div className="p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
-              <p className="text-4xl font-bold font-display text-green-600 mb-2">₹0</p>
-              <p className="text-sm text-gray-600 font-semibold">Joining fee</p>
+            <div className="p-3.5 sm:p-6 bg-white rounded-2xl shadow-lg border border-gray-200 flex flex-col items-center justify-center text-center min-h-[96px] sm:min-h-[120px]">
+              <p className="text-2xl sm:text-4xl font-bold font-display text-green-600 leading-none tabular-nums mb-1.5 sm:mb-2">{'\u20B90'}</p>
+              <p className="text-[11px] sm:text-sm text-gray-600 font-semibold leading-tight">Joining fee</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Main Content */}
-      <section className="py-16 px-4">
+      <section className="py-10 sm:py-14 md:py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             {/* Left Column - Info */}
-            <div className="lg:col-span-2 space-y-8">
+            <div className="lg:col-span-2 space-y-6 sm:space-y-8">
               {/* Workflow */}
-              <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
-                <h3 className="flex items-center gap-3 text-2xl font-bold text-gray-900 mb-6">
+              <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-5 sm:p-7 lg:p-8">
+                <h3 className="flex items-center gap-3 text-xl sm:text-2xl font-bold text-gray-900 mb-5 sm:mb-6">
                   <Workflow size={20} className="text-purple-600" />
                   The CoBrother Workflow
                 </h3>
@@ -207,8 +207,8 @@ const JoinForm = () => {
               </div>
 
               {/* Details Cards */}
-              <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
-                <h3 className="flex items-center gap-3 text-2xl font-bold text-gray-900 mb-6">
+              <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-5 sm:p-7 lg:p-8">
+                <h3 className="flex items-center gap-3 text-xl sm:text-2xl font-bold text-gray-900 mb-5 sm:mb-6">
                   <Sparkles size={20} className="text-purple-600" />
                   Everything you should know
                 </h3>
@@ -237,8 +237,8 @@ const JoinForm = () => {
               </div>
 
               {/* FAQ */}
-              <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
-                <h3 className="flex items-center gap-3 text-2xl font-bold text-gray-900 mb-6">
+              <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-5 sm:p-7 lg:p-8">
+                <h3 className="flex items-center gap-3 text-xl sm:text-2xl font-bold text-gray-900 mb-5 sm:mb-6">
                   <MessageCircle size={20} className="text-purple-600" />
                   Frequently Asked Questions
                 </h3>
@@ -251,11 +251,11 @@ const JoinForm = () => {
             </div>
 
             {/* Right Column - Form */}
-            <div className="lg:col-span-1 sticky top-24 self-start">
-              <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-8">
+            <div className="lg:col-span-1 lg:sticky lg:top-24 self-start">
+              <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-5 sm:p-7 lg:p-8">
                 <div className="mb-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Claim your territory</h3>
-                  <p className="text-gray-600 text-sm">Fill once — we route leads to you by area & skill.</p>
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Claim your territory</h3>
+                  <p className="text-gray-600 text-sm">Fill once - we route leads to you by area & skill.</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
@@ -400,7 +400,7 @@ const JoinForm = () => {
 };
 
 const DetailCard = ({ icon: Icon, title, items }) => (
-  <div className="p-5 bg-gray-50 rounded-xl border border-gray-200 hover:border-gray-400 transition-colors">
+  <div className="card-glow-hover p-5 bg-white rounded-xl border border-gray-200 transition-colors">
     <div className="flex items-center gap-3 mb-4">
       <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
         <Icon size={18} className="text-purple-600" />
@@ -445,3 +445,4 @@ const TrustBadge = ({ icon: Icon, text }) => (
 );
 
 export default JoinForm;
+

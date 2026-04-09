@@ -41,9 +41,9 @@ export default function VenturesSection() {
 
   if (loading) {
     return (
-      <section className="bg-white py-10 px-8">
+      <section className="bg-white py-8 md:py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1200px] mx-auto">
-          <h3 className="font-display text-[1.75rem] font-bold text-gray-900 mb-6">
+          <h3 className="font-display text-[1.4rem] md:text-[1.75rem] font-bold text-gray-900 mb-5 md:mb-6">
             {t('coVentures')}
           </h3>
           <div className="flex items-center justify-center py-20">
@@ -56,9 +56,9 @@ export default function VenturesSection() {
 
   if (ventures.length === 0) {
     return (
-      <section className="bg-white py-10 px-8">
+      <section className="bg-white py-8 md:py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1200px] mx-auto">
-          <h3 className="font-display text-[1.75rem] font-bold text-gray-900 mb-6">
+          <h3 className="font-display text-[1.4rem] md:text-[1.75rem] font-bold text-gray-900 mb-5 md:mb-6">
             {t('coVentures')}
           </h3>
           <p className="text-center text-gray-500 py-12">{t('noVentures')}</p>
@@ -68,13 +68,13 @@ export default function VenturesSection() {
   }
 
   return (
-    <section className="bg-white py-10 px-8">
+    <section className="bg-white py-8 md:py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1200px] mx-auto">
-        <h3 className="font-display text-[1.75rem] font-bold text-gray-900 mb-6">
+        <h3 className="font-display text-[1.4rem] md:text-[1.75rem] font-bold text-gray-900 mb-5 md:mb-6">
           {t('coVentures')}
         </h3>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
           {ventures.slice(0, 8).map((venture) => {
             const b = venture.brandDetails || {};
             const shortDesc = `${b.description?.slice(0, 130) || ''}${b.description?.length > 130 ? '…' : ''}`;
@@ -82,7 +82,7 @@ export default function VenturesSection() {
             return (
               <div
                 key={venture.id}
-                className="card-glow-hover p-5 bg-white border border-gray-200 rounded-[14px] cursor-pointer flex flex-col transition-all duration-300"
+                className="card-glow-hover p-4 md:p-5 bg-white border border-gray-200 rounded-[14px] cursor-pointer flex flex-col transition-all duration-300"
                 onClick={() => handleCardClick(venture.id)}
               >
                 <div className="flex flex-col flex-1">

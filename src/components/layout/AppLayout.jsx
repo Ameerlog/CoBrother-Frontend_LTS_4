@@ -127,14 +127,12 @@ export default function AppLayout({ children }) {
   return (
     <div className="min-h-screen flex flex-col">
       <TopNavbar />
-      <nav className="sticky top-[45px] z-[100] flex items-center gap-8 px-8 h-16 bg-white border-b border-gray-200">
+      <nav className="sticky top-[40px] md:top-[45px] z-[100] flex items-center gap-6 md:gap-8 px-4 sm:px-6 lg:px-8 h-[60px] md:h-16 bg-white border-b border-gray-200">
         <Link to="/" className="flex items-center gap-0 no-underline">
           <img src={coBrotherLogo} alt="CoBrother" className="w-[140px] h-[42px] object-contain" />
         </Link>
 
-        <div className={`flex items-center gap-1 flex-1 max-md:hidden max-md:fixed max-md:top-16 max-md:left-0 max-md:right-0 max-md:bg-white max-md:border-b max-md:border-gray-200 max-md:flex-col max-md:p-4 max-md:gap-1 ${
-          mobileOpen ? 'max-md:flex' : 'max-md:hidden'
-        }`}>
+        <div className="hidden lg:flex items-center gap-1 flex-1">
           {visibleLinks.map((l) => (
             <Link
               key={l.to}
@@ -152,17 +150,17 @@ export default function AppLayout({ children }) {
           ))}
         </div>
 
-        <div className="ml-auto flex items-center gap-4">
+        <div className="ml-auto flex items-center gap-3 md:gap-4">
 
-        <div className="relative" ref={bellRef}>
+        <div className="relative max-lg:hidden" ref={bellRef}>
             <button 
-              className="relative bg-white border border-gray-200 cursor-pointer p-2 rounded-lg text-gray-600 transition-all duration-150 leading-none hover:bg-gray-100 hover:text-gray-900 hover:border-gray-300 flex items-center justify-center"
+              className="relative bg-white border border-gray-200 cursor-pointer p-2.5 rounded-xl text-gray-600 transition-all duration-150 leading-none hover:bg-gray-100 hover:text-gray-900 hover:border-gray-300 flex items-center justify-center"
               onClick={handleBellOpen} 
               title="Notifications"
             >
-              <img src={NotificationIcon} alt="Notifications" className="w-4 h-2 object-contain flex-shrink-0" />
+              <img src={NotificationIcon} alt="Notifications" className="w-5 h-5 object-contain flex-shrink-0" />
               {unreadCount > 0 && (
-                <span className="absolute top-0 right-0 bg-[#c86e6e] text-white text-[0.6rem] font-bold min-w-[16px] h-4 rounded-lg flex items-center justify-center px-[3px] pointer-events-none">{unreadCount > 99 ? '99+' : unreadCount}</span>
+                <span className="absolute -top-1 -right-1 bg-[#c86e6e] text-white text-[0.65rem] font-bold min-w-[18px] h-[18px] rounded-lg flex items-center justify-center px-[5px] pointer-events-none">{unreadCount > 99 ? '99+' : unreadCount}</span>
               )}
             </button>
 
@@ -221,9 +219,9 @@ export default function AppLayout({ children }) {
             <div className="w-[34px] h-[34px] bg-gray-100 text-gray-700 rounded-full flex items-center justify-center font-semibold text-sm">
               {user?.firstname?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || '?'}
             </div>
-            <span className="text-sm font-medium text-gray-700 max-md:hidden">{user?.firstname || user?.email?.split('@')[0]}</span>
+            <span className="text-sm font-medium text-gray-700 max-lg:hidden">{user?.firstname || user?.email?.split('@')[0]}</span>
             <button 
-              className="bg-transparent border border-gray-200 text-gray-600 rounded-lg p-1.5 cursor-pointer transition-all duration-200 hover:bg-red-50 hover:text-red-600 hover:border-red-200"
+              className="max-lg:hidden bg-transparent border border-gray-200 text-gray-600 rounded-lg p-1.5 cursor-pointer transition-all duration-200 hover:bg-red-50 hover:text-red-600 hover:border-red-200"
               onClick={handleLogout} 
               title="Logout"
             >
@@ -231,13 +229,73 @@ export default function AppLayout({ children }) {
             </button>
           </div>
           <button 
-            className="hidden max-md:flex bg-transparent border-none text-gray-900 text-xl cursor-pointer"
+            className="lg:hidden bg-transparent border-none text-gray-900 text-xl cursor-pointer"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             {mobileOpen ? '✕' : '☰'}
           </button>
         </div>
       </nav>
+
+      {mobileOpen && (
+        <>
+          <div
+            className="lg:hidden fixed top-[100px] inset-x-0 bottom-0 bg-black/30 z-[90]"
+            onClick={() => setMobileOpen(false)}
+          />
+          <div className="lg:hidden fixed top-[100px] inset-x-0 bg-white border-b border-gray-200 z-[110] p-4">
+            <div className="flex flex-col gap-1">
+              {visibleLinks.map((l) => (
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  className={`flex items-center gap-2 px-3.5 py-2.5 rounded-[12px] text-sm font-semibold text-gray-700 no-underline transition-all duration-200 hover:text-gray-900 hover:bg-gray-100 ${
+                    location.pathname.startsWith(l.to) ? 'text-gray-900 bg-gray-100' : ''
+                  }`}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <span className="inline-flex items-center justify-center w-5 h-5">
+                    <img src={l.icon} alt="" className="w-full h-full object-contain" />
+                  </span>
+                  {l.label}
+                </Link>
+              ))}
+
+              <Link
+                to="/notifications"
+                className="flex items-center justify-between gap-2 px-3.5 py-2.5 rounded-[12px] text-sm font-semibold text-gray-700 no-underline transition-all duration-200 hover:text-gray-900 hover:bg-gray-100"
+                onClick={() => setMobileOpen(false)}
+              >
+                <span className="flex items-center gap-2">
+                  <span className="inline-flex items-center justify-center w-5 h-5">
+                    <img src={NotificationIcon} alt="" className="w-4 h-4 object-contain" />
+                  </span>
+                  Notifications
+                </span>
+                {unreadCount > 0 && (
+                  <span className="bg-[#c86e6e] text-white text-[0.7rem] font-bold min-w-[18px] h-[18px] rounded-lg flex items-center justify-center px-[5px]">
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </span>
+                )}
+              </Link>
+
+              <button
+                type="button"
+                className="flex items-center gap-2 px-3.5 py-2.5 rounded-[12px] text-sm font-semibold text-red-600 bg-white border border-red-200 cursor-pointer transition-all duration-200 hover:bg-red-50"
+                onClick={async () => {
+                  setMobileOpen(false);
+                  await handleLogout();
+                }}
+              >
+                <span className="inline-flex items-center justify-center w-5 h-5">
+                  <LogOut size={16} />
+                </span>
+                Logout
+              </button>
+            </div>
+          </div>
+        </>
+      )}
 
       <main className="flex-1 p-8 max-w-none m-0 w-full bg-gray-50 max-md:p-4">
         {children}

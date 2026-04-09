@@ -50,10 +50,8 @@ export default function Home() {
   const navRef = useRef(null);
 
   useEffect(() => {
-    // Set body class for Home page styling
     document.body.classList.add('home-page-body');
-    
-    // Handle scroll to show/hide navbar glow
+
     const handleScroll = () => {
       if (navRef.current) {
         if (window.scrollY > 0) {
@@ -65,9 +63,8 @@ export default function Home() {
     };
 
     window.addEventListener('scroll', handleScroll);
-    
+
     return () => {
-      // Clean up body class when component unmounts
       document.body.classList.remove('home-page-body');
       window.removeEventListener('scroll', handleScroll);
     };
@@ -85,18 +82,17 @@ export default function Home() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setSearchError(''); // Clear previous errors
+    setSearchError('');
 
     try {
       const url = searchDomainRedirect(searchQuery, '.com');
       window.open(url, '_blank');
-      setSearchQuery(''); // Clear search after successful redirect
+      setSearchQuery('');
     } catch (error) {
       setSearchError(error.message);
     }
   };
 
-  
   const features = [
     {
       icon: <img src={coBrandingIcon} alt="Domain" className="w-10 h-10 object-contain" />,
@@ -132,29 +128,26 @@ export default function Home() {
 
   return (
     <div className="bg-white">
-      <TopNavbar />
+      <TopNavbar homeMobileMenu />
       <HomeNavbar
         navRef={navRef}
         openDropdown={openDropdown}
         setOpenDropdown={setOpenDropdown}
         navigate={navigate}
       />
-      
+
       <HeroGlow />
       <DomainSearchBar />
       <ExploreSection />
 
-      {/* Domain Search Bar */}
-
-      {/* Feature Cards */}
-      <section className="py-20 px-8 bg-gray-50">
+      <section className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-[1200px] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
             {features.map((feature, index) => (
-              <div key={index} className="card-glow-hover p-8 bg-white border border-gray-200 rounded-[20px] shadow-sm flex flex-col items-center text-center">
-                <div className="w-16 h-16 flex items-center justify-center text-purple mb-5">{feature.icon}</div>
-                <h3 className="font-display text-xl font-bold text-gray-900 mb-3">{t(feature.titleKey)}</h3>
-                <p className="text-sm text-gray-600 mb-6 flex-1 leading-relaxed">{t(feature.descKey)}</p>
+              <div key={index} className="card-glow-hover p-5 md:p-8 bg-white border border-gray-200 rounded-[16px] md:rounded-[20px] shadow-sm flex flex-col items-center text-center">
+                <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center text-purple mb-4 md:mb-5">{feature.icon}</div>
+                <h3 className="font-display text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3">{t(feature.titleKey)}</h3>
+                <p className="text-sm text-gray-600 mb-5 md:mb-6 flex-1 leading-relaxed">{t(feature.descKey)}</p>
                 <GlowButton onClick={() => navigate(feature.link)}>
                   {t('exploreBtn')} →
                 </GlowButton>

@@ -34,9 +34,9 @@ export default function DomainsSection() {
 
   if (loading) {
     return (
-      <section className="bg-white py-10 px-8">
+      <section className="bg-white py-8 md:py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1200px] mx-auto">
-          <h3 className="font-display text-[1.75rem] font-bold text-gray-900 mb-6">
+          <h3 className="font-display text-[1.4rem] md:text-[1.75rem] font-bold text-gray-900 mb-5 md:mb-6">
             {t('premiumDomains')}
           </h3>
           <div className="flex items-center justify-center py-20">
@@ -49,9 +49,9 @@ export default function DomainsSection() {
 
   if (domains.length === 0) {
     return (
-      <section className="bg-white py-10 px-8">
+      <section className="bg-white py-8 md:py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1200px] mx-auto">
-          <h3 className="font-display text-[1.75rem] font-bold text-gray-900 mb-6">
+          <h3 className="font-display text-[1.4rem] md:text-[1.75rem] font-bold text-gray-900 mb-5 md:mb-6">
             {t('premiumDomains')}
           </h3>
           <p className="text-center text-gray-500 py-12">{t('noDomains')}</p>
@@ -61,13 +61,12 @@ export default function DomainsSection() {
   }
 
   return (
-    <section className="bg-white py-10 px-8">
+    <section className="bg-white py-8 md:py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1200px] mx-auto">
-        <h3 className="font-display text-[1.75rem] font-bold text-gray-900 mb-6">
+        <h3 className="font-display text-[1.4rem] md:text-[1.75rem] font-bold text-gray-900 mb-5 md:mb-6">
           {t('premiumDomains')}
         </h3>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
           {domains.slice(0, 8).map((domain) => {
             const isAuction = domain.saleType === 'AUCTION';
             const domainInitials = (domain.domainName || '')
@@ -78,7 +77,7 @@ export default function DomainsSection() {
             return (
               <div
                 key={domain.id}
-                className="card-glow-hover p-5 bg-white border border-gray-200 rounded-[14px] flex flex-col gap-3 overflow-hidden cursor-pointer transition-all duration-300"
+                className="card-glow-hover p-4 md:p-5 bg-white border border-gray-200 rounded-[14px] flex flex-col gap-3 overflow-hidden cursor-pointer transition-all duration-300"
                 onClick={() => handleCardClick(domain.id)}
               >
                 <div className="flex-1 min-w-0">
@@ -132,9 +131,9 @@ export default function DomainsSection() {
                   </div>
                 </div>
 
-                <div className="border-t border-gray-100 pt-3 flex items-center justify-between">
+                <div className="border-t border-gray-100 pt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
                   <span className="text-xs text-gray-500">{domain.domainExtension}</span>
-                  <button className="btn-glow btn-glow-sm">
+                  <button className="btn-glow btn-glow-sm w-full sm:w-auto">
                     View Details
                   </button>
                 </div>

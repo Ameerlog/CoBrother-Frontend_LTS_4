@@ -40,9 +40,9 @@ export default function TechnologySection() {
 
   if (loading) {
     return (
-      <section className="bg-white py-10 px-8">
+      <section className="bg-white py-8 md:py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1200px] mx-auto">
-          <h3 className="font-display text-[1.75rem] font-bold text-gray-900 mb-6">
+          <h3 className="font-display text-[1.4rem] md:text-[1.75rem] font-bold text-gray-900 mb-5 md:mb-6">
             {t('technologySoftware')}
           </h3>
           <div className="flex items-center justify-center py-20">
@@ -55,9 +55,9 @@ export default function TechnologySection() {
 
   if (softwares.length === 0) {
     return (
-      <section className="bg-white py-10 px-8">
+      <section className="bg-white py-8 md:py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1200px] mx-auto">
-          <h3 className="font-display text-[1.75rem] font-bold text-gray-900 mb-6">
+          <h3 className="font-display text-[1.4rem] md:text-[1.75rem] font-bold text-gray-900 mb-5 md:mb-6">
             {t('technologySoftware')}
           </h3>
           <p className="text-center text-gray-500 py-12">{t('noSoftware')}</p>
@@ -67,20 +67,20 @@ export default function TechnologySection() {
   }
 
   return (
-    <section className="bg-white py-10 px-8">
+    <section className="bg-white py-8 md:py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1200px] mx-auto">
-        <h3 className="font-display text-[1.75rem] font-bold text-gray-900 mb-6">
+        <h3 className="font-display text-[1.4rem] md:text-[1.75rem] font-bold text-gray-900 mb-5 md:mb-6">
           {t('technologySoftware')}
         </h3>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
           {softwares.slice(0, 8).map((item) => {
             const s = STATUS_COLORS[item.softwareStatus] || STATUS_COLORS.AVAILABLE;
 
             return (
               <div
                 key={item.id}
-                className="card-glow-hover p-5 bg-white border border-gray-200 rounded-[14px] flex flex-col gap-2 overflow-hidden cursor-pointer transition-all duration-300"
+                className="card-glow-hover p-4 md:p-5 bg-white border border-gray-200 rounded-[14px] flex flex-col gap-2 overflow-hidden cursor-pointer transition-all duration-300"
                 onClick={() => handleCardClick(item.id)}
               >
                 <div className="flex items-start justify-between gap-2 mb-1">
@@ -136,11 +136,11 @@ export default function TechnologySection() {
                   </div>
                 </div>
 
-                <div className="border-t border-gray-100 pt-3 flex items-center justify-between">
+                <div className="border-t border-gray-100 pt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
                   <div className="flex items-center gap-3 text-sm text-gray-600">
                     <span title="Views">👁 {item.views || 0}</span>
                   </div>
-                  <button className="btn-glow btn-glow-sm">
+                    <button className="btn-glow btn-glow-sm w-full sm:w-auto">
                     View Details
                   </button>
                 </div>
