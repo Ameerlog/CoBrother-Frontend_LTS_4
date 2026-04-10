@@ -134,19 +134,19 @@ export default function AppLayout({ children }) {
 
         <div className="hidden lg:flex items-center gap-1 flex-1">
           {visibleLinks.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-[10px] text-sm font-medium text-gray-600 no-underline transition-all duration-200 hover:text-gray-900 hover:bg-gray-100 ${
-                location.pathname.startsWith(l.to) ? 'text-gray-900 bg-gray-100' : ''
-              }`}
-              onClick={() => setMobileOpen(false)}
-            >
-              <span className="inline-flex items-center justify-center w-5 h-5">
-                <img src={l.icon} alt="" className="w-full h-full object-contain" />
-              </span>
-              {l.label}
-            </Link>
+              <Link
+                key={l.to}
+                to={l.to}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-white text-sm font-semibold text-gray-800 no-underline transition-all duration-200 hover:text-gray-900 hover:border-gray-300 hover:shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.45),18px_0_28px_-8px_rgba(147,51,234,0.40),0_0_18px_-4px_rgba(120,80,220,0.24)] active:translate-y-[1px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300/60 ${
+                  location.pathname.startsWith(l.to) ? 'text-gray-900 bg-white border-gray-300 shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.45),18px_0_28px_-8px_rgba(147,51,234,0.40),0_0_18px_-4px_rgba(120,80,220,0.24)]' : ''
+                }`}
+                onClick={() => setMobileOpen(false)}
+              >
+                <span className="inline-flex items-center justify-center w-5 h-5">
+                  <img src={l.icon} alt="" className="w-full h-full object-contain" />
+                </span>
+                <span>{l.label}</span>
+              </Link>
           ))}
         </div>
 
@@ -249,15 +249,15 @@ export default function AppLayout({ children }) {
                 <Link
                   key={l.to}
                   to={l.to}
-                  className={`flex items-center gap-2 px-3.5 py-2.5 rounded-[12px] text-sm font-semibold text-gray-700 no-underline transition-all duration-200 hover:text-gray-900 hover:bg-gray-100 ${
-                    location.pathname.startsWith(l.to) ? 'text-gray-900 bg-gray-100' : ''
+                  className={`flex items-center gap-2 px-3.5 py-2.5 rounded-[14px] border border-gray-200 bg-white text-sm font-semibold text-gray-800 no-underline transition-all duration-200 hover:text-gray-900 hover:border-gray-300 hover:shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.40),18px_0_28px_-8px_rgba(147,51,234,0.34),0_0_18px_-4px_rgba(120,80,220,0.20)] active:translate-y-[1px] ${
+                    location.pathname.startsWith(l.to) ? 'text-gray-900 bg-white border-gray-300 shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.40),18px_0_28px_-8px_rgba(147,51,234,0.34),0_0_18px_-4px_rgba(120,80,220,0.20)]' : ''
                   }`}
                   onClick={() => setMobileOpen(false)}
                 >
                   <span className="inline-flex items-center justify-center w-5 h-5">
                     <img src={l.icon} alt="" className="w-full h-full object-contain" />
                   </span>
-                  {l.label}
+                  <span>{l.label}</span>
                 </Link>
               ))}
 

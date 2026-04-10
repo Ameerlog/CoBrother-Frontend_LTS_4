@@ -30,7 +30,7 @@ export default function TopNavbar({ homeMobileMenu = false }) {
       className="sticky top-0 w-full h-[40px] md:h-[45px] z-[1001] border-b border-purple/[0.18] font-body"
       style={{ background: 'linear-gradient(90deg, #0e0b1e 0%, #130d28 60%, #0f1225 100%)' }}
     >
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-end">
+      <div className="w-full px-4 sm:px-6 lg:px-8 h-full flex items-center justify-end">
         <div className="flex items-center gap-2 md:gap-5">
           <div className="relative">
             <button
@@ -106,7 +106,7 @@ export default function TopNavbar({ homeMobileMenu = false }) {
 
       {homeMobileMenu && mobileMenuOpen && (
         <div className="md:hidden absolute top-full inset-x-0 px-4 py-3 bg-[#130d28] border-b border-white/10">
-          <div className="max-w-[1400px] mx-auto flex flex-col gap-2">
+          <div className="w-full flex flex-col gap-2">
             <a
               href="/contact"
               className="text-white text-sm px-3 py-2 rounded hover:bg-white/10 transition-colors"

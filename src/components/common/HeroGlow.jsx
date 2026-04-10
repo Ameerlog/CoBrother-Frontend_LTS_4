@@ -43,9 +43,9 @@ export default function HeroGlow() {
           animation: hueRotate 24s linear infinite;
           background: radial-gradient(
             ellipse 100% 85% at 45% 0%,
-            hsl(var(--glow-hue), 80%, 62%, 0.30) 0%,
-            hsl(var(--glow-hue), 75%, 60%, 0.14) 40%,
-            hsl(var(--glow-hue), 70%, 58%, 0.04) 65%,
+            hsl(var(--glow-hue), 80%, 62%, 0.62) 0%,
+            hsl(var(--glow-hue), 75%, 60%, 0.32) 40%,
+            hsl(var(--glow-hue), 70%, 58%, 0.14) 65%,
             transparent 82%
           );
         }
