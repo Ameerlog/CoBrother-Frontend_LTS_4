@@ -20,7 +20,7 @@
   "exploreSoftware": "Explore Software",
   "exploreTechnology": "Explore Technologies",
   "disruptors": "Disruptors",
-  "beTheDisruptors": "Be The Disruptors",
+  "beTheDisruptors": "Be The Disruptor",
   "exploreDisruptors": "Explore Disruptors",
   "bidDisruptors": "Bid Disruptors",
   "auctions": "Auctions",
@@ -56,6 +56,8 @@
   "technologyDesc": "Access cutting-edge software and technology solutions",
   "auctionsTitle": "Auctions",
   "auctionsDesc": "Bid on premium domains and venture equity in live auctions",
+  "disruptorsTitle": "Disruptor",
+  "disruptorsDesc": "Dream big, break norms, build the future",
   "communityTitle": "Community",
   "communityDesc": "Connect with talented developers and creative professionals"
 }

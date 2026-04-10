@@ -119,10 +119,10 @@ export default function Home() {
     //   link: '/auctions'
     // },
     {
-      icon: <img src={cobrotherProfile} alt="Community" className="community-profile-icon" />,
-      titleKey: 'communityTitle',
-      descKey: 'communityDesc',
-      link: '/community'
+      icon: <img src={cobrotherProfile} alt="Disruptors" className="community-profile-icon" />,
+      titleKey: 'disruptorsTitle',
+      descKey: 'disruptorsDesc',
+      link: '/disruptors'
     }
   ];
 

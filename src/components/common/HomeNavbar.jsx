@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../context/AuthContext';
 import coBrotherLogo from '../../assets/Cobrother_logo.png';
 
 export default function HomeNavbar({
@@ -10,6 +11,7 @@ export default function HomeNavbar({
   navigate,
 }) {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const closeMobileMenu = () => {
@@ -132,7 +134,25 @@ export default function HomeNavbar({
                       setOpenDropdown(null);
                     }}
                   >
-                    {t('liveAuctions')}
+                    Domain Auction
+                  </button>
+                  <button
+                    className="block w-full px-4 py-3 border-none text-left text-sm text-gray-700 bg-transparent cursor-pointer transition-all duration-200 hover:bg-gray-50 hover:text-gray-900"
+                    onClick={() => {
+                      navigate('/venture-auction');
+                      setOpenDropdown(null);
+                    }}
+                  >
+                    Venture Auction
+                  </button>
+                  <button
+                    className="block w-full px-4 py-3 border-none text-left text-sm text-gray-700 bg-transparent cursor-pointer transition-all duration-200 hover:bg-gray-50 hover:text-gray-900"
+                    onClick={() => {
+                      navigate('/disruptors');
+                      setOpenDropdown(null);
+                    }}
+                  >
+                    Disruptor Auction
                   </button>
                 </div>
               )}
@@ -223,9 +243,21 @@ export default function HomeNavbar({
             <button className="btn-glow btn-glow-md" onClick={() => navigate('/join-form')}>
               {t('joinUs')}
             </button>
-            <button className="btn-glow btn-glow-md" onClick={() => navigate('/login')}>
-              {t('signIn')}
-            </button>
+            {!user ? (
+              <button className="btn-glow btn-glow-md" onClick={() => navigate('/login')}>
+                {t('signIn')}
+              </button>
+            ) : (
+              <button
+                className="btn-glow btn-glow-md"
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.href = '/';
+                }}
+              >
+                Logout
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -296,9 +328,22 @@ export default function HomeNavbar({
                 <button className="btn-glow btn-glow-md w-full" onClick={() => { navigate('/join-form'); closeMobileMenu(); }}>
                   {t('joinUs')}
                 </button>
-                <button className="btn-glow btn-glow-md w-full" onClick={() => { navigate('/login'); closeMobileMenu(); }}>
-                  {t('signIn')}
-                </button>
+                {!user ? (
+                  <button className="btn-glow btn-glow-md w-full" onClick={() => { navigate('/login'); closeMobileMenu(); }}>
+                    {t('signIn')}
+                  </button>
+                ) : (
+                  <button
+                    className="btn-glow btn-glow-md w-full"
+                    onClick={() => {
+                      localStorage.clear();
+                      window.location.href = '/';
+                      closeMobileMenu();
+                    }}
+                  >
+                    Logout
+                  </button>
+                )}
               </div>
             </div>
           </div>

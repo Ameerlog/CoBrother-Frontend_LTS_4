@@ -12,9 +12,31 @@ import {
 } from 'lucide-react';
 
 const SKILL_ENUM_MAP = {
-  CRM: 'CRM_SETUP',
-  'AI Bots': 'AI_SOCIAL_BOTS',
-  'SaaS Setup': 'SAAS_SETUP',
+  'Web Development': 'WEB_DEV',
+  'App Development': 'APP_DEV',
+  'Data Science & Analytics': 'DATA_SCIENCE',
+  'AI & Machine Learning': 'AI_ML',
+  'Cybersecurity': 'CYBERSECURITY',
+  'Cloud & DevOps': 'CLOUD_DEVOPS',
+  'Embedded Systems': 'EMBEDDED_SYSTEMS',
+  'VLSI Design': 'VLSI',
+  'Signal Processing': 'SIGNAL_PROCESSING',
+  'Power Systems': 'POWER_SYSTEMS',
+  'Control Systems': 'CONTROL_SYSTEMS',
+  'Renewable Energy': 'RENEWABLE_ENERGY',
+  'CAD/CAM & Manufacturing': 'CAD_CAM',
+  'Robotics & Automation': 'ROBOTICS',
+  'Automotive Engineering': 'AUTOMOTIVE',
+  'Structural Engineering': 'STRUCTURAL_ENG',
+  'Construction Management': 'CONSTRUCTION',
+  'Environmental Engineering': 'ENVIRONMENTAL',
+  'Biotechnology & Bioinformatics': 'BIOTECH',
+  'Food Technology': 'FOOD_TECH',
+  'Agricultural Technology': 'AGRI_TECH',
+  'Aerospace Engineering': 'AEROSPACE',
+  'Marine Engineering': 'MARINE',
+  'Petroleum & Chemical Engineering': 'PETROCHEM',
+  'IoT & Smart Systems': 'IOT',
 };
 
 const JoinForm = () => {
@@ -146,21 +168,21 @@ const JoinForm = () => {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-2 bg-green-100 border border-green-300 rounded-full text-xs sm:text-sm font-semibold text-green-700 mb-5 sm:mb-6">
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            Now open · Up to 60% commission
+            Be the <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent font-bold">Disruptive CoBrother</span>
           </div>
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-4 sm:mb-6">
-            Join the <span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">CoBrother Elite</span>
+            Be the <span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">Disruptive CoBrother</span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 sm:mb-10 md:mb-12 max-w-3xl mx-auto leading-relaxed">
-            Small businesses in India are buying <strong className="text-gray-900">AI and SaaS</strong>, but can't install it. 
-            We provide the software - <strong className="text-gray-900">you provide the deployment</strong> and earn up to 60%.
+            Disruptive businesses are integrating <strong className="text-gray-900">AI and Technology</strong> but struggling to implement it.
+            We provide the technology - <strong className="text-gray-900">you deliver it to the doorstep</strong> and earn up to 100%.
           </p>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-3 sm:gap-6 max-w-[560px] sm:max-w-2xl mx-auto">
+          <div className="grid grid-cols-3 gap-3 sm:gap-6 max-w-[560px] sm:max-w-2xl mx-auto mb-8 sm:mb-10 md:mb-12">
             <div className="p-3.5 sm:p-6 bg-white rounded-2xl shadow-lg border border-gray-200 flex flex-col items-center justify-center text-center min-h-[96px] sm:min-h-[120px]">
-              <p className="text-2xl sm:text-4xl font-bold font-display text-purple-600 leading-none tabular-nums mb-1.5 sm:mb-2">60%</p>
-              <p className="text-[11px] sm:text-sm text-gray-600 font-semibold leading-tight">Commission</p>
+              <p className="text-2xl sm:text-4xl font-bold font-display text-purple-600 leading-none tabular-nums mb-1.5 sm:mb-2">100%</p>
+              <p className="text-[11px] sm:text-sm text-gray-600 font-semibold leading-tight">Earnings</p>
             </div>
             <div className="p-3.5 sm:p-6 bg-white rounded-2xl shadow-lg border border-gray-200 flex flex-col items-center justify-center text-center min-h-[96px] sm:min-h-[120px]">
               <p className="text-2xl sm:text-4xl font-bold font-display text-indigo-600 leading-none tabular-nums mb-1.5 sm:mb-2">48h</p>
@@ -188,10 +210,10 @@ const JoinForm = () => {
                 </h3>
                 <div className="space-y-4">
                   {[
-                    { icon: Bell, title: 'Claim a Lead', desc: 'Get notified of a business in your area ready for AI.', color: '#9440dd' },
-                    { icon: MapPin, title: 'On-Site Setup', desc: 'Visit the shop. Install Aultum CRM and AI Social Bots.', color: '#6366f1' },
-                    { icon: MonitorCheck, title: 'Dashboard Handover', desc: 'Walk the owner through their new live dashboard.', color: '#0ea5e9' },
-                    { icon: BadgeIndianRupee, title: 'Instant Commission', desc: 'Your 60% commission clears the moment integration goes live.', color: '#10b981' }
+                    { icon: Bell, title: 'Claim a Lead', desc: 'Get notified of a business in your area ready for Aultum Technologies.', color: '#9440dd' },
+                    { icon: MapPin, title: 'On-Site Setup', desc: 'Visit the Business, deliver and install Aultum Technologies.', color: '#6366f1' },
+                    { icon: MonitorCheck, title: 'Technology Handover', desc: 'Walk the business owner through their real time technology.', color: '#0ea5e9' },
+                    { icon: BadgeIndianRupee, title: 'Instant Earning', desc: 'Your 100% Delivery Fees, Instant Earning, Clears the Moment Integration Goes Live.', color: '#10b981' }
                   ].map((step, idx) => (
                     <div key={idx} className="flex items-start gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors">
                       <div className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${step.color}15`, borderWidth: '2px', borderStyle: 'solid', borderColor: `${step.color}30` }}>
@@ -215,22 +237,22 @@ const JoinForm = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <DetailCard
                     icon={Package}
-                    title="What you install"
-                    items={['Aultum CRM setup', 'AI Social Bots integration', 'Dashboard live + handover']}
+                    title="What to deliver"
+                    items={['Aultum Technologies', 'AI Technologies', 'Dashboard live + Integration']}
                   />
                   <DetailCard
                     icon={Store}
-                    title="Who you help"
-                    items={['Shops & local businesses', 'Owners buying AI tools', 'Teams needing setup support']}
+                    title="Who you deliver"
+                    items={['Owners buying AI', 'Teams in need of setup support', 'Local Businesses and Startups', 'Corporates buying AI tools']}
                   />
                   <DetailCard
                     icon={Sparkles}
-                    title="What you get"
+                    title="What you Earn"
                     items={['Lead notifications by area', 'Clear setup workflow', 'Commission on go-live']}
                   />
                   <DetailCard
                     icon={ShieldCheck}
-                    title="Requirements"
+                    title="What you Need"
                     items={['Phone + WhatsApp active', 'Basic communication skills', 'Laptop/Tablet recommended']}
                   />
                 </div>
@@ -254,8 +276,8 @@ const JoinForm = () => {
             <div className="lg:col-span-1 lg:sticky lg:top-24 self-start">
               <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-5 sm:p-7 lg:p-8">
                 <div className="mb-6">
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Claim your territory</h3>
-                  <p className="text-gray-600 text-sm">Fill once - we route leads to you by area & skill.</p>
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Claim Your Territory</h3>
+                  <p className="text-gray-600 text-sm">Fill Once - We Route Leads to You by Area & Skill.</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
@@ -308,7 +330,7 @@ const JoinForm = () => {
                       name="cityPincode"
                       value={formData.cityPincode}
                       onChange={handleChange}
-                      placeholder="Hubballi / 580032"
+                      placeholder="Mumbai / 400065"
                       className={`w-full px-4 py-3 bg-white text-gray-900 placeholder:text-gray-400 border rounded-lg focus:outline-none focus:ring-2 transition-all ${errors.cityPincode ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-purple-500'}`}
                     />
                     {errors.cityPincode && <span className="text-xs text-red-500 mt-1 block">{errors.cityPincode}</span>}
@@ -317,9 +339,31 @@ const JoinForm = () => {
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">Top Skill <span className="text-red-500">*</span></label>
                     <select name="topSkill" value={formData.topSkill} onChange={handleChange} className="w-full px-4 py-3 bg-white text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all">
-                      <option value="CRM">CRM Setup</option>
-                      <option value="AI Bots">AI Social Bots</option>
-                      <option value="SaaS Setup">SaaS Setup</option>
+                      <option value="WEB_DEV">Web Development</option>
+                      <option value="APP_DEV">App Development</option>
+                      <option value="DATA_SCIENCE">Data Science & Analytics</option>
+                      <option value="AI_ML">AI & Machine Learning</option>
+                      <option value="CYBERSECURITY">Cybersecurity</option>
+                      <option value="CLOUD_DEVOPS">Cloud & DevOps</option>
+                      <option value="EMBEDDED_SYSTEMS">Embedded Systems</option>
+                      <option value="VLSI">VLSI Design</option>
+                      <option value="SIGNAL_PROCESSING">Signal Processing</option>
+                      <option value="POWER_SYSTEMS">Power Systems</option>
+                      <option value="CONTROL_SYSTEMS">Control Systems</option>
+                      <option value="RENEWABLE_ENERGY">Renewable Energy</option>
+                      <option value="CAD_CAM">CAD/CAM & Manufacturing</option>
+                      <option value="ROBOTICS">Robotics & Automation</option>
+                      <option value="AUTOMOTIVE">Automotive Engineering</option>
+                      <option value="STRUCTURAL_ENG">Structural Engineering</option>
+                      <option value="CONSTRUCTION">Construction Management</option>
+                      <option value="ENVIRONMENTAL">Environmental Engineering</option>
+                      <option value="BIOTECH">Biotechnology & Bioinformatics</option>
+                      <option value="FOOD_TECH">Food Technology</option>
+                      <option value="AGRI_TECH">Agricultural Technology</option>
+                      <option value="AEROSPACE">Aerospace Engineering</option>
+                      <option value="MARINE">Marine Engineering</option>
+                      <option value="PETROCHEM">Petroleum & Chemical Engineering</option>
+                      <option value="IOT">IoT & Smart Systems</option>
                     </select>
                   </div>
 
@@ -354,7 +398,7 @@ const JoinForm = () => {
                         <span>Processing...</span>
                       </>
                     ) : (
-                      'START EARNING 60% →'
+                      'SUBMIT'
                     )}
                   </button>
 
@@ -379,7 +423,7 @@ const JoinForm = () => {
                   )}
 
                   <p className="text-xs text-center text-gray-500">
-                    No spam · No joining fee · Get matched within 48h
+                    Zero Spam · Zero Joining Fee · Matched Within 48h
                   </p>
                 </form>
               </div>
@@ -387,7 +431,7 @@ const JoinForm = () => {
               {/* Trust Badges */}
               <div className="grid grid-cols-2 gap-3 mt-6">
                 <TrustBadge icon={Timer} text="Zero wait time" />
-                <TrustBadge icon={BadgePercent} text="Up to 60% cut" />
+                <TrustBadge icon={BadgePercent} text="Up to 100% cut" />
                 <TrustBadge icon={ShieldCheck} text="No joining fee" />
                 <TrustBadge icon={Rocket} text="Instant commission" />
               </div>

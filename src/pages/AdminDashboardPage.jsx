@@ -8,6 +8,7 @@ import AuctionIcon from '../assets/Auction.png';
 import PurchaseIcon from '../assets/purchase.png';
 import RequestIcon from '../assets/Request.png';
 import EnquireIcon from '../assets/Enquire.png';
+import HomepageFeatureSelector from '../components/admin/HomepageFeatureSelector';
 
 const STATUS_COLORS = {
   PAYMENT_PENDING:   '#c8a96e',
@@ -98,6 +99,7 @@ export default function AdminDashboardPage() {
     { id: 'requests',           label: 'CoBrother Requests', icon: RequestIcon},
     { id: 'auctions', label: 'Domain Auctions', icon: AuctionIcon },
     { id: 'venture-auctions', label: 'Venture Auctions', icon: AuctionIcon },
+    { id: 'homepage-features',  label: 'Homepage Features', icon: PurchaseIcon },
   ];
 
   return (
@@ -128,9 +130,14 @@ export default function AdminDashboardPage() {
             enquiries={data}
             onForward={(entityId, type) => setForwardModal({ entityId, type })}
           />
-        ) :
-          tab === 'auctions' ? ( <AuctionsAdminTable auctions={data} /> 
+        ) : tab === 'auctions' ? ( <AuctionsAdminTable auctions={data} /> 
         ) : tab === 'venture-auctions' ? ( <VentureAuctionsAdminTable auctions={data} /> 
+        ) : tab === 'homepage-features' ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <HomepageFeatureSelector type="domain" />
+            <HomepageFeatureSelector type="venture" />
+            <HomepageFeatureSelector type="software" />
+          </div>
         ) : tab === 'requests' ? (
           <RequestsTable requests={requests} />
         ) : data.length === 0 ? (

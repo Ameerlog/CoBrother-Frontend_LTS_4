@@ -105,14 +105,24 @@ export default function LoginPage() {
       <div className="relative z-10 w-full max-w-[420px] sm:max-w-[440px] bg-white/92 px-5 pt-16 pb-6 sm:px-8 sm:pt-16 sm:pb-8 md:p-10 rounded-[20px] shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-white/60 backdrop-blur-xl">
         <button
           onClick={() => navigate('/')}
-          className="absolute top-3 left-3 sm:top-4 sm:left-4 flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-600 bg-white/90 border border-gray-200 rounded-xl backdrop-blur-sm hover:bg-gray-50 hover:text-gray-900 hover:border-gray-300 hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-200"
+          className="absolute top-3 left-3 sm:top-4 sm:left-4 group flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 shadow-[0_4px_15px_rgba(147,51,234,0.4)] hover:shadow-[0_8px_25px_rgba(147,51,234,0.5)] hover:-translate-y-0.5 transition-all duration-300"
         >
-          ← Back
+          <svg
+            className="w-5 h-5 text-white transition-transform duration-300 group-hover:-translate-x-0.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
         </button>
         <div className="text-center mb-6 sm:mb-8">
           <img src={coBrotherLogo} alt="CoBrother" className="w-[170px] sm:w-[190px] md:w-[200px] h-auto object-contain mx-auto mb-3 sm:mb-4 block" />
           <h1 className="font-display text-[1.9rem] sm:text-[2rem] font-semibold text-gray-900 leading-tight">Welcome to CoBrother</h1>
-          <p className="text-gray-600 text-[1rem] sm:text-[1.05rem] mt-2 sm:mt-2.5 max-w-[260px] sm:max-w-[300px] mx-auto">Where ventures find their co-pilots</p>
+          {/* <p className="text-gray-600 text-[1rem] sm:text-[1.05rem] mt-2 sm:mt-2.5 max-w-[260px] sm:max-w-[300px] mx-auto">Where ventures f */}
         </div>
 
         <button className="w-full flex items-center justify-center gap-3 px-4 py-3.5 sm:py-3 bg-white border-2 border-gray-200 text-gray-700 text-sm sm:text-base font-medium rounded-xl cursor-pointer transition-all duration-200 shadow-sm hover:border-gray-400 hover:bg-gray-50 hover:shadow-[0_10px_24px_rgba(0,0,0,0.06)]" onClick={handleGoogleLogin}>

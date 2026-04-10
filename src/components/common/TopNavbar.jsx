@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronDown, Globe, Menu, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../context/AuthContext';
 import cobrotherProfile from '../../assets/CoBrother_profileW.png';
 
 export default function TopNavbar({ homeMobileMenu = false }) {
   const { t, i18n } = useTranslation();
+  const { user } = useAuth();
   const [languageOpen, setLanguageOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showInitial, setShowInitial] = useState(false);
 
   const languages = [
     { code: 'en', name: 'English (IND)', currency: '₹' },
@@ -18,12 +21,35 @@ export default function TopNavbar({ homeMobileMenu = false }) {
     { code: 'pt', name: 'Português', currency: '$' }
   ];
 
-  const handleLanguageSelect = (langCode) => {
-    i18n.changeLanguage(langCode);
-    setLanguageOpen(false);
-  };
+  const currentLanguageName = languages.find((l) => l.code === i18n.language)?.name || 'English (IND)';
 
-  const currentLanguageName = languages.find((l) => l.code === i18n.language)?.name || 'English';
+  // Slow flip animation every 3 seconds when user is logged in
+  useEffect(() => {
+    if (!user) {
+      setShowInitial(false);
+      return;
+    }
+
+    // Start the flip effect after 1 second
+    const startFlip = setTimeout(() => {
+      setShowInitial(true);
+    }, 1000);
+
+    // Flip every 3 seconds
+    const interval = setInterval(() => {
+      setShowInitial(prev => !prev);
+    }, 3000);
+
+    return () => {
+      clearTimeout(startFlip);
+      clearInterval(interval);
+    };
+  }, [user]);
+
+  const getUserInitial = () => {
+    if (!user) return '';
+    return user.fullName?.charAt(0)?.toUpperCase() || user.name?.charAt(0)?.toUpperCase() || user.email?.charAt(0)?.toUpperCase() || 'U';
+  };
 
   return (
     <div
@@ -46,7 +72,6 @@ export default function TopNavbar({ homeMobileMenu = false }) {
                 {languages.map((lang) => (
                   <button
                     key={lang.code}
-                    onClick={() => handleLanguageSelect(lang.code)}
                     className={`w-full px-4 py-2.5 bg-transparent border-none text-left text-sm cursor-pointer transition-colors duration-200 font-body ${
                       i18n.language === lang.code
                         ? 'bg-purple-50 text-purple font-semibold'
@@ -78,16 +103,38 @@ export default function TopNavbar({ homeMobileMenu = false }) {
             </a>
           </div>
 
+          {/* Profile/Initial Icon with Slow Flip */}
           <div className="relative ml-1 md:ml-2">
             <a
-              href="/profile"
-              className="w-[30px] h-[30px] md:w-[36px] md:h-[36px] min-w-[30px] min-h-[30px] md:min-w-[36px] md:min-h-[36px] shrink-0 rounded-full flex items-center justify-center text-white bg-transparent border-[1.75px] border-white/35 cursor-pointer relative transition-all duration-300 no-underline hover:text-gray-200 hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.2)] group overflow-hidden box-border"
+              href={user ? "/dashboard" : "/profile"}
+              className="block w-[30px] h-[30px] md:w-[36px] md:h-[36px] shrink-0 rounded-full cursor-pointer no-underline transition-all duration-500 hover:scale-110"
+              style={{
+                perspective: '500px',
+              }}
             >
-              <span
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0 rounded-full opacity-0 transition-all duration-300 -z-10 group-hover:w-[60px] group-hover:h-[60px] group-hover:opacity-100"
-                style={{ background: 'radial-gradient(circle, rgba(147, 51, 234, 0.5) 0%, rgba(59, 130, 246, 0.25) 50%, transparent 70%)' }}
-              ></span>
-              <img src={cobrotherProfile} alt="Profile" className="w-full h-full object-contain p-1.5" />
+              {/* Front - Profile Icon */}
+              <div
+                className="absolute inset-0 rounded-full flex items-center justify-center border-[1.75px] border-white/35 bg-transparent transition-all duration-500"
+                style={{
+                  transform: showInitial ? 'rotateY(90deg) scale(0.5)' : 'rotateY(0deg) scale(1)',
+                  opacity: showInitial ? 0 : 1,
+                  backfaceVisibility: 'hidden',
+                }}
+              >
+                <img src={cobrotherProfile} alt="Profile" className="w-full h-full object-contain p-1.5" />
+              </div>
+
+              {/* Back - User Initial Circle */}
+              <div
+                className="absolute inset-0 rounded-full flex items-center justify-center bg-gradient-to-br from-purple-500 to-indigo-600 text-white font-bold text-sm transition-all duration-500"
+                style={{
+                  transform: showInitial ? 'rotateY(0deg) scale(1)' : 'rotateY(-90deg) scale(0.5)',
+                  opacity: showInitial ? 1 : 0,
+                  backfaceVisibility: 'hidden',
+                }}
+              >
+                {getUserInitial()}
+              </div>
             </a>
           </div>
 

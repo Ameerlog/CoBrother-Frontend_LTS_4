@@ -135,6 +135,7 @@ export const likeAPI = {
 
 export const adminAPI = {
   getCoVentures:        ()              => api.get('/api/v1/admin/coventures'),
+  getVentures:          ()              => api.get('/api/v1/admin/ventures'),
   getDomains:           ()              => api.get('/api/v1/admin/domains'),
   getCoCreations:       ()              => api.get('/api/v1/admin/cocreations'),
   getCoBrotherRequests: ()              => api.get('/api/v1/admin/cobrother-requests'),
@@ -146,6 +147,9 @@ export const adminAPI = {
   takeDown:  (type, id, reason) => api.post(`/api/v1/admin/takedown`, { type, entityId: id, reason }),
   restore:   (type, id)         => api.post(`/api/v1/admin/restore`,  { type, entityId: id }),
   getDomainEnquiries: ()        => api.get('/api/v1/domain-enquiry/all'),
+  toggleDomainHomepage:   (id)  => api.post(`/api/v1/admin/domain/${id}/toggle-homepage`),
+  toggleVentureHomepage:  (id)  => api.post(`/api/v1/admin/venture/${id}/toggle-homepage`),
+  toggleSoftwareHomepage: (id)  => api.post(`/api/v1/admin/software/${id}/toggle-homepage`),
 
 };
 
