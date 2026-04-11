@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { LogOut } from 'lucide-react';
+import { LogOut, Menu, X } from 'lucide-react';
 import TopNavbar from '../common/TopNavbar';
 import coBrotherLogo from '../../assets/Cobrother_logo.png';
 import { useAuth } from '../../context/AuthContext';
@@ -17,21 +16,43 @@ import NotificationIcon from '../../assets/notification.png';
 import AdminIcon from '../../assets/Community-profileicon.png';
 
 const TYPE_ICONS = {
-  COVENTURE_APPLICATION_RECEIVED:      '📋',
-  COVENTURE_APPLICATION_STATUS_CHANGED:'📣',
-  DOMAIN_SOLD:                         '◇',
-  SOFTWARE_PURCHASED:                  '⟁',
-  SOFTWARE_MARKED_COMPLETE:            '✓',
-  PROFILE_VIEWED:                      '👁',
-  NEW_LISTING_IN_INDUSTRY:             '🆕',
+  COVENTURE_APPLICATION_RECEIVED: 'ðŸ“‹',
+  COVENTURE_APPLICATION_STATUS_CHANGED: 'ðŸ“£',
+  DOMAIN_SOLD: 'â—‡',
+  SOFTWARE_PURCHASED: 'âŸ',
+  SOFTWARE_MARKED_COMPLETE: 'âœ“',
+  PROFILE_VIEWED: 'ðŸ‘',
+  NEW_LISTING_IN_INDUSTRY: 'ðŸ†•',
 };
 
 function timeAgo(dateStr) {
   const diff = (Date.now() - new Date(dateStr)) / 1000;
-  if (diff < 60)    return 'just now';
-  if (diff < 3600)  return `${Math.floor(diff / 60)}m ago`;
+  if (diff < 60) return 'just now';
+  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
   if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
   return `${Math.floor(diff / 86400)}d ago`;
+}
+
+function renderNavIcon(icon, label) {
+  const isImageSource = typeof icon === 'string' && /^(data:|https?:|\/)/.test(icon);
+
+  if (isImageSource) {
+    return (
+      <span className="inline-flex items-center justify-center w-5 h-5">
+        <img src={icon} alt="" className="w-full h-full object-contain" />
+      </span>
+    );
+  }
+
+  return (
+    <span
+      className="inline-flex items-center justify-center w-5 h-5 text-base leading-none"
+      aria-hidden="true"
+      title={label}
+    >
+      {icon}
+    </span>
+  );
 }
 
 export default function AppLayout({ children }) {
@@ -39,59 +60,58 @@ export default function AppLayout({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [bellOpen, setBellOpen]           = useState(false);
+  const [bellOpen, setBellOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
-  const [unreadCount, setUnreadCount]     = useState(0);
+  const [unreadCount, setUnreadCount] = useState(0);
   const bellRef = useRef(null);
 
-  
   const navLinks = [
     { to: '/dashboard', label: 'Dashboard', icon: DashboardIcon },
     { to: '/ventures', label: 'Venture', icon: VentureIcon },
-    { to: '/domains',    label: 'Domains',   icon: DomainsIcon },
-    { to: '/cocreation',  label: 'Technology',  icon: TechnologyIcon },
+    { to: '/domains', label: 'Domains', icon: DomainsIcon },
+    { to: '/cocreation', label: 'Technology', icon: TechnologyIcon },
     { to: '/community', label: 'Community', icon: CommunityIcon },
-    { to: '/auctions',  label: 'Auctions',  icon: AuctionIcon },
+    { to: '/auctions', label: 'Auctions', icon: AuctionIcon },
     { to: '/purchases', label: 'Purchases', icon: PurchaseIcon },
   ];
 
-  // Add after existing navLinks:
-  const coBrotherLinks = [
-    { to: '/cobrother', label: 'CoBrother', icon: '◆' },
-  ];
-  
-  // Admin sees everything + admin panel
-  const adminLinks = [
-    ...navLinks,
-    { to: '/admin', label: 'Admin', icon: AdminIcon },
-  ];
-  
-  const visibleLinks = user?.role === 'COBROTHER'
-  ? coBrotherLinks
-  : user?.role === 'ADMIN'
-  ? adminLinks
-  : navLinks;
+  const coBrotherLinks = [{ to: '/cobrother', label: 'CoBrother', icon: 'â—†' }];
+
+  const adminLinks = [...navLinks, { to: '/admin', label: 'Admin', icon: AdminIcon }];
+
+  const visibleLinks =
+    user?.role === 'COBROTHER'
+      ? coBrotherLinks
+      : user?.role === 'ADMIN'
+        ? adminLinks
+        : navLinks;
 
   useEffect(() => {
     const fetchCount = () =>
-      notificationAPI.getUnreadCount()
+      notificationAPI
+        .getUnreadCount()
         .then(({ data }) => setUnreadCount(data.count))
         .catch(() => {});
+
     fetchCount();
     const interval = setInterval(fetchCount, 30000);
     return () => clearInterval(interval);
   }, []);
 
-  // Close bell when clicking outside
   useEffect(() => {
     const handler = (e) => {
       if (bellRef.current && !bellRef.current.contains(e.target)) {
         setBellOpen(false);
       }
     };
+
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, []);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
 
   const handleBellOpen = async () => {
     if (!bellOpen) {
@@ -100,23 +120,28 @@ export default function AppLayout({ children }) {
         setNotifications(Array.isArray(data) ? data : []);
       } catch {}
     }
-    setBellOpen(v => !v);
+    setBellOpen((v) => !v);
   };
 
   const handleMarkAllRead = async () => {
     await notificationAPI.markAllRead();
-    setNotifications(n => n.map(x => ({ ...x, read: true })));
+    setNotifications((items) => items.map((item) => ({ ...item, read: true })));
     setUnreadCount(0);
   };
 
-  const handleNotificationClick = async (n) => {
-    if (!n.read) {
-      await notificationAPI.markOneRead(n.id);
-      setNotifications(prev => prev.map(x => x.id === n.id ? { ...x, read: true } : x));
-      setUnreadCount(c => Math.max(0, c - 1));
+  const handleNotificationClick = async (notification) => {
+    if (!notification.read) {
+      await notificationAPI.markOneRead(notification.id);
+      setNotifications((items) =>
+        items.map((item) =>
+          item.id === notification.id ? { ...item, read: true } : item,
+        ),
+      );
+      setUnreadCount((count) => Math.max(0, count - 1));
     }
+
     setBellOpen(false);
-    if (n.link) navigate(n.link);
+    if (notification.link) navigate(notification.link);
   };
 
   const handleLogout = async () => {
@@ -127,40 +152,49 @@ export default function AppLayout({ children }) {
   return (
     <div className="min-h-screen flex flex-col">
       <TopNavbar />
-      <nav className="sticky top-[40px] md:top-[45px] z-[100] flex items-center gap-6 md:gap-8 px-4 sm:px-6 lg:px-8 h-[60px] md:h-16 bg-white border-b border-gray-200">
-        <Link to="/" className="flex items-center gap-0 no-underline">
-          <img src={coBrotherLogo} alt="CoBrother" className="w-[140px] h-[42px] object-contain" />
+
+      <nav className="sticky top-[40px] md:top-[45px] z-[100] flex items-center gap-3 md:gap-5 px-4 sm:px-6 xl:px-8 h-[60px] md:h-16 bg-white border-b border-gray-200 min-w-0">
+        <Link to="/" className="flex items-center gap-0 no-underline shrink-0">
+          <img
+            src={coBrotherLogo}
+            alt="CoBrother"
+            className="w-[122px] h-9 object-contain md:w-[140px] md:h-[42px]"
+          />
         </Link>
 
-        <div className="hidden lg:flex items-center gap-1 flex-1">
-          {visibleLinks.map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-white text-sm font-semibold text-gray-800 no-underline transition-all duration-200 hover:text-gray-900 hover:border-gray-300 hover:shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.45),18px_0_28px_-8px_rgba(147,51,234,0.40),0_0_18px_-4px_rgba(120,80,220,0.24)] active:translate-y-[1px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300/60 ${
-                  location.pathname.startsWith(l.to) ? 'text-gray-900 bg-white border-gray-300 shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.45),18px_0_28px_-8px_rgba(147,51,234,0.40),0_0_18px_-4px_rgba(120,80,220,0.24)]' : ''
-                }`}
-                onClick={() => setMobileOpen(false)}
-              >
-                <span className="inline-flex items-center justify-center w-5 h-5">
-                  <img src={l.icon} alt="" className="w-full h-full object-contain" />
-                </span>
-                <span>{l.label}</span>
-              </Link>
+        <div className="hidden xl:flex items-center gap-1 flex-1 min-w-0">
+          {visibleLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-white text-sm font-semibold text-gray-800 no-underline transition-all duration-200 hover:text-gray-900 hover:border-gray-300 hover:shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.45),18px_0_28px_-8px_rgba(147,51,234,0.40),0_0_18px_-4px_rgba(120,80,220,0.24)] active:translate-y-[1px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300/60 ${
+                location.pathname.startsWith(link.to)
+                  ? 'text-gray-900 bg-white border-gray-300 shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.45),18px_0_28px_-8px_rgba(147,51,234,0.40),0_0_18px_-4px_rgba(120,80,220,0.24)]'
+                  : ''
+              }`}
+            >
+              {renderNavIcon(link.icon, link.label)}
+              <span>{link.label}</span>
+            </Link>
           ))}
         </div>
 
-        <div className="ml-auto flex items-center gap-3 md:gap-4">
-
-        <div className="relative max-lg:hidden" ref={bellRef}>
-            <button 
+        <div className="ml-auto flex items-center gap-2 md:gap-3 shrink-0">
+          <div className="relative max-xl:hidden" ref={bellRef}>
+            <button
               className="relative bg-white border border-gray-200 cursor-pointer p-2.5 rounded-xl text-gray-600 transition-all duration-150 leading-none hover:bg-gray-100 hover:text-gray-900 hover:border-gray-300 flex items-center justify-center"
-              onClick={handleBellOpen} 
+              onClick={handleBellOpen}
               title="Notifications"
             >
-              <img src={NotificationIcon} alt="Notifications" className="w-5 h-5 object-contain flex-shrink-0" />
+              <img
+                src={NotificationIcon}
+                alt="Notifications"
+                className="w-5 h-5 object-contain flex-shrink-0"
+              />
               {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#c86e6e] text-white text-[0.65rem] font-bold min-w-[18px] h-[18px] rounded-lg flex items-center justify-center px-[5px] pointer-events-none">{unreadCount > 99 ? '99+' : unreadCount}</span>
+                <span className="absolute -top-1 -right-1 bg-[#c86e6e] text-white text-[0.65rem] font-bold min-w-[18px] h-[18px] rounded-lg flex items-center justify-center px-[5px] pointer-events-none">
+                  {unreadCount > 99 ? '99+' : unreadCount}
+                </span>
               )}
             </button>
 
@@ -169,7 +203,7 @@ export default function AppLayout({ children }) {
                 <div className="flex justify-between items-center px-4 py-3.5 border-b border-gray-100 font-semibold text-sm text-gray-900">
                   <span>Notifications</span>
                   {unreadCount > 0 && (
-                    <button 
+                    <button
                       className="bg-transparent border-none text-gray-700 text-xs cursor-pointer p-0 hover:underline"
                       onClick={handleMarkAllRead}
                     >
@@ -180,59 +214,79 @@ export default function AppLayout({ children }) {
 
                 <div className="max-h-[380px] overflow-y-auto">
                   {notifications.length === 0 ? (
-                    <div className="py-8 px-4 text-center text-gray-500 text-sm">No notifications yet</div>
+                    <div className="py-8 px-4 text-center text-gray-500 text-sm">
+                      No notifications yet
+                    </div>
                   ) : (
-                    notifications.map(n => (
-                      <div key={n.id}
+                    notifications.map((notification) => (
+                      <div
+                        key={notification.id}
                         className={`flex items-start gap-3 px-4 py-3.5 border-b border-gray-100 cursor-pointer transition-colors duration-150 relative last:border-b-0 hover:bg-gray-50 ${
-                          !n.read ? 'bg-[#f8faff]' : ''
+                          !notification.read ? 'bg-[#f8faff]' : ''
                         }`}
-                        onClick={() => handleNotificationClick(n)}>
+                        onClick={() => handleNotificationClick(notification)}
+                      >
                         <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm bg-gray-100 flex-shrink-0">
-                          {TYPE_ICONS[n.type] || '🔔'}
+                          {TYPE_ICONS[notification.type] || 'ðŸ””'}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="text-[0.82rem] font-semibold text-gray-900 mb-0.5">{n.title}</div>
-                          <div className="text-[0.77rem] text-gray-500 leading-snug whitespace-nowrap overflow-hidden text-ellipsis">{n.message}</div>
-                          <div className="text-[0.7rem] text-gray-400 mt-1">{timeAgo(n.createdAt)}</div>
+                          <div className="text-[0.82rem] font-semibold text-gray-900 mb-0.5">
+                            {notification.title}
+                          </div>
+                          <div className="text-[0.77rem] text-gray-500 leading-snug whitespace-nowrap overflow-hidden text-ellipsis">
+                            {notification.message}
+                          </div>
+                          <div className="text-[0.7rem] text-gray-400 mt-1">
+                            {timeAgo(notification.createdAt)}
+                          </div>
                         </div>
-                        {!n.read && <div className="w-[7px] h-[7px] rounded-full bg-gray-600 flex-shrink-0 mt-1.5" />}
+                        {!notification.read && (
+                          <div className="w-[7px] h-[7px] rounded-full bg-gray-600 flex-shrink-0 mt-1.5" />
+                        )}
                       </div>
                     ))
                   )}
                 </div>
 
                 <div className="px-4 py-3 border-t border-gray-100 text-center">
-                  <Link 
-                    to="/notifications" 
+                  <Link
+                    to="/notifications"
                     onClick={() => setBellOpen(false)}
                     className="text-[0.78rem] text-gray-700 no-underline hover:underline"
                   >
-                    View all notifications →
+                    View all notifications â†’
                   </Link>
                 </div>
               </div>
             )}
           </div>
-          
+
           <div className="flex items-center gap-2.5">
             <div className="w-[34px] h-[34px] bg-gray-100 text-gray-700 rounded-full flex items-center justify-center font-semibold text-sm">
-              {user?.firstname?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || '?'}
+              {user?.firstname?.[0]?.toUpperCase() ||
+                user?.email?.[0]?.toUpperCase() ||
+                '?'}
             </div>
-            <span className="text-sm font-medium text-gray-700 max-lg:hidden">{user?.firstname || user?.email?.split('@')[0]}</span>
-            <button 
-              className="max-lg:hidden bg-transparent border border-gray-200 text-gray-600 rounded-lg p-1.5 cursor-pointer transition-all duration-200 hover:bg-red-50 hover:text-red-600 hover:border-red-200"
-              onClick={handleLogout} 
+            <span className="text-sm font-medium text-gray-700 max-xl:hidden">
+              {user?.firstname || user?.email?.split('@')[0]}
+            </span>
+            <button
+              className="max-xl:hidden bg-transparent border border-gray-200 text-gray-600 rounded-lg p-1.5 cursor-pointer transition-all duration-200 hover:bg-red-50 hover:text-red-600 hover:border-red-200"
+              onClick={handleLogout}
               title="Logout"
             >
               <LogOut size={16} />
             </button>
           </div>
-          <button 
-            className="lg:hidden bg-transparent border-none text-gray-900 text-xl cursor-pointer"
-            onClick={() => setMobileOpen(!mobileOpen)}
+
+          <button
+            type="button"
+            aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={mobileOpen}
+            className="xl:hidden inline-flex items-center justify-center rounded-xl border border-gray-200 bg-white p-2 text-gray-900 cursor-pointer transition-all duration-200 hover:border-gray-300 hover:bg-gray-50"
+            onClick={() => setMobileOpen((open) => !open)}
           >
-            {mobileOpen ? '✕' : '☰'}
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </nav>
@@ -240,24 +294,24 @@ export default function AppLayout({ children }) {
       {mobileOpen && (
         <>
           <div
-            className="lg:hidden fixed top-[100px] inset-x-0 bottom-0 bg-black/30 z-[90]"
+            className="xl:hidden fixed top-[100px] md:top-[109px] inset-x-0 bottom-0 bg-black/30 z-[90]"
             onClick={() => setMobileOpen(false)}
           />
-          <div className="lg:hidden fixed top-[100px] inset-x-0 bg-white border-b border-gray-200 z-[110] p-4">
+          <div className="xl:hidden fixed top-[100px] md:top-[109px] inset-x-0 bg-white border-b border-gray-200 z-[110] p-4 max-h-[calc(100dvh-100px)] md:max-h-[calc(100dvh-109px)] overflow-y-auto">
             <div className="flex flex-col gap-1">
-              {visibleLinks.map((l) => (
+              {visibleLinks.map((link) => (
                 <Link
-                  key={l.to}
-                  to={l.to}
+                  key={link.to}
+                  to={link.to}
                   className={`flex items-center gap-2 px-3.5 py-2.5 rounded-[14px] border border-gray-200 bg-white text-sm font-semibold text-gray-800 no-underline transition-all duration-200 hover:text-gray-900 hover:border-gray-300 hover:shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.40),18px_0_28px_-8px_rgba(147,51,234,0.34),0_0_18px_-4px_rgba(120,80,220,0.20)] active:translate-y-[1px] ${
-                    location.pathname.startsWith(l.to) ? 'text-gray-900 bg-white border-gray-300 shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.40),18px_0_28px_-8px_rgba(147,51,234,0.34),0_0_18px_-4px_rgba(120,80,220,0.20)]' : ''
+                    location.pathname.startsWith(link.to)
+                      ? 'text-gray-900 bg-white border-gray-300 shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.40),18px_0_28px_-8px_rgba(147,51,234,0.34),0_0_18px_-4px_rgba(120,80,220,0.20)]'
+                      : ''
                   }`}
                   onClick={() => setMobileOpen(false)}
                 >
-                  <span className="inline-flex items-center justify-center w-5 h-5">
-                    <img src={l.icon} alt="" className="w-full h-full object-contain" />
-                  </span>
-                  <span>{l.label}</span>
+                  {renderNavIcon(link.icon, link.label)}
+                  <span>{link.label}</span>
                 </Link>
               ))}
 

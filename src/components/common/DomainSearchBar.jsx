@@ -21,11 +21,11 @@ export default function DomainSearchBar() {
         </h3>
 
         {/* Search Row: Search bar + Promotional pricing */}
-        <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <form onSubmit={handleSearch} className="search-glow-focus flex flex-col sm:flex-row items-stretch sm:items-center bg-white rounded-2xl sm:rounded-full shadow-[0_4px_32px_rgba(0,0,0,0.12)] border border-gray-200 overflow-hidden px-4 sm:pl-6 sm:pr-3 py-3 sm:py-2.5 gap-3 sm:gap-0 transition-all duration-300 relative flex-1">
+        <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+          <form onSubmit={handleSearch} className="search-glow-focus w-full flex flex-col sm:flex-row items-stretch sm:items-center bg-white rounded-2xl sm:rounded-full shadow-[0_4px_32px_rgba(0,0,0,0.12)] border border-gray-200 overflow-hidden px-4 sm:pl-6 sm:pr-3 py-3 sm:py-2.5 gap-3 sm:gap-0 transition-all duration-300 relative flex-1">
             <input
               type="text"
-              className="flex-1 bg-transparent border-none outline-none text-gray-800 text-base sm:text-lg placeholder:text-gray-400 py-2.5 sm:py-3 focus:ring-0"
+              className="w-full min-w-0 flex-1 bg-transparent border-none outline-none text-gray-800 text-base sm:text-lg placeholder:text-gray-400 py-2.5 sm:py-3 focus:ring-0"
               placeholder="Search your next big domain..."
               value={query}
               onChange={e => setQuery(e.target.value)}
@@ -39,25 +39,28 @@ export default function DomainSearchBar() {
           </form>
 
           {/* Promotional Pricing - Right side */}
-          <div className="hidden lg:flex flex-col items-start px-4 py-2 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-200">
-            <span className="text-[10px] text-green-600 font-medium">Promotional Offer</span>
+          <div className="hidden lg:flex flex-col items-center px-4 py-2 bg-white rounded-xl border border-gray-200 shadow-sm relative swing-hover">
+            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-gradient-to-b from-gray-300 to-gray-500 border border-gray-400 shadow-[inset_0_1px_2px_rgba(255,255,255,0.5)]" />
+            <span className="text-[10px] text-gray-800 font-medium mt-1">Promotional Offer</span>
             <div className="flex items-baseline gap-1">
-              <span className="text-sm font-bold text-green-700">.com</span>
+              <span className="text-sm font-bold text-gray-900">.com</span>
               <span className="text-lg font-bold text-gray-900">₹999</span>
-              <span className="text-[10px] text-gray-500">/year</span>
+              <span className="text-[10px] text-gray-600">/year</span>
             </div>
           </div>
 
           {/* Mobile Promotional banner */}
-          <div className="lg:hidden flex items-center justify-center gap-2 py-2 px-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-100 w-full sm:w-auto">
-            <span className="text-[11px] text-green-700 font-medium">Limited Offer:</span>
-            <span className="text-[11px] font-bold text-green-800">.com</span>
-            <span className="text-[11px] font-bold text-green-800">₹999/year</span>
+          <div className="lg:hidden flex items-center justify-center gap-2 py-2 px-4 bg-white rounded-lg border border-gray-200 shadow-sm w-full sm:w-auto relative swing-hover">
+            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-gradient-to-b from-gray-300 to-gray-500 border border-gray-400 shadow-[inset_0_1px_2px_rgba(255,255,255,0.5)]" />
+            <span className="text-[11px] text-gray-800 font-medium">Limited Offer:</span>
+            <span className="text-[11px] font-bold text-gray-900">.com</span>
+            <span className="text-[11px] font-bold text-gray-900">₹999/year</span>
           </div>
         </div>
       </div>
       <style>{`
         .search-glow-focus {
+          width: 100%;
           box-shadow:
             -12px 0 20px -6px rgba(0, 195, 255, 0.35),
             12px 0 20px -6px rgba(255, 48, 108, 0.35),
@@ -80,6 +83,20 @@ export default function DomainSearchBar() {
               16px 0 28px -8px rgba(255, 48, 108, 0.5),
               0 0 20px -4px rgba(120, 80, 220, 0.4);
           }
+        }
+        @media (max-width: 639px) {
+          .search-glow-focus {
+            padding: 0.9rem;
+            gap: 0.85rem;
+          }
+        }
+        .swing-hover {
+          transform-origin: top center;
+          animation: swing 3s ease-in-out infinite;
+        }
+        @keyframes swing {
+          0%, 100% { transform: rotate(-2deg); }
+          50% { transform: rotate(2deg); }
         }
       `}</style>
     </div>

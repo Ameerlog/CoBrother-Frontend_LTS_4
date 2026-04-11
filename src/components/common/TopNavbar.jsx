@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronDown, Globe, Menu, X } from 'lucide-react';
+import { ChevronDown, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
 import cobrotherProfile from '../../assets/CoBrother_profileW.png';
@@ -10,6 +10,7 @@ export default function TopNavbar({ homeMobileMenu = false }) {
   const [languageOpen, setLanguageOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showInitial, setShowInitial] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
   const languages = [
     { code: 'en', name: 'English (IND)', currency: '₹' },
@@ -99,24 +100,25 @@ export default function TopNavbar({ homeMobileMenu = false }) {
               href="/account"
               className="text-white text-sm font-normal no-underline flex items-center gap-1 px-3 py-2 rounded transition-colors duration-200 cursor-pointer bg-transparent border-none font-body hover:bg-white/15 hover:text-gray-200"
             >
-              {t('myAccount')}
+              My Profile
             </a>
           </div>
 
           {/* Profile/Initial Icon with Slow Flip */}
           <div className="relative ml-1 md:ml-2">
-            <a
-              href={user ? "/dashboard" : "/profile"}
+            <button
+              type="button"
               className="block w-[30px] h-[30px] md:w-[36px] md:h-[36px] shrink-0 rounded-full cursor-pointer no-underline transition-all duration-500 hover:scale-110"
               style={{
                 perspective: '500px',
               }}
+              onClick={() => setProfileDropdownOpen((prev) => !prev)}
             >
               {/* Front - Profile Icon */}
               <div
                 className="absolute inset-0 rounded-full flex items-center justify-center border-[1.75px] border-white/35 bg-transparent transition-all duration-500"
                 style={{
-                  transform: showInitial ? 'rotateY(90deg) scale(0.5)' : 'rotateY(0deg) scale(1)',
+                  transform: showInitial ? 'rotateY(90deg) scale(0.5)' : 'rotateY(0deg) scale(0.8)',
                   opacity: showInitial ? 0 : 1,
                   backfaceVisibility: 'hidden',
                 }}
@@ -126,28 +128,38 @@ export default function TopNavbar({ homeMobileMenu = false }) {
 
               {/* Back - User Initial Circle */}
               <div
-                className="absolute inset-0 rounded-full flex items-center justify-center bg-gradient-to-br from-purple-500 to-indigo-600 text-white font-bold text-sm transition-all duration-500"
+                className="absolute inset-0 rounded-full flex items-center justify-center bg-gradient-to-br from-black-500 to-indigo-600 text-white font-bold text-md transition-all duration-500"
                 style={{
-                  transform: showInitial ? 'rotateY(0deg) scale(1)' : 'rotateY(-90deg) scale(0.5)',
+                  transform: showInitial ? 'rotateY(0deg) scale(0.8)' : 'rotateY(-90deg) scale(0.5)',
                   opacity: showInitial ? 1 : 0,
                   backfaceVisibility: 'hidden',
                 }}
               >
                 {getUserInitial()}
               </div>
-            </a>
+            </button>
+
+            {/* Profile Dropdown - Mobile/Tablet Only */}
+            {profileDropdownOpen && (
+              <div className="md:hidden absolute top-full right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg min-w-[140px] overflow-hidden z-[1001]">
+                <a
+                  href="/contact"
+                  className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                  onClick={() => setProfileDropdownOpen(false)}
+                >
+                  {t('contactUs')}
+                </a>
+                <a
+                  href={user ? "/dashboard" : "/profile"}
+                  className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                  onClick={() => setProfileDropdownOpen(false)}
+                >
+                  Profile
+                </a>
+              </div>
+            )}
           </div>
 
-          {homeMobileMenu && (
-            <button
-              type="button"
-              aria-label="Toggle top menu"
-              className="md:hidden text-white p-1.5 rounded hover:bg-white/15 transition-colors"
-              onClick={() => setMobileMenuOpen((prev) => !prev)}
-            >
-              {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
-            </button>
-          )}
         </div>
       </div>
 
@@ -155,25 +167,11 @@ export default function TopNavbar({ homeMobileMenu = false }) {
         <div className="md:hidden absolute top-full inset-x-0 px-4 py-3 bg-[#130d28] border-b border-white/10">
           <div className="w-full flex flex-col gap-2">
             <a
-              href="/contact"
+              href="/"
               className="text-white text-sm px-3 py-2 rounded hover:bg-white/10 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              {t('contactUs')}
-            </a>
-            <a
-              href="/account"
-              className="text-white text-sm px-3 py-2 rounded hover:bg-white/10 transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {t('myAccount')}
-            </a>
-            <a
-              href="/profile"
-              className="text-white text-sm px-3 py-2 rounded hover:bg-white/10 transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Profile
+              Home
             </a>
           </div>
         </div>

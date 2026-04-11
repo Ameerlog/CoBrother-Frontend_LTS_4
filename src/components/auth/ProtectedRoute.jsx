@@ -6,13 +6,10 @@ import { useAuth } from '../../context/AuthContext';
 // ── Spinner shown while auth state is loading ─────────────────────────────
 function FullScreenSpinner() {
 
-  
+
   return (
-    <div style={{
-      minHeight: '100vh', display: 'flex', alignItems: 'center',
-      justifyContent: 'center', background: '#0a0a0f'
-    }}>
-      <div className="spinner" style={{ width: 40, height: 40 }} />
+    <div className="min-h-screen flex items-center justify-center bg-[#0a0a0f]">
+      <div className="spinner w-10 h-10" />
     </div>
   );
 }
