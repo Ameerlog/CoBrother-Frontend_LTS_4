@@ -1,16 +1,73 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const RESELLER_STOREFRONT = 'https://neminathakkole.supersite2.myorderbox.com';
+const tlds = ["com", "net", "org", "in", "co", "io", "ai"];
 
 export default function DomainSearchBar() {
   const [query, setQuery] = useState('');
+  const [result, setResult] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const doSearch = async (input) => {
+    if (!input) return;
+    setLoading(true);
+
+    const domains = input.includes(".")
+      ? [input]
+      : tlds.map(tld => `${input}.${tld}`);
+
+    setResult(domains.map(domain => ({ domain, status: "loading", price: null })));
+
+    await Promise.all(
+      domains.map(async (fullDomain) => {
+        try {
+          const res = await fetch(
+            `http://localhost:8080/api/v1/domain/check?name=${fullDomain}`
+          );
+          const data = await res.json();
+          const status = data.status === "available" ? "available" : "taken";
+          const price = data.price ? `₹${data.price}` : null;
+
+          setResult(prev =>
+            prev.map(item =>
+              item.domain === fullDomain ? { ...item, status, price } : item
+            )
+          );
+        } catch {
+          setResult(prev =>
+            prev.map(item =>
+              item.domain === fullDomain ? { ...item, status: "taken", price: null } : item
+            )
+          );
+        }
+      })
+    );
+    setLoading(false);
+  };
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const domain = query.trim().toLowerCase();
-    if (!domain) return;
-    window.open(`${RESELLER_STOREFRONT}/domain-registration/domain-search?domain=${encodeURIComponent(domain)}`, '_blank');
+    const input = query.trim().toLowerCase();
+    if (!input) return;
+    doSearch(input);
   };
+
+  useEffect(() => {
+    if (!query) { setResult([]); return; }
+    const delay = setTimeout(() => {
+      const input = query.trim().toLowerCase();
+      if (input) doSearch(input);
+    }, 600);
+    return () => clearTimeout(delay);
+  }, [query]);
+
+  const handleBuyNow = (domain) => {
+    window.open(
+      `https://cobrother.supersite2.myorderbox.com/domain-registration/index.php?domain=${domain}`,
+      "_blank"
+    );
+  };
+
+  const bestDomain = result.find(item => item.status === "available") || result[0];
 
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 py-4 md:py-6">
@@ -57,7 +114,136 @@ export default function DomainSearchBar() {
             <span className="text-[11px] font-bold text-gray-900">₹999/year</span>
           </div>
         </div>
+
+        {/* RESULTS */}
+        <div className="mt-8">
+
+          {loading && (
+            <p className="text-center text-gray-500 mb-6">
+              Checking domains...
+            </p>
+          )}
+
+          {/* ⭐ FEATURED */}
+          {bestDomain && bestDomain.status !== "loading" && (
+            <div className={`mb-8 bg-white rounded-3xl p-8 shadow-xl border-2 ${bestDomain.status === "available" ? 'border-purple-500' : 'border-red-300'}`}>
+
+              {bestDomain.status === "available" ? (
+                <span className="inline-block bg-purple-100 text-purple-700 text-xs font-bold px-3 py-1 rounded mb-3">
+                  BEST MATCH
+                </span>
+              ) : (
+                <span className="inline-block bg-red-100 text-red-600 text-xs font-bold px-3 py-1 rounded mb-3">
+                  TAKEN / SOLD
+                </span>
+              )}
+
+              {(() => {
+                const [name, tld] = bestDomain.domain.split(".");
+                return (
+                  <>
+                    <h2 className={`text-4xl font-bold mb-4 ${bestDomain.status === "available" ? 'text-gray-900' : 'text-gray-400 line-through'}`}>
+                      {name}
+                      <span className={bestDomain.status === "available" ? 'text-purple-600' : 'text-purple-300'}>.{tld}</span>
+                    </h2>
+
+                    {bestDomain.status === "available" && bestDomain.price && (
+                      <div className="mb-4">
+                        <p className="text-gray-400 line-through text-lg">
+                          ₹{Math.round(parseInt(bestDomain.price.replace("₹","")) * 1.8)}
+                        </p>
+                        <p className="text-3xl font-bold text-gray-900">
+                          {bestDomain.price}
+                        </p>
+                      </div>
+                    )}
+
+                    {bestDomain.status === "available" ? (
+                      <button
+                        onClick={() => handleBuyNow(bestDomain.domain)}
+                        className="bg-black text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 transition"
+                      >
+                        Make it Yours
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleBuyNow(bestDomain.domain)}
+                        className="bg-gray-200 text-gray-500 px-8 py-3 rounded-lg font-semibold hover:bg-gray-300 transition"
+                      >
+                        Check Alternatives
+                      </button>
+                    )}
+                  </>
+                );
+              })()}
+            </div>
+          )}
+
+          {/* GRID */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {result
+              .filter(item => item !== bestDomain)
+              .map((item, index) => {
+                const [name, tld] = item.domain.split(".");
+
+                const isTaken = item.status === "taken";
+                return (
+                  <div key={index} className={`bg-white border rounded-2xl p-6 shadow-sm hover:shadow-lg transition ${isTaken ? 'border-gray-200 opacity-75' : 'border-gray-300'}`}>
+
+                    {item.status === "available" ? (
+                      <span className="inline-block bg-yellow-200 text-yellow-800 text-xs font-bold px-3 py-1 rounded mb-3">
+                        AVAILABLE
+                      </span>
+                    ) : item.status === "taken" ? (
+                      <span className="inline-block bg-red-100 text-red-600 text-xs font-bold px-3 py-1 rounded mb-3">
+                        TAKEN / SOLD
+                      </span>
+                    ) : (
+                      <span className="inline-block bg-gray-100 text-gray-500 text-xs font-bold px-3 py-1 rounded mb-3">
+                        CHECKING...
+                      </span>
+                    )}
+
+                    <h2 className={`text-2xl font-bold mb-4 ${isTaken ? 'text-gray-400 line-through' : 'text-gray-900'}`}>
+                      {name}
+                      <span className={isTaken ? 'text-purple-300' : 'text-purple-600'}>.{tld}</span>
+                    </h2>
+
+                    {item.status === "available" && item.price && (
+                      <div className="mb-4">
+                        <p className="text-gray-400 line-through text-sm">
+                          ₹{Math.round(parseInt(item.price.replace("₹","")) * 1.8)}
+                        </p>
+                        <p className="text-xl font-bold text-gray-900">
+                          {item.price}
+                        </p>
+                      </div>
+                    )}
+
+                    {item.status === "available" ? (
+                      <button
+                        onClick={() => handleBuyNow(item.domain)}
+                        className="bg-black text-white px-6 py-2 rounded-lg font-semibold hover:bg-gray-800 transition"
+                      >
+                        Buy
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleBuyNow(item.domain)}
+                        className="bg-gray-200 text-gray-500 px-6 py-2 rounded-lg font-semibold hover:bg-gray-300 transition"
+                      >
+                        Check Alternatives
+                      </button>
+                    )}
+
+                  </div>
+                );
+              })}
+          </div>
+
+        </div>
       </div>
+
       <style>{`
         .search-glow-focus {
           width: 100%;
