@@ -97,7 +97,7 @@ export default function CoCreationPage() {
             <button className="btn-glow btn-glow-sm flex items-center gap-2" onClick={() => navigate('/cocreation/dashboard')}>
               <LayoutDashboard size={16} /> Dashboard
             </button>
-            {user?.role === 'ADMIN' && (
+            {user && (
               <button className="btn-glow btn-glow-sm flex items-center gap-2" onClick={() => setShowForm(true)}>
                 <Plus size={16} /> List Technology
               </button>
@@ -112,7 +112,7 @@ export default function CoCreationPage() {
             onClick={() => setFilterTab('mine')}>My Listings</button>
         </div>
 
-        {showForm && user?.role === 'ADMIN' && (
+        {showForm && user && (
           <div className="mb-6">
             <SoftwareForm
               onSaved={s => { setAllSoftware(prev => [s, ...prev]); setShowForm(false); }}
@@ -169,7 +169,7 @@ export default function CoCreationPage() {
                 <SoftwareCard
                   key={s.id}
                   item={s}
-                  isOwner={s.listedBy?.id === user?.id}
+                  isOwner={s.listedBy?.id === user?.id || user?.role === 'ADMIN'}
                   likeState={getLike(s.id)}
                   onLike={() => toggleLike(s.id)}
                   onView={() => setDetailTarget(s)}
@@ -227,7 +227,9 @@ export default function CoCreationPage() {
   );
 }
 function SoftwareCard({ item, isOwner, onView, onBuy, onDelete, likeState, onLike }) {
+  const { user } = useAuth();
   const s = STATUS_COLORS[item.softwareStatus] || STATUS_COLORS.AVAILABLE;
+
   return (
     <div className="card-glow-hover p-5 bg-white border border-gray-200 rounded-[14px] flex flex-col gap-2 overflow-hidden cursor-pointer transition-all duration-300" onClick={onView}>
       <div className="flex items-start justify-between gap-2 mb-1">
@@ -240,7 +242,11 @@ function SoftwareCard({ item, isOwner, onView, onBuy, onDelete, likeState, onLik
           <span className="text-[0.72rem] font-semibold text-amber-600 uppercase tracking-wider">{item.category?.replace(/_/g, ' ')}</span>
           <span className="text-xs text-gray-500 overflow-hidden text-ellipsis whitespace-nowrap">{item.pricingDemand}</span>
         </div>
-        {isOwner && <div className="ml-auto px-2 py-0.5 bg-green-50 border border-green-200 rounded text-[0.7rem] text-green-600 flex-shrink-0">Owner</div>}
+        {item.listedBy?.id === user?.id && (
+          <div className="ml-auto px-2 py-0.5 bg-green-100 border border-green-300 rounded text-[0.7rem] font-semibold text-green-700 flex-shrink-0">
+            ✓ Owner
+          </div>
+        )}
         {item.official && (
           <div className="px-2 py-0.5 bg-amber-50 border border-amber-200 rounded text-[0.68rem] font-bold text-amber-600 flex-shrink-0">
             ✦ Official
@@ -280,13 +286,26 @@ function SoftwareCard({ item, isOwner, onView, onBuy, onDelete, likeState, onLik
           <LikeButton liked={likeState?.liked} count={likeState?.count} onToggle={onLike} />
         </div>
         <div className="flex gap-2" onClick={e => e.stopPropagation()}>
-          {isOwner ? (
+          {user?.role === 'ADMIN' ? (
+            <>
+              <button className="inline-flex items-center justify-center px-3 py-1.5 bg-red-50 border border-red-200 text-red-600 font-semibold text-xs rounded-lg cursor-pointer transition-colors hover:bg-red-100"
+                onClick={e => { e.stopPropagation(); onDelete(); }}>
+                Remove
+              </button>
+              {item.softwareStatus === 'AVAILABLE' && (
+                <button className="inline-flex items-center justify-center px-3 py-1.5 bg-indigo-600 text-white font-semibold text-xs rounded-lg cursor-pointer hover:bg-indigo-700"
+                  onClick={e => { e.stopPropagation(); onBuy(); }}>
+                  Buy Now →
+                </button>
+              )}
+            </>
+          ) : item.listedBy?.id === user?.id ? (
             <button className="inline-flex items-center justify-center px-3 py-1.5 bg-red-50 border border-red-200 text-red-600 font-semibold text-xs rounded-lg cursor-pointer transition-colors hover:bg-red-100"
               onClick={e => { e.stopPropagation(); onDelete(); }}>
               Remove
             </button>
           ) : item.softwareStatus === 'AVAILABLE' ? (
-            <button className="btn-glow btn-glow-sm"
+            <button className="inline-flex items-center justify-center px-3 py-1.5 bg-indigo-600 text-white font-semibold text-xs rounded-lg cursor-pointer hover:bg-indigo-700"
               onClick={e => { e.stopPropagation(); onBuy(); }}>
               Buy Now →
             </button>
