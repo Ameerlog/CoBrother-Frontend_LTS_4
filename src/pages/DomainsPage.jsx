@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Plus, Gavel, ShoppingCart, MessageSquare, Trash2, CheckCircle, Share2 } from 'lucide-react';
+import { LayoutDashboard, Plus, Gavel, ShoppingCart, MessageSquare, Trash2, CheckCircle, Share2, ArrowUpRight } from 'lucide-react';
 import { domainAPI, domainEnquiryAPI, auctionAPI } from '../api/services';
 import { useAuth } from '../context/AuthContext';
 import AppLayout from '../components/layout/AppLayout';
@@ -11,6 +11,7 @@ import FilterBar from '../components/common/FilterBar';
 import Pagination from '../components/common/Pagination';
 import SkeletonCard from '../components/common/Skeleton';
 import ConfirmDialog from '../components/common/ConfirmDialog';
+import Confetti from '../components/common/Confetti';
 
 const DOMAIN_PRICING_OPTIONS = [
   { value: 'FIXED',      label: 'Fixed Price' },
@@ -37,6 +38,7 @@ export default function DomainsPage() {
   const [enquireTarget, setEnquireTarget]   = useState(null);
   const [enquireSuccess, setEnquireSuccess] = useState(false);
   const [filterTab, setFilterTab]           = useState('all');
+  const [showConfetti, setShowConfetti]     = useState(false);
 
   const { toggle: toggleLike, get: getLike } = useLikes('DOMAIN', allDomains);
 
@@ -80,6 +82,16 @@ export default function DomainsPage() {
 
   return (
     <AppLayout>
+      <Confetti show={showConfetti} />
+      {showConfetti && (
+        <div className="fixed inset-0 z-[9998] flex items-center justify-center bg-black/30 backdrop-blur-sm pointer-events-none animate-fadeIn">
+          <div className="bg-white rounded-2xl shadow-2xl px-10 py-8 text-center max-w-sm mx-4 animate-slideUp">
+            <div className="text-5xl mb-3">🌐</div>
+            <h2 className="font-display text-2xl font-extrabold text-gray-900 mb-1">Domain Listed!</h2>
+            <p className="text-sm text-gray-500">Your domain is now live on the marketplace.</p>
+          </div>
+        </div>
+      )}
       <div>
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
           <div>
@@ -106,7 +118,12 @@ export default function DomainsPage() {
         {showForm && (
           <div className="mb-6">
             <DomainForm
-              onSaved={d => { setAllDomains(prev => [d, ...prev]); setShowForm(false); }}
+              onSaved={d => {
+                setAllDomains(prev => [d, ...prev]);
+                setShowForm(false);
+                setShowConfetti(true);
+                setTimeout(() => setShowConfetti(false), 4000);
+              }}
               onCancel={() => setShowForm(false)}
             />
           </div>
@@ -284,171 +301,214 @@ function DomainCard({ domain, isOwner, onView, onBuy, onEnquire, onViewAuction,
     setShareOpen(false);
   };
 
+  const accentGrad = isAuction
+    ? 'from-purple-600 via-fuchsia-500 to-pink-500'
+    : 'from-indigo-600 via-blue-500 to-cyan-400';
+
   return (
-    <div className="card-glow-hover p-5 bg-white border border-gray-200 rounded-[14px] flex flex-col gap-3 overflow-hidden cursor-pointer transition-all duration-300" onClick={onView}>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-start gap-3 mb-1">
-          <div className={`w-[42px] h-[42px] border rounded-[10px] flex items-center justify-center text-lg font-bold flex-shrink-0 overflow-hidden ${isAuction ? 'bg-purple-50 border-purple-200 text-purple-500' : 'bg-indigo-50 border-indigo-200 text-indigo-600'}`}>
-            {domain.logo ? (
-              <img src={domain.logo} alt={domain.domainName} className="w-full h-full object-cover" />
-            ) : domainInitials}
-          </div>
-          <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-            <h3 className="font-display text-[1.05rem] font-bold text-gray-900 mb-0.5">{domain.domainName}{domain.domainExtension}</h3>
-            <span className="text-xs text-gray-500 truncate">{domain.pricingDemand}</span>
-          </div>
-          {isOwner && <div className="ml-auto px-2 py-0.5 bg-green-50 border border-green-200 rounded text-[0.7rem] text-green-600 flex-shrink-0">Owner</div>}
-          {domain.takenDown && (
-            <div className="px-2 py-0.5 bg-red-100 border border-red-300 rounded text-[0.68rem] font-bold text-red-500 flex-shrink-0">
-              ⚠ Taken Down
+    <div
+      className="group relative bg-white rounded-2xl overflow-hidden cursor-pointer flex flex-col border border-gray-200/60 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-300"
+      onClick={onView}
+    >
+      {/* Gradient header with large image */}
+      <div className={`relative bg-gradient-to-r ${accentGrad} px-4 pt-3.5 pb-3.5 min-h-[90px] flex items-end`}>
+        {domain.logo
+          ? <img src={domain.logo} alt={domain.domainName}
+              className="absolute top-0 right-0 w-full h-full object-cover opacity-30 group-hover:opacity-40 transition-opacity duration-300" />
+          : null
+        }
+        <div className="relative z-10 flex items-end justify-between w-full">
+          <div className="flex items-center gap-2">
+            {domain.logo
+              ? <img src={domain.logo} alt={domain.domainName}
+                  className="w-14 h-14 rounded-xl object-cover ring-[3px] ring-white/50 shadow-lg" />
+              : <div className="w-14 h-14 rounded-xl flex items-center justify-center font-display text-2xl font-extrabold text-white ring-[3px] ring-white/30 shadow-lg bg-white/15 backdrop-blur-sm">
+                  {domainInitials}
+                </div>
+            }
+            <div>
+              <span className={`px-2 py-[3px] text-[10px] font-bold rounded-md uppercase tracking-wide ${isAuction ? 'bg-yellow-400 text-gray-900' : 'bg-white/25 backdrop-blur-sm text-white'}`}>
+                {isAuction ? '🔨 Auction' : domain.domainExtension}
+              </span>
+              {isOwner && (
+                <span className="ml-1.5 px-2 py-[3px] bg-white text-indigo-600 text-[10px] font-extrabold rounded-md uppercase tracking-wide shadow-sm">
+                  ✦ Owner
+                </span>
+              )}
             </div>
-          )}
+          </div>
         </div>
-        <div className="my-2 flex items-center gap-1.5 flex-wrap">
-          {!isAuction && (
-            <span className="px-2.5 py-1 rounded-md text-xs font-semibold" style={{ color: s.color, background: s.bg, border: `1px solid ${s.border}` }}>
-              {domain.domainStatus}
+        {domain.takenDown && (
+          <span className="absolute top-3 right-3 z-10 px-2 py-[3px] bg-red-500 text-white text-[10px] font-bold rounded-md uppercase tracking-wide shadow-sm">
+            ⚠ Taken Down
+          </span>
+        )}
+      </div>
+
+      {/* Body */}
+      <div className="relative px-4 pb-4 pt-3 flex flex-col flex-1">
+        {/* Domain name + status/pricing tags on right */}
+        <div className="flex items-start justify-between gap-2 mb-1">
+          <h3 className="font-display text-[0.95rem] font-extrabold text-gray-900 truncate leading-snug">
+            {domain.domainName}{domain.domainExtension}
+          </h3>
+          <div className="flex items-center gap-1 flex-shrink-0">
+            {!isAuction && (
+              <span className={`px-1.5 py-[2px] text-[9px] font-bold rounded uppercase tracking-wide border ${
+                domain.domainStatus === 'AVAILABLE' ? 'bg-green-50 text-green-600 border-green-200' :
+                domain.domainStatus === 'SOLD'      ? 'bg-red-50 text-red-500 border-red-200' :
+                                                      'bg-amber-50 text-amber-600 border-amber-200'
+              }`}>
+                {domain.domainStatus}
+              </span>
+            )}
+            <span className="px-1.5 py-[2px] bg-gray-100 text-gray-500 text-[9px] font-bold rounded uppercase tracking-wide whitespace-nowrap">
+              {domain.pricingDemand || 'Fixed'}
             </span>
-          )}
+          </div>
+        </div>
+
+        {/* Badges row */}
+        <div className="flex items-center gap-1.5 flex-wrap mb-3">
           {domain.verified && (
-            <span className="px-2.5 py-1 rounded-md text-[0.72rem] font-bold text-green-500 bg-green-50 border border-green-300">
+            <span className="px-2 py-[2px] text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-md">
               ✓ Verified
             </span>
           )}
           {isHighValue && domain.domainStatus === 'AVAILABLE' && (
-            <span className="px-2 py-0.5 rounded text-[0.68rem] font-bold text-purple-600 bg-purple-50 border border-purple-200">
+            <span className="px-2 py-[2px] text-[10px] font-bold text-purple-600 bg-purple-50 border border-purple-200 rounded-md">
               Premium
             </span>
           )}
           {isAuction && (
             <>
-              <span className="px-2 py-0.5 rounded text-[0.68rem] font-bold text-purple-600 bg-purple-50 border border-purple-200">
-                🔨 Auction
-              </span>
-              {auction?.status === 'ACTIVE'   && <span className="text-[0.68rem] text-green-500 font-bold">🟢 Live</span>}
-              {auction?.status === 'EXTENDED' && <span className="text-[0.68rem] text-amber-500 font-bold">⚡ Extended</span>}
-              {auction?.status === 'DRAFT'    && <span className="text-[0.68rem] text-gray-500">⏳ Draft</span>}
+              {auction?.status === 'ACTIVE'   && <span className="text-[10px] text-emerald-600 font-bold">🟢 Live</span>}
+              {auction?.status === 'EXTENDED' && <span className="text-[10px] text-amber-500 font-bold">⚡ Extended</span>}
+              {auction?.status === 'DRAFT'    && <span className="text-[10px] text-gray-400">⏳ Draft</span>}
             </>
           )}
         </div>
+
+        {/* Price block */}
         {isAuction && auction ? (
-          <div className="mb-2">
-            {auction.currentHighestBid > 0 ? (
-              <>
-                <div className="text-[0.65rem] text-gray-500">Highest Bid</div>
-                <div className="font-display text-[1.85rem] font-bold text-green-600 leading-tight tracking-[-0.01em]">
-                  ₹{Number(auction.currentHighestBid).toLocaleString('en-IN')}
+          <div className="rounded-lg bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-100 px-3 py-2 mb-3">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-xl font-extrabold text-purple-700 tracking-tight">
+                ₹{Number(auction.currentHighestBid > 0 ? auction.currentHighestBid : auction.minBidPrice).toLocaleString('en-IN')}
+              </span>
+              <span className="text-[10px] text-purple-400 font-semibold">
+                {auction.currentHighestBid > 0 ? 'highest' : 'min bid'}
+              </span>
+            </div>
+            <span className="text-[10px] text-purple-400">{auction.totalBids} bid{auction.totalBids !== 1 ? 's' : ''}</span>
+          </div>
+        ) : (
+          <div className="rounded-lg bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 px-3 py-2 mb-3">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-xl font-extrabold text-emerald-700 tracking-tight">
+                ₹{Number(domain.askingPrice).toLocaleString('en-IN')}
+              </span>
+              <span className="text-[10px] text-emerald-400 font-semibold">asking price</span>
+            </div>
+          </div>
+        )}
+
+        {/* Stats row */}
+        <div className="flex items-center gap-2.5 text-[11px] text-gray-400 font-medium py-2 border-t border-gray-100 mt-auto">
+          <span className="flex items-center gap-1">👁 {domain.views || 0}</span>
+          <LikeButton liked={likeState?.liked} count={likeState?.count} onToggle={onLike} />
+
+          <div className="relative ml-auto" ref={shareRef}>
+            <button
+              className="p-1 rounded-md hover:bg-gray-100 transition-colors text-gray-400 hover:text-gray-600"
+              onClick={(e) => { e.stopPropagation(); setShareOpen(!shareOpen); }}
+              title="Share"
+            >
+              <Share2 size={13} />
+            </button>
+
+            {shareOpen && (
+              <div className="absolute right-0 bottom-full mb-1 z-50 bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden min-w-[150px]">
+                <div className="px-3 py-2 border-b border-gray-100 bg-gray-50">
+                  <span className="text-[10px] font-semibold text-gray-500">Share via</span>
                 </div>
-                <div className="text-xs text-gray-500">
-                  {auction.totalBids} bid{auction.totalBids !== 1 ? 's' : ''}
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="text-[0.65rem] text-gray-500">Starting Bid</div>
-                <div className="font-display text-[1.85rem] font-bold text-gray-900 leading-tight tracking-[-0.01em]">
-                  ₹{Number(auction.minBidPrice).toLocaleString('en-IN')}
-                </div>
-                <div className="text-xs text-green-500">No bids yet</div>
-              </>
+                <button className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+                  onClick={(e) => { e.stopPropagation(); handleShare(linkedinShare); }}>
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  LinkedIn
+                </button>
+                <button className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                  onClick={(e) => { e.stopPropagation(); handleShare(facebookShare); }}>
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                  Facebook
+                </button>
+                <button className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors"
+                  onClick={(e) => { e.stopPropagation(); handleShare(whatsappShare); }}>
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  WhatsApp
+                </button>
+              </div>
             )}
           </div>
-        ) : (
-          <div className="font-display text-[1.85rem] font-bold text-gray-900 leading-tight tracking-[-0.01em]">
-            ₹{Number(domain.askingPrice).toLocaleString('en-IN')}
-          </div>
-        )}
-      </div>
+        </div>
 
-      <div className="flex gap-3 text-xs text-gray-400 items-center">
-        <span title="Views">👁 {domain.views || 0}</span>
-        <LikeButton liked={likeState?.liked} count={likeState?.count} onToggle={onLike} />
-
-        {/* Share Button */}
-        <div className="relative" ref={shareRef}>
-          <button
-            className="p-1.5 rounded-md hover:bg-gray-100 transition-colors"
-            onClick={(e) => { e.stopPropagation(); setShareOpen(!shareOpen); }}
-            title="Share"
-          >
-            <Share2 size={15} />
-          </button>
-
-          {shareOpen && (
-            <div className="absolute right-0 bottom-full mb-1 z-50 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden min-w-[150px]">
-              <div className="px-3 py-2 border-b border-gray-100 bg-gray-50">
-                <span className="text-[10px] font-semibold text-gray-500">Share via</span>
-              </div>
-              <button
-                className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
-                onClick={(e) => { e.stopPropagation(); handleShare(linkedinShare); }}
-              >
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-                LinkedIn
+        {/* Actions */}
+        <div className="flex gap-2 mt-1 items-center" onClick={e => e.stopPropagation()}>
+          {isOwner ? (
+            <>
+              <button className="flex-1 py-2 bg-red-500 text-white text-xs font-bold rounded-lg transition-all hover:bg-red-600 inline-flex items-center justify-center gap-1.5"
+                onClick={e => { e.stopPropagation(); onDelete(); }}>
+                <Trash2 size={13} /> Remove
               </button>
               <button
-                className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
-                onClick={(e) => { e.stopPropagation(); handleShare(facebookShare); }}
-              >
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-                Facebook
+                className="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded-full border-2 border-gray-200 bg-white text-gray-600 transition-all hover:border-indigo-400 hover:text-indigo-600 hover:shadow-md"
+                onClick={onView} title="View Details">
+                <ArrowUpRight size={16} />
               </button>
+            </>
+          ) : (
+            <>
+              {isAuction ? (
+                auctionLive ? (
+                  <button
+                    onClick={e => { e.stopPropagation(); onViewAuction(); }}
+                    className={`flex-1 py-2 bg-gradient-to-r ${accentGrad} text-white text-xs font-bold rounded-lg transition-all hover:opacity-90 inline-flex items-center justify-center gap-1.5`}>
+                    <Gavel size={13} /> Bid Now
+                  </button>
+                ) : (
+                  <span className="flex-1 py-2 text-center text-[11px] text-gray-400 font-medium">
+                    {auction?.status === 'DRAFT'  ? 'Coming Soon' :
+                     auction?.status === 'ENDED'  ? 'Auction Ended' :
+                     auction?.status === 'UNSOLD' ? 'Unsold' : 'Closed'}
+                  </span>
+                )
+              ) : domain.domainStatus === 'AVAILABLE' ? (
+                isHighValue ? (
+                  <button
+                    onClick={e => { e.stopPropagation(); onEnquire(); }}
+                    className={`flex-1 py-2 bg-gradient-to-r ${accentGrad} text-white text-xs font-bold rounded-lg transition-all hover:opacity-90 inline-flex items-center justify-center gap-1.5`}>
+                    <MessageSquare size={13} /> Enquire
+                  </button>
+                ) : (
+                  <button
+                    onClick={e => { e.stopPropagation(); onBuy(); }}
+                    className={`flex-1 py-2 bg-gradient-to-r ${accentGrad} text-white text-xs font-bold rounded-lg transition-all hover:opacity-90 inline-flex items-center justify-center gap-1.5`}>
+                    <ShoppingCart size={13} /> Buy Now
+                  </button>
+                )
+              ) : (
+                <span className="flex-1 py-2 text-center text-[11px] text-gray-400 font-medium">
+                  {domain.domainStatus === 'SOLD' ? 'Sold' : 'Pending'}
+                </span>
+              )}
               <button
-                className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors"
-                onClick={(e) => { e.stopPropagation(); handleShare(whatsappShare); }}
-              >
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                </svg>
-                WhatsApp
+                className="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded-full border-2 border-gray-200 bg-white text-gray-600 transition-all hover:border-indigo-400 hover:text-indigo-600 hover:shadow-md"
+                onClick={onView} title="View Details">
+                <ArrowUpRight size={16} />
               </button>
-            </div>
+            </>
           )}
         </div>
-      </div>
-
-      <div className="flex gap-2 flex-wrap" onClick={e => e.stopPropagation()}>
-        {isOwner ? (
-          <button className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-50 border border-red-200 text-red-600 font-semibold text-xs rounded-lg cursor-pointer transition-colors hover:bg-red-100"
-            onClick={e => { e.stopPropagation(); onDelete(); }}>
-            <Trash2 size={14} /> Remove
-          </button>
-        ) : isAuction ? (
-          auctionLive ? (
-            <button
-              onClick={e => { e.stopPropagation(); onViewAuction(); }}
-              className="btn-glow btn-glow-sm flex-1 flex items-center justify-center gap-1.5 min-h-[42px]">
-              <Gavel size={14} /> Bid Now →
-            </button>
-          ) : (
-            <span className="text-[0.8rem] text-gray-500 font-medium">
-              {auction?.status === 'DRAFT'  ? 'Coming Soon' :
-               auction?.status === 'ENDED'  ? 'Auction Ended' :
-               auction?.status === 'UNSOLD' ? 'Unsold' : 'Closed'}
-            </span>
-          )
-        ) : domain.domainStatus === 'AVAILABLE' ? (
-          isHighValue ? (
-            <button
-              onClick={e => { e.stopPropagation(); onEnquire(); }}
-              className="btn-glow btn-glow-sm flex-1 flex items-center justify-center gap-1.5 min-h-[42px]">
-              <MessageSquare size={14} /> Enquire Now →
-            </button>
-          ) : (
-            <button className="btn-glow btn-glow-sm"
-              onClick={e => { e.stopPropagation(); onBuy(); }}>
-              <ShoppingCart size={14} /> Buy Now →
-            </button>
-          )
-        ) : (
-          <span className="text-[0.8rem] text-gray-500 font-medium">
-            {domain.domainStatus === 'SOLD' ? 'Sold' : 'Pending'}
-          </span>
-        )}
       </div>
     </div>
   );
@@ -572,7 +632,7 @@ function DomainForm({ onSaved, onCancel }) {
           <div className="flex gap-3">
             <button type="button" className="btn-glow flex-1"
               disabled={!imageFile || imageUploading} onClick={handleImageUpload}>
-              {imageUploading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> : 'Upload Logo →'}
+              {imageUploading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> : 'List Your Domain →'}
             </button>
             <button type="button" className="btn-glow" onClick={handleSkip}>Skip</button>
           </div>
@@ -716,7 +776,7 @@ function DomainForm({ onSaved, onCancel }) {
         <div className="flex gap-3 mt-2">
           <button type="submit" className="btn-glow flex-1" disabled={loading}>
             {loading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> :
-              isAuction ? 'List for Auction →' : 'List Domain →'}
+              isAuction ? 'List for Auction →' : 'Add Logo →'}
           </button>
           <button type="button" className="btn-glow" onClick={onCancel}>Cancel</button>
         </div>

@@ -56,6 +56,11 @@ export default {
           '0%':   { transform: 'translateY(-10px) rotate(0deg)', opacity: '1' },
           '85%':  { opacity: '1' },
           '100%': { transform: 'translateY(100vh) rotate(var(--rotation))', opacity: '0' },
+        },
+        'confetti-burst': {
+          '0%':   { transform: 'translate(var(--tx-start, 0), var(--ty-start, 0)) rotate(0deg) scale(1)', opacity: '1' },
+          '70%':  { opacity: '1' },
+          '100%': { transform: 'translate(var(--tx-end, 0), var(--ty-end, 100vh)) rotate(var(--rotation, 360deg)) scale(0.3)', opacity: '0' },
         }
       },
       animation: {
@@ -64,6 +69,7 @@ export default {
         slideUp: 'slideUp 0.25s ease',
         shimmer: 'shimmer 2s linear infinite',
         'confetti-fall': 'confetti-fall var(--duration, 4s) ease-in forwards',
+        'confetti-burst': 'confetti-burst var(--duration, 1.5s) cubic-bezier(.15,.8,.3,1) forwards',
       }
     },
   },

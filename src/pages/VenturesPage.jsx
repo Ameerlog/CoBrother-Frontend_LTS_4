@@ -251,113 +251,170 @@ function VentureCard({ venture, isOwner, onView, onApply, onEdit, onDelete,
     setShareOpen(false);
   };
 
+  const accentGrad = isAuction
+    ? 'from-purple-600 via-fuchsia-500 to-pink-500'
+    : 'from-indigo-600 via-blue-500 to-cyan-400';
+
   return (
-    <div className="card-glow-hover p-5 bg-white border border-gray-200 rounded-[14px] cursor-pointer flex flex-col" onClick={onView}>
-      <div className="flex flex-col flex-1">
-        <div className="flex items-start gap-3 mb-4">
-          {b.ventureImageUrl
-            ? <img src={b.ventureImageUrl} alt={b.brandName} className="w-12 h-12 rounded-[10px] object-cover flex-shrink-0" />
-            : <div className="w-12 h-12 rounded-[10px] bg-indigo-50 border border-indigo-200 flex items-center justify-center font-display text-xl font-bold text-indigo-600 flex-shrink-0">{b.brandName?.[0] || '?'}</div>
-          }
-          <div className="flex-1 min-w-0">
-            <div className="flex gap-2 flex-wrap mb-1">
-              <span className="px-2 py-0.5 bg-indigo-50 text-indigo-600 text-xs font-semibold rounded">{b.industry?.replace(/_/g, ' ')}</span>
-              <span className="px-2 py-0.5 bg-purple-50 text-purple-600 text-xs font-semibold rounded">{TYPE_LABELS[b.ventureType] || b.ventureType}</span>
-              {isAuction ? (
-                <span className="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs font-bold rounded">🔨 Auction</span>
-              ) : (
-                <span className="px-2 py-0.5 bg-blue-50 text-blue-600 text-xs font-semibold rounded">🤝 Regular</span>
+    <div
+      className="group relative bg-white rounded-2xl overflow-hidden cursor-pointer flex flex-col border border-gray-200/60 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-300"
+      onClick={onView}
+    >
+      {/* Gradient header with large image */}
+      <div className={`relative bg-gradient-to-r ${accentGrad} px-4 pt-3.5 pb-3.5 min-h-[90px] flex items-end`}>
+        {b.ventureImageUrl
+          ? <img src={b.ventureImageUrl} alt={b.brandName}
+              className="absolute top-0 right-0 w-full h-full object-cover opacity-30 group-hover:opacity-40 transition-opacity duration-300" />
+          : null
+        }
+        <div className="relative z-10 flex items-end justify-between w-full">
+          <div className="flex items-center gap-2">
+            {b.ventureImageUrl
+              ? <img src={b.ventureImageUrl} alt={b.brandName}
+                  className="w-14 h-14 rounded-xl object-cover ring-[3px] ring-white/50 shadow-lg" />
+              : <div className={`w-14 h-14 rounded-xl flex items-center justify-center font-display text-2xl font-extrabold text-white ring-[3px] ring-white/30 shadow-lg bg-white/15 backdrop-blur-sm`}>
+                  {b.brandName?.[0] || '?'}
+                </div>
+            }
+            <div>
+              <span className={`px-2 py-[3px] text-[10px] font-bold rounded-md uppercase tracking-wide ${isAuction ? 'bg-yellow-400 text-gray-900' : 'bg-white/25 backdrop-blur-sm text-white'}`}>
+                {isAuction ? '🔨 Auction' : '🤝 Regular'}
+              </span>
+              {isOwner && (
+                <span className="ml-1.5 px-2 py-[3px] bg-white text-indigo-600 text-[10px] font-extrabold rounded-md uppercase tracking-wide shadow-sm">
+                  ✦ Owner
+                </span>
               )}
             </div>
-            {isOwner && <div className="inline-block px-2 py-0.5 bg-indigo-50 text-indigo-600 text-xs font-semibold rounded">Owner</div>}
           </div>
         </div>
-        <h3 className="font-display text-lg font-bold text-gray-900 mb-2">{b.brandName}</h3>
-        <p className="text-sm text-gray-600 mb-3 line-clamp-3 flex-1">{shortDesc}</p>
-        {isAuction && auction ? (
-          <div className="text-lg font-bold text-purple-600 mb-3">
-            {auction.currentHighestBid > 0
-              ? `₹${Number(auction.currentHighestBid).toLocaleString('en-IN')}`
-              : `Min: ₹${Number(auction.minBidPrice || 0).toLocaleString('en-IN')}`}
-            <span className="text-xs text-gray-500 font-normal ml-2">{auction.totalBids} bid{auction.totalBids !== 1 ? 's' : ''}</span>
-          </div>
-        ) : b.dealValue ? (
-          <div className="text-lg font-bold text-green-600 mb-3">₹{Number(b.dealValue).toLocaleString('en-IN')}</div>
-        ) : null}
       </div>
 
-      <div className="border-t border-gray-100 pt-3 mb-3">
-        <div className="flex items-center gap-4 text-sm text-gray-600">
-          <span title="Views" className="flex items-center gap-1">👁 {venture.views || 0}</span>
-          {!isAuction && <span title="Applications" className="flex items-center gap-1">📋 {venture.coVentureApplicationCount || 0}</span>}
+      {/* Body */}
+      <div className="relative px-4 pb-4 pt-3 flex flex-col flex-1">
+        {/* Brand name + tags row */}
+        <div className="flex items-start justify-between gap-2 mb-1">
+          <h3 className="font-display text-[0.95rem] font-extrabold text-gray-900 truncate leading-snug">
+            {b.brandName}
+          </h3>
+          <div className="flex items-center gap-1 flex-shrink-0">
+            {b.industry && (
+              <span className="px-1.5 py-[2px] bg-gray-100 text-gray-500 text-[9px] font-bold rounded uppercase tracking-wide whitespace-nowrap">
+                {b.industry.replace(/_/g, ' ')}
+              </span>
+            )}
+            {b.ventureType && (
+              <span className="px-1.5 py-[2px] bg-indigo-50 text-indigo-500 text-[9px] font-bold rounded uppercase tracking-wide whitespace-nowrap">
+                {TYPE_LABELS[b.ventureType] || b.ventureType}
+              </span>
+            )}
+          </div>
+        </div>
+        <p className="text-[11px] text-gray-500 leading-relaxed line-clamp-2 mb-3">
+          {shortDesc || <span className="italic text-gray-300">No description yet</span>}
+        </p>
+
+        {/* Price block */}
+        {isAuction && auction ? (
+          <div className={`rounded-lg bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-100 px-3 py-2 mb-3`}>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-xl font-extrabold text-purple-700 tracking-tight">
+                ₹{Number(auction.currentHighestBid > 0 ? auction.currentHighestBid : (auction.minBidPrice || 0)).toLocaleString('en-IN')}
+              </span>
+              <span className="text-[10px] text-purple-400 font-semibold">
+                {auction.currentHighestBid > 0 ? 'highest' : 'min bid'}
+              </span>
+            </div>
+            <span className="text-[10px] text-purple-400">{auction.totalBids} bid{auction.totalBids !== 1 ? 's' : ''}</span>
+          </div>
+        ) : b.dealValue ? (
+          <div className="rounded-lg bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 px-3 py-2 mb-3">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-xl font-extrabold text-emerald-700 tracking-tight">
+                ₹{Number(b.dealValue).toLocaleString('en-IN')}
+              </span>
+              <span className="text-[10px] text-emerald-400 font-semibold">deal value</span>
+            </div>
+          </div>
+        ) : null}
+
+        {/* Stats row */}
+        <div className="flex items-center gap-2.5 text-[11px] text-gray-400 font-medium py-2 border-t border-gray-100 mt-auto">
+          <span className="flex items-center gap-1">👁 {venture.views || 0}</span>
+          {!isAuction && (
+            <span className="flex items-center gap-1">📋 {venture.coVentureApplicationCount || 0}</span>
+          )}
           <LikeButton liked={likeState?.liked} count={likeState?.count} onToggle={onLike} />
 
-          {/* Share Button */}
-          <div className="relative" ref={shareRef}>
+          <div className="relative ml-auto" ref={shareRef}>
             <button
-              className="p-1.5 rounded-md hover:bg-gray-100 transition-colors"
+              className="p-1 rounded-md hover:bg-gray-100 transition-colors text-gray-400 hover:text-gray-600"
               onClick={(e) => { e.stopPropagation(); setShareOpen(!shareOpen); }}
               title="Share"
             >
-              <Share2 size={15} />
+              <Share2 size={13} />
             </button>
 
             {shareOpen && (
-              <div className="absolute left-0 bottom-full mb-1 z-50 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden min-w-[150px]">
+              <div className="absolute right-0 bottom-full mb-1 z-50 bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden min-w-[150px]">
                 <div className="px-3 py-2 border-b border-gray-100 bg-gray-50">
                   <span className="text-[10px] font-semibold text-gray-500">Share via</span>
                 </div>
-                <button
-                  className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
-                  onClick={(e) => { e.stopPropagation(); handleShare(linkedinShare); }}
-                >
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
+                <button className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+                  onClick={(e) => { e.stopPropagation(); handleShare(linkedinShare); }}>
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                   LinkedIn
                 </button>
-                <button
-                  className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
-                  onClick={(e) => { e.stopPropagation(); handleShare(facebookShare); }}
-                >
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                  </svg>
+                <button className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                  onClick={(e) => { e.stopPropagation(); handleShare(facebookShare); }}>
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                   Facebook
                 </button>
-                <button
-                  className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors"
-                  onClick={(e) => { e.stopPropagation(); handleShare(whatsappShare); }}
-                >
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                  </svg>
+                <button className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors"
+                  onClick={(e) => { e.stopPropagation(); handleShare(whatsappShare); }}>
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                   WhatsApp
                 </button>
               </div>
             )}
           </div>
         </div>
-      </div>
 
-      <div className="flex gap-2 flex-wrap" onClick={e => e.stopPropagation()}>
-        {isOwner ? (
-          <>
-            <button className="btn-glow btn-glow-sm" onClick={onEdit}>Edit</button>
-            <button className="px-3 py-1.5 bg-red-500 border border-red-500 text-white rounded-lg text-xs font-semibold cursor-pointer transition-all duration-200 hover:bg-red-600" onClick={onDelete}>Delete</button>
-          </>
-        ) : isAuction && auction?.id && auction.status !== 'DRAFT' ? (
-          <button className="btn-glow btn-glow-sm"
-            onClick={() => navigate(`/venture-auction/${auction.id}`)}>🔨 Bid Now →</button>
-        ) : !isAuction ? (
-          <button className="btn-glow btn-glow-sm" onClick={onApply}>Co-Venture →</button>
-        ) : null}
-        {b.website && (
-          <a href={b.website} target="_blank" rel="noreferrer"
-             className="btn-glow btn-glow-sm flex items-center justify-center" onClick={e => e.stopPropagation()}>
-            <ArrowUpRight size={17} />
-          </a>
-        )}
+        {/* Actions */}
+        <div className="flex gap-2 mt-1" onClick={e => e.stopPropagation()}>
+          {isOwner ? (
+            <>
+              <button className="flex-1 py-2 bg-gray-100 text-gray-700 text-xs font-bold rounded-lg transition-all hover:bg-gray-200" onClick={onView}>View</button>
+              <button className="flex-1 py-2 bg-gray-900 text-white text-xs font-bold rounded-lg transition-all hover:bg-gray-800" onClick={onEdit}>Edit</button>
+              <button className="px-3 py-2 bg-red-500 text-white text-xs font-bold rounded-lg transition-all hover:bg-red-600" onClick={onDelete}>Delete</button>
+              {b.website && (
+                <a href={b.website} target="_blank" rel="noreferrer"
+                   className="px-3 py-2 bg-gray-100 text-gray-600 rounded-lg flex items-center justify-center transition-all hover:bg-gray-200"
+                   onClick={e => e.stopPropagation()}>
+                  <ArrowUpRight size={14} />
+                </a>
+              )}
+            </>
+          ) : (
+            <>
+              <button className="flex-1 py-2 bg-gray-100 text-gray-700 text-xs font-bold rounded-lg transition-all hover:bg-gray-200" onClick={onView}>View Details</button>
+              {isAuction && auction?.id && auction.status !== 'DRAFT' ? (
+                <button className={`flex-1 py-2 bg-gradient-to-r ${accentGrad} text-white text-xs font-bold rounded-lg transition-all hover:opacity-90`}
+                  onClick={() => navigate(`/venture-auction/${auction.id}`)}>🔨 Bid Now</button>
+              ) : !isAuction ? (
+                <button className={`flex-1 py-2 bg-gradient-to-r ${accentGrad} text-white text-xs font-bold rounded-lg transition-all hover:opacity-90`}
+                  onClick={onApply}>Co-Venture →</button>
+              ) : null}
+              {b.website && (
+                <a href={b.website} target="_blank" rel="noreferrer"
+                   className="px-3 py-2 bg-gray-100 text-gray-600 rounded-lg flex items-center justify-center transition-all hover:bg-gray-200"
+                   onClick={e => e.stopPropagation()}>
+                  <ArrowUpRight size={14} />
+                </a>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
