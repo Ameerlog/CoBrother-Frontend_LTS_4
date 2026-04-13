@@ -70,7 +70,7 @@ export default function AppLayout({ children }) {
     { to: '/ventures', label: 'Venture', icon: VentureIcon },
     { to: '/domains', label: 'Domains', icon: DomainsIcon },
     { to: '/cocreation', label: 'Technology', icon: TechnologyIcon },
-    { to: '/community', label: 'Community', icon: CommunityIcon },
+    { to: '/community', label: 'Disruptor', icon: CommunityIcon },
     { to: '/auctions', label: 'Auctions', icon: AuctionIcon },
     { to: '/purchases', label: 'Purchases', icon: PurchaseIcon },
   ];
@@ -163,20 +163,25 @@ export default function AppLayout({ children }) {
         </Link>
 
         <div className="hidden xl:flex items-center gap-1 flex-1 min-w-0">
-          {visibleLinks.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-white text-sm font-semibold text-gray-800 no-underline transition-all duration-200 hover:text-gray-900 hover:border-gray-300 hover:shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.45),18px_0_28px_-8px_rgba(147,51,234,0.40),0_0_18px_-4px_rgba(120,80,220,0.24)] active:translate-y-[1px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300/60 ${
-                location.pathname.startsWith(link.to)
-                  ? 'text-gray-900 bg-white border-gray-300 shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.45),18px_0_28px_-8px_rgba(147,51,234,0.40),0_0_18px_-4px_rgba(120,80,220,0.24)]'
-                  : ''
-              }`}
-            >
-              {renderNavIcon(link.icon, link.label)}
-              <span>{link.label}</span>
-            </Link>
-          ))}
+          {visibleLinks.map((link) => {
+            const isActive = location.pathname.startsWith(link.to);
+            return (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-white text-sm font-semibold text-gray-800 no-underline transition-all duration-200 hover:text-gray-900 hover:border-gray-300 hover:shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.45),18px_0_28px_-8px_rgba(147,51,234,0.40),0_0_18px_-4px_rgba(120,80,220,0.24)] active:translate-y-[1px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300/60 ${
+                  isActive
+                    ? 'text-gray-900 bg-white border-gray-300 shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.45),18px_0_28px_-8px_rgba(147,51,234,0.40),0_0_18px_-4px_rgba(120,80,220,0.24)]'
+                    : ''
+                }`}
+              >
+                {renderNavIcon(link.icon, link.label)}
+                <span className={isActive ? 'bg-gradient-to-r from-indigo-600 to-fuchsia-500 text-transparent bg-clip-text' : ''}>
+                  {link.label}
+                </span>
+              </Link>
+            );
+          })}
         </div>
 
         <div className="ml-auto flex items-center gap-2 md:gap-3 shrink-0">
@@ -268,7 +273,7 @@ export default function AppLayout({ children }) {
                 '?'}
             </div>
             <span className="text-sm font-medium text-gray-700 max-xl:hidden">
-              {user?.firstname || user?.email?.split('@')[0]}
+              {user?.firstname?.toUpperCase() || user?.email?.split('@')[0]?.toUpperCase()}
             </span>
             <button
               className="max-xl:hidden bg-transparent border border-gray-200 text-gray-600 rounded-lg p-1.5 cursor-pointer transition-all duration-200 hover:bg-red-50 hover:text-red-600 hover:border-red-200"
