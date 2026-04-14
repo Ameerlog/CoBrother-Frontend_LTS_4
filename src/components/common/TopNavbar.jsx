@@ -108,29 +108,30 @@ export default function TopNavbar({ homeMobileMenu = false }) {
           <div className="relative ml-1 md:ml-2">
             <button
               type="button"
-              className="block w-[30px] h-[30px] md:w-[36px] md:h-[36px] shrink-0 rounded-full cursor-pointer no-underline transition-all duration-500 hover:scale-110"
+              className="block w-[32px] h-[32px] md:w-[40px] md:h-[40px] shrink-0 rounded-full cursor-pointer no-underline transition-all duration-500 hover:scale-110 shadow-[0_6px_24px_rgba(0,0,0,0.14)]"
               style={{
                 perspective: '500px',
+                transformStyle: 'preserve-3d',
               }}
               onClick={() => setProfileDropdownOpen((prev) => !prev)}
             >
               {/* Front - Profile Icon */}
               <div
-                className="absolute inset-0 rounded-full flex items-center justify-center border-[1.75px] border-white/35 bg-transparent transition-all duration-500"
+                className="absolute inset-0 rounded-full flex items-center justify-center border border-white/25 bg-transparent transition-all duration-500"
                 style={{
-                  transform: showInitial ? 'rotateY(90deg) scale(0.5)' : 'rotateY(0deg) scale(0.8)',
+                  transform: showInitial ? 'rotateY(90deg) scale(0.55)' : 'rotateY(0deg) scale(0.9)',
                   opacity: showInitial ? 0 : 1,
                   backfaceVisibility: 'hidden',
                 }}
               >
-                <img src={cobrotherProfile} alt="Profile" className="w-full h-full object-contain p-1.5" />
+                <img src={cobrotherProfile} alt="Profile" className="w-full h-full object-contain p-1" />
               </div>
 
               {/* Back - User Initial Circle */}
               <div
-                className="absolute inset-0 rounded-full flex items-center justify-center bg-gradient-to-br from-black-500 to-indigo-600 text-white font-bold text-md transition-all duration-500"
+                className="absolute inset-0 rounded-full flex items-center justify-center border border-white/25 bg-gradient-to-br from-black-500 to-indigo-600 text-white font-bold text-lg transition-all duration-500"
                 style={{
-                  transform: showInitial ? 'rotateY(0deg) scale(0.8)' : 'rotateY(-90deg) scale(0.5)',
+                  transform: showInitial ? 'rotateY(0deg) scale(0.9)' : 'rotateY(-90deg) scale(0.55)',
                   opacity: showInitial ? 1 : 0,
                   backfaceVisibility: 'hidden',
                 }}

@@ -12,6 +12,7 @@ import Pagination from '../components/common/Pagination';
 import SkeletonCard from '../components/common/Skeleton';
 import ConfirmDialog from '../components/common/ConfirmDialog';
 import Confetti from '../components/common/Confetti';
+import DomainsIcon from '../assets/CoBranding.png';
 
 const DOMAIN_PRICING_OPTIONS = [
   { value: 'FIXED',      label: 'Fixed Price' },
@@ -153,7 +154,7 @@ export default function DomainsPage() {
           </div>
         ) : paginated.length === 0 ? (
           <div className="text-center py-20">
-            <div className="text-6xl mb-4">◇</div>
+            <img src={DomainsIcon} alt="Domain" className="mx-auto mb-4 w-16 h-16 object-contain" />
             <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">
               {activeFilterCount > 0 ? 'No domains match your filters' :
                filterTab === 'mine' ? 'You have no active listings' :
