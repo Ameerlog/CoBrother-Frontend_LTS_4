@@ -14,6 +14,7 @@ import AuctionIcon from '../../assets/Auction.png';
 import PurchaseIcon from '../../assets/purchase.png';
 import NotificationIcon from '../../assets/notification.png';
 import AdminIcon from '../../assets/Community-profileicon.png';
+import { Zap } from 'lucide-react';
 
 const TYPE_ICONS = {
   COVENTURE_APPLICATION_RECEIVED: 'ðŸ“‹',
@@ -73,6 +74,7 @@ export default function AppLayout({ children }) {
     { to: '/community', label: 'Disruptor', icon: CommunityIcon },
     { to: '/auctions', label: 'Auctions', icon: AuctionIcon },
     { to: '/purchases', label: 'Purchases', icon: PurchaseIcon },
+    { to: '/insights', label: 'Insights', icon: '⚡' },
   ];
 
   const coBrotherLinks = [{ to: '/cobrother', label: 'CoBrother', icon: 'â—†' }];

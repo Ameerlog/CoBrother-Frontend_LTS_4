@@ -185,6 +185,30 @@ export const feedbackAPI = {
   submit: (payload) => api.post('/api/v1/feedback', payload),
 };
 
+// ─── Insights ─────────────────────────────────────────────────────────────────
+export const insightsAPI = {
+  // Startup Validator
+  validate:         (data)         => api.post('/api/v1/insights/validate', data),
+  validationHistory:()             => api.get('/api/v1/insights/validate/history'),
+
+  // News Subscriptions
+  getSubscriptions: ()             => api.get('/api/v1/insights/subscriptions'),
+  createSubscription:(data)        => api.post('/api/v1/insights/subscriptions', data),
+  updateSubscription:(id, data)    => api.put(`/api/v1/insights/subscriptions/${id}`, data),
+  deleteSubscription:(id)          => api.delete(`/api/v1/insights/subscriptions/${id}`),
+  toggleSubscription:(id)          => api.post(`/api/v1/insights/subscriptions/${id}/toggle`),
+  triggerSubscription:(id)         => api.post(`/api/v1/insights/subscriptions/${id}/trigger`),
+
+  // Digests
+  getDigests:       (page = 0, size = 10) => api.get('/api/v1/insights/digests', { params: { page, size } }),
+  getDigest:        (id)           => api.get(`/api/v1/insights/digests/${id}`),
+  markDigestRead:   (id)           => api.patch(`/api/v1/insights/digests/${id}/read`),
+  markAllRead:      ()             => api.post('/api/v1/insights/digests/mark-all-read'),
+  getUnreadCount:   ()             => api.get('/api/v1/insights/digests/unread-count'),
+  getRadar:         ()             => api.get('/api/v1/insights/digests/radar'),
+  getFundingSignals:()             => api.get('/api/v1/insights/digests/funding'),
+};
+
 export const joinUsAPI = {
   submit: (data) => api.post('/api/v1/becobrother', data),
 };

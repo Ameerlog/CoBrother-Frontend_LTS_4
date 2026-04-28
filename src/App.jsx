@@ -32,6 +32,10 @@ import AuctionsPage from './pages/AuctionsPage';
 import Home from './pages/Home';
 import JoinForm from './pages/JoinForm';
 import ContactPage from './pages/ContactPage';
+import InsightsPage from './pages/InsightsPage';
+import StartupValidatorPage from './pages/StartupValidatorPage';
+import NewsDigestPage from './pages/NewsDigestPage';
+import NewsSubscriptionsPage from './pages/NewsSubscriptionsPage';
 
 
 export default function App() {
@@ -127,6 +131,12 @@ export default function App() {
               </ProfileGuard>
             }
           />
+
+          {/* Insights */}
+          <Route path="/insights"                   element={<ProfileGuard><InsightsPage /></ProfileGuard>} />
+          <Route path="/insights/validate"          element={<ProfileGuard><StartupValidatorPage /></ProfileGuard>} />
+          <Route path="/insights/news"              element={<ProfileGuard><NewsDigestPage /></ProfileGuard>} />
+          <Route path="/insights/news/subscriptions" element={<ProfileGuard><NewsSubscriptionsPage /></ProfileGuard>} />
 
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/login" replace />} />
