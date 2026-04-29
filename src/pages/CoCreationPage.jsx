@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Plus } from 'lucide-react';
-import { cocreationAPI } from '../api/services';
+import { cocreationAPI, addonAPI } from '../api/services';
+import AddonSelector, { addonTotal, ADDON_SERVICES } from '../components/addon/AddonSelector';
 import { useAuth } from '../context/AuthContext';
 import AppLayout from '../components/layout/AppLayout';
 import TechnologyIcon from '../assets/CoCreation.png';
@@ -544,12 +545,56 @@ function BuySoftwareModal({ item, user, onClose, onSuccess }) {
     buyerPhone:    user?.phoneNumber || '',
   });
   const [coBrotherOptIn, setCoBrotherOptIn] = useState(false);
+  const [addons, setAddons]                 = useState([]);
   const [loading, setLoading]               = useState(false);
   const [error, setError]                   = useState('');
 
   const basePrice    = item.price;
   const coBrotherFee = coBrotherOptIn ? 1000 : 0;
-  const totalPrice   = basePrice + coBrotherFee;
+  const addonExtra   = addonTotal(addons);
+  const totalPrice   = basePrice + coBrotherFee + addonExtra;
+
+  const payAddons = async (purchaseId, buyerInfo) => {
+    if (addons.length === 0) return;
+    try {
+      const { data: addonOrder } = await addonAPI.createOrder({
+        purchaseType: 'SOFTWARE',
+        purchaseId,
+        services:     addons,
+        buyerEmail:   buyerInfo.buyerEmail  || '',
+        buyerName:    buyerInfo.buyerFullName || '',
+        buyerPhone:   buyerInfo.buyerPhone  || '',
+      });
+      if (addonOrder.contactOnly) return;
+      await new Promise((resolve) => {
+        const opts = {
+          key:         addonOrder.keyId,
+          amount:      addonOrder.amount * 100,
+          currency:    addonOrder.currency,
+          name:        'CoBrother',
+          description: 'Add-on Services',
+          order_id:    addonOrder.orderId,
+          handler: async (resp) => {
+            try {
+              await addonAPI.verifyPayment({
+                razorpayPaymentId: resp.razorpay_payment_id,
+                razorpayOrderId:   resp.razorpay_order_id,
+                razorpaySignature: resp.razorpay_signature,
+              });
+            } catch { /* non-blocking */ }
+            resolve();
+          },
+          modal: { ondismiss: () => resolve() },
+          theme: { color: '#6366f1' },
+        };
+        const rzp = new window.Razorpay(opts);
+        rzp.on('payment.failed', () => resolve());
+        rzp.open();
+      });
+    } catch (e) {
+      console.warn('Addon payment issue:', e);
+    }
+  };
 
   const handlePay = async () => {
     setLoading(true); setError('');
@@ -574,6 +619,8 @@ function BuySoftwareModal({ item, user, onClose, onSuccess }) {
               razorpayOrderId:   response.razorpay_order_id,
               razorpaySignature: response.razorpay_signature,
             });
+            // Software paid — now handle addons
+            await payAddons(verifyData.purchaseId ?? item.id, form);
             onSuccess({
               ...item,
               softwareStatus:   'SOLD',
@@ -582,6 +629,7 @@ function BuySoftwareModal({ item, user, onClose, onSuccess }) {
               githubLink:       verifyData.githubLink,
               coBrotherOptIn,
               coBrotherHelpPaid: coBrotherOptIn,
+              _addons:           addons,
             });
           } catch {
             setError('Payment verification failed. Contact support.');
@@ -673,6 +721,9 @@ function BuySoftwareModal({ item, user, onClose, onSuccess }) {
           </div>
         </div>
 
+        {/* ── Add-on selector ── */}
+        <AddonSelector selected={addons} onChange={setAddons} />
+
         {/* ── Billing breakdown ── */}
         <div className="bg-gray-50 border border-gray-200 rounded-[10px] p-4 mb-5">
           <div className="text-[0.72rem] font-semibold text-gray-400 uppercase tracking-wider mb-3">
@@ -682,6 +733,16 @@ function BuySoftwareModal({ item, user, onClose, onSuccess }) {
                        value={`₹${Number(basePrice).toLocaleString('en-IN')}`} />
           {coBrotherOptIn && (
             <BillingLine label="◆ CoBrother Helper" value="₹1,000" accent />
+          )}
+          {addons.filter(k => !ADDON_SERVICES.find(s => s.key === k)?.contactOnly).map(k => {
+            const svc = ADDON_SERVICES.find(s => s.key === k);
+            return svc ? (
+              <BillingLine key={k} label={svc.label}
+                value={`₹${svc.price.toLocaleString('en-IN')}`} accent />
+            ) : null;
+          })}
+          {addons.some(k => ADDON_SERVICES.find(s => s.key === k)?.contactOnly) && (
+            <div className="text-xs text-amber-600 py-1">+ contact-based services (no charge now)</div>
           )}
           <div className="h-px bg-gray-200 my-2.5" />
           <div className="flex justify-between items-center">
@@ -702,7 +763,7 @@ function BuySoftwareModal({ item, user, onClose, onSuccess }) {
         <div className="flex gap-3">
           <button className="btn-glow flex-1" onClick={handlePay} disabled={loading}>
             {loading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> :
-              `Pay ₹${Number(totalPrice).toLocaleString('en-IN')} →`}
+              `Pay ₹${Number(basePrice + coBrotherFee).toLocaleString('en-IN')}${addonExtra > 0 ? ` + ₹${addonExtra.toLocaleString('en-IN')} add-ons` : ''} →`}
           </button>
           <button className="btn-glow" onClick={onClose}>Cancel</button>
         </div>

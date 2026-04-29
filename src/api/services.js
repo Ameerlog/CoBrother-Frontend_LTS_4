@@ -209,6 +209,15 @@ export const insightsAPI = {
   getFundingSignals:()             => api.get('/api/v1/insights/digests/funding'),
 };
 
+export const addonAPI = {
+  getServices: () => api.get('/api/v1/addon/services'),
+  createOrder: (body) => api.post('/api/v1/addon/order', body),
+  verifyPayment: (body) => api.post('/api/v1/addon/verify', body),
+  getMyOrders: () => api.get('/api/v1/addon/my-orders'),
+  adminGetAll: () => api.get('/api/v1/addon/admin/all'),
+};
+
+
 export const joinUsAPI = {
   submit: (data) => api.post('/api/v1/becobrother', data),
 };
@@ -219,3 +228,5 @@ export const publicAPI = {
   getVentures:  () => api.get('/public/api/v1/ventures'),
   getSoftwares: () => api.get('/public/api/v1/softwares'),
 };
+
+
