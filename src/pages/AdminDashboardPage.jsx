@@ -33,8 +33,9 @@ export default function AdminDashboardPage() {
     domains:            adminAPI.getDomains,
     'domain-enquiries': adminAPI.getDomainEnquiries,
     cocreations:        adminAPI.getCoCreations,
-    auctions: adminAPI.getAllAuctions,
+    auctions:           adminAPI.getAllAuctions,
     'venture-auctions': adminAPI.getAllVentureAuctions,
+    'addon-orders':     adminAPI.getAddonOrders,
   };
 
   const loadTab = (currentTab) => {
@@ -95,11 +96,12 @@ export default function AdminDashboardPage() {
     { id: 'coventures',         label: 'CoVentures', icon: VentureIcon       },
     { id: 'domains',            label: 'Domains', icon: DomainsIcon           },
     { id: 'domain-enquiries',   label: 'Domain Enquiries', icon: EnquireIcon },
-    { id: 'cocreations',        label: 'CoCreations', icon: TechnologyIcon       },
+    { id: 'cocreations',        label: 'CoCreations', icon: TechnologyIcon    },
     { id: 'requests',           label: 'CoBrother Requests', icon: RequestIcon},
-    { id: 'auctions', label: 'Domain Auctions', icon: AuctionIcon },
-    { id: 'venture-auctions', label: 'Venture Auctions', icon: AuctionIcon },
-    { id: 'homepage-features',  label: 'Homepage Features', icon: PurchaseIcon },
+    { id: 'auctions',           label: 'Domain Auctions', icon: AuctionIcon   },
+    { id: 'venture-auctions',   label: 'Venture Auctions', icon: AuctionIcon  },
+    { id: 'addon-orders',       label: 'Addon Orders', icon: PurchaseIcon     },
+    { id: 'homepage-features',  label: 'Homepage Features', icon: PurchaseIcon},
   ];
 
   return (
@@ -130,8 +132,9 @@ export default function AdminDashboardPage() {
             enquiries={data}
             onForward={(entityId, type) => setForwardModal({ entityId, type })}
           />
-        ) : tab === 'auctions' ? ( <AuctionsAdminTable auctions={data} /> 
-        ) : tab === 'venture-auctions' ? ( <VentureAuctionsAdminTable auctions={data} /> 
+        ) : tab === 'auctions' ? ( <AuctionsAdminTable auctions={data} />
+        ) : tab === 'venture-auctions' ? ( <VentureAuctionsAdminTable auctions={data} />
+        ) : tab === 'addon-orders' ? ( <AddonOrdersTable orders={data} />
         ) : tab === 'homepage-features' ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <HomepageFeatureSelector type="domain" />
@@ -785,6 +788,118 @@ function TakeDownModal({ target, onConfirm, onClose }) {
           <button className="btn-ghost" onClick={onClose}>Cancel</button>
         </div>
       </div>
+    </div>
+  );
+}
+
+function AddonOrdersTable({ orders }) {
+  if (!orders.length) return (
+    <div className="text-center py-20">
+      <h3 className="font-display text-2xl font-bold text-gray-900">No addon orders yet</h3>
+      <p className="text-gray-600 mt-2">Orders will appear here when users select add-ons during checkout.</p>
+    </div>
+  );
+
+  const STATUS_COLOR = {
+    COMPLETED:       '#6ec896',
+    CONTACT_PENDING: '#c8a96e',
+    CREATED:         '#6eadc8',
+    FAILED:          '#c86e6e',
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+      {orders.map(order => (
+        <AddonOrderRow key={order.id} order={order} statusColor={STATUS_COLOR} />
+      ))}
+    </div>
+  );
+}
+
+function AddonOrderRow({ order, statusColor }) {
+  const [expanded, setExpanded] = useState(false);
+  const services = order.selectedServices ? order.selectedServices.split(',') : [];
+
+  return (
+    <div style={{ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: 10, overflow: 'hidden' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem 1.25rem', cursor: 'pointer' }}
+           onClick={() => setExpanded(v => !v)}>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontWeight: 600, color: '#111827', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            #{order.id} — {order.buyerName || order.buyerEmail || '—'}
+            <span style={{ fontSize: '0.68rem', fontWeight: 700,
+                           color: order.purchaseType === 'DOMAIN' ? '#0369a1' : '#7c3aed',
+                           background: order.purchaseType === 'DOMAIN' ? 'rgba(3,105,161,0.08)' : 'rgba(124,58,237,0.08)',
+                           border: `1px solid ${order.purchaseType === 'DOMAIN' ? 'rgba(3,105,161,0.25)' : 'rgba(124,58,237,0.25)'}`,
+                           padding: '0.15rem 0.45rem', borderRadius: 4 }}>
+              {order.purchaseType}
+            </span>
+            <span style={{ fontSize: '0.68rem', fontWeight: 700,
+                           color: statusColor[order.paymentStatus] || '#888',
+                           background: 'rgba(0,0,0,0.04)',
+                           border: '1px solid rgba(0,0,0,0.1)',
+                           padding: '0.15rem 0.45rem', borderRadius: 4 }}>
+              {order.paymentStatus?.replace(/_/g, ' ')}
+            </span>
+          </div>
+          <div style={{ fontSize: '0.78rem', color: '#6b7280', marginTop: '0.2rem' }}>
+            {services.length} service{services.length !== 1 ? 's' : ''} · ₹{Number(order.totalAmount || 0).toLocaleString('en-IN')}
+            {order.createdAt && ` · ${new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}`}
+          </div>
+        </div>
+        <div style={{ textAlign: 'right' }}>
+          <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.1rem', fontWeight: 700,
+                        color: statusColor[order.paymentStatus] || '#888' }}>
+            ₹{Number(order.totalAmount || 0).toLocaleString('en-IN')}
+          </div>
+        </div>
+        <span style={{ color: '#9ca3af', fontSize: '0.85rem' }}>{expanded ? '▲' : '▼'}</span>
+      </div>
+
+      {expanded && (
+        <div style={{ borderTop: '1px solid #e5e7eb', padding: '1rem 1.25rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+            <div>
+              <div style={labelStyle}>Buyer</div>
+              <div style={valueStyle}>{order.buyerName || '—'}</div>
+              <div style={{ fontSize: '0.78rem', color: '#6b7280' }}>{order.buyerEmail}</div>
+              <div style={{ fontSize: '0.78rem', color: '#6b7280' }}>{order.buyerPhone || '—'}</div>
+            </div>
+            <div>
+              <div style={labelStyle}>Linked Purchase</div>
+              <div style={valueStyle}>{order.purchaseType} #{order.purchaseId}</div>
+              <div style={{ fontSize: '0.78rem', color: '#6b7280' }}>Addon Order #{order.id}</div>
+            </div>
+            <div>
+              <div style={labelStyle}>Payment</div>
+              <div style={{ fontSize: '0.9rem', fontWeight: 600, color: statusColor[order.paymentStatus] || '#888' }}>
+                {order.paymentStatus?.replace(/_/g, ' ')}
+              </div>
+              {order.razorpayPaymentId && (
+                <div style={{ fontSize: '0.72rem', color: '#6b7280', wordBreak: 'break-all' }}>
+                  {order.razorpayPaymentId}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {services.length > 0 && (
+            <div>
+              <div style={labelStyle}>Services Selected</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.4rem' }}>
+                {services.map(key => (
+                  <span key={key} style={{ fontSize: '0.75rem', fontWeight: 600,
+                                           background: '#eef2ff', color: '#4338ca',
+                                           border: '1px solid #c7d2fe',
+                                           padding: '0.2rem 0.6rem', borderRadius: 6 }}>
+                    {key.replace(/_/g, ' ')}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

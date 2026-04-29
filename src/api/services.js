@@ -150,7 +150,7 @@ export const adminAPI = {
   toggleDomainHomepage:   (id)  => api.post(`/api/v1/admin/domain/${id}/toggle-homepage`),
   toggleVentureHomepage:  (id)  => api.post(`/api/v1/admin/venture/${id}/toggle-homepage`),
   toggleSoftwareHomepage: (id)  => api.post(`/api/v1/admin/software/${id}/toggle-homepage`),
-
+  getAddonOrders:       ()      => api.get('/api/v1/addon/admin/all'),
 };
 
 export const coBrotherAPI = {

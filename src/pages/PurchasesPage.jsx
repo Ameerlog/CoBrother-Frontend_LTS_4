@@ -102,6 +102,7 @@ export default function PurchasesPage() {
                 <DomainPurchaseRow
                   key={'d-' + item.id}
                   domain={item}
+                  addonOrders={addonOrders.filter(o => o.purchaseType === 'DOMAIN' && String(o.purchaseId) === String(item.id))}
                   onDownloadInvoice={() => generateInvoice({ type: 'domain', item, user })}
                 />
               ) : (
@@ -157,7 +158,13 @@ export default function PurchasesPage() {
 /* ─────────────────────────────────────────────────────────
    Domain Purchase Row
 ───────────────────────────────────────────────────────── */
-function DomainPurchaseRow({ domain, onDownloadInvoice }) {
+function DomainPurchaseRow({ domain, addonOrders = [], onDownloadInvoice }) {
+  const paidAddons = addonOrders
+    .flatMap(o => o.selectedServices ? o.selectedServices.split(',') : [])
+    .map(key => ADDON_SERVICES.find(s => s.key === key))
+    .filter(Boolean);
+  const addonAmount = paidAddons.reduce((s, a) => s + (a.price || 0), 0);
+
   return (
     <div className="p-5 bg-white border border-gray-200 rounded-xl shadow-sm">
       <div className="flex justify-between flex-wrap gap-3">
@@ -175,10 +182,29 @@ function DomainPurchaseRow({ domain, onDownloadInvoice }) {
           <div className="font-display text-xl font-bold text-green-600">
             ₹{Number(domain.askingPrice).toLocaleString('en-IN')}
           </div>
+          {addonAmount > 0 && (
+            <div className="text-xs text-indigo-600">
+              + ₹{addonAmount.toLocaleString('en-IN')} add-ons
+            </div>
+          )}
           <div className="text-xs text-gray-600">✓ Payment Confirmed</div>
           <InvoiceDownloadButton onClick={onDownloadInvoice} />
         </div>
       </div>
+
+      {paidAddons.length > 0 && (
+        <div className="mt-3.5 p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+          <div className="font-bold text-xs text-indigo-700 mb-2 uppercase tracking-wide">Add-on Services</div>
+          <div className="flex flex-wrap gap-2">
+            {paidAddons.map(svc => (
+              <span key={svc.key} className="text-xs bg-white border border-indigo-200 text-indigo-700 font-semibold px-2.5 py-1 rounded-lg">
+                ✓ {svc.label}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="mt-3.5 px-4 py-3 bg-yellow-50 border border-yellow-200 rounded-lg text-xs text-yellow-900">
         ⏳ Domain transfer in progress — seller will initiate within 24 hours.
       </div>
@@ -193,7 +219,8 @@ function SoftwarePurchaseRow({ purchase, addonOrders = [], onGetHelp, onDownload
   const sw      = purchase.software || {};
   const helpPaid  = purchase.coBrotherHelpPaid;
   const confirmed = purchase.completionStatus === 'CONFIRMED';
-  const paidAddons = addonOrders.flatMap(o => o.services || [])
+  const paidAddons = addonOrders
+    .flatMap(o => o.selectedServices ? o.selectedServices.split(',') : [])
     .map(key => ADDON_SERVICES.find(s => s.key === key))
     .filter(Boolean);
 
