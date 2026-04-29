@@ -20,14 +20,53 @@ function invoiceNumber(id) {
   return `CB-INV-${num}`;
 }
 
+// Canonical addon prices — must match AddonServiceType enum on the backend
+const ADDON_PRICE_MAP = {
+  GST_REGISTRATION:       3000,
+  UDYAM_REGISTRATION:     1500,
+  IEC_REGISTRATION:       2000,
+  DIGITAL_SIGNATURE:      3000,
+  PROFESSIONAL_TAX:       2500,
+  STARTUP_INDIA:          3000,
+  TRADEMARK_REGISTRATION: 0,
+  COMPANY_REGISTRATION:   0,
+  WEBSITE_DEVELOPMENT:    0,
+};
+
+const ADDON_LABEL_MAP = {
+  GST_REGISTRATION:       'GST Registration',
+  UDYAM_REGISTRATION:     'Udyam Registration',
+  IEC_REGISTRATION:       'Import Export Code (IEC) Registration',
+  DIGITAL_SIGNATURE:      'Digital Signature Certificate',
+  PROFESSIONAL_TAX:       'Professional Tax Registration',
+  STARTUP_INDIA:          'Startup India Registration',
+  TRADEMARK_REGISTRATION: 'Trademark Registration',
+  COMPANY_REGISTRATION:   'Company / LLP / Proprietorship Registration',
+  WEBSITE_DEVELOPMENT:    'Website Development',
+};
+
+function addonLinesToExtraRows(addonOrders) {
+  const lines = [];
+  addonOrders.forEach(order => {
+    const keys = order.selectedServices
+      ? order.selectedServices.split(',')
+      : (order.services || []);
+    keys.forEach(key => {
+      const price = ADDON_PRICE_MAP[key];
+      if (price > 0) {
+        lines.push({ label: ADDON_LABEL_MAP[key] || key.replace(/_/g, ' '), amount: price });
+      }
+    });
+  });
+  return lines;
+}
+
 /**
  * @param {object} opts
  * @param {'domain'|'software'} opts.type
  * @param {object} opts.item        — the raw purchase object from the API
  * @param {object} opts.user        — { name, email } of the logged-in user
- * @param {Array}  opts.addonOrders — (software only) list of addon order objects from addonAPI.getMyOrders()
- *                                    Each order: { services: string[], purchaseType, purchaseId }
- *                                    ADDON_SERVICES reference: { key, label, price }
+ * @param {Array}  opts.addonOrders — list of AddonOrder objects (selectedServices is a comma string)
  */
 export function generateInvoice({ type, item, user = {}, addonOrders = [] }) {
   /* ── Derive fields ─────────────────────────────────────── */
@@ -42,55 +81,18 @@ export function generateInvoice({ type, item, user = {}, addonOrders = [] }) {
     productName = `${item.domainName}${item.domainExtension}`;
     productDesc = item.pricingDemand || 'Domain Name Purchase';
     baseAmount  = Number(item.askingPrice || 0);
+    extraLines  = addonLinesToExtraRows(addonOrders);
   } else {
-    const sw     = item.software || {};
-    productName  = sw.name || 'Software License';
-    productDesc  = sw.description || 'Software Purchase';
-    baseAmount   = Number(sw.price || 0);
+    const sw    = item.software || {};
+    productName = sw.name || 'Software License';
+    productDesc = sw.description || 'Software Purchase';
+    baseAmount  = Number(sw.price || 0);
 
-    // CoBrother Helper (paid at time of purchase or later)
     if (item.coBrotherHelpPaid) {
       extraLines.push({ label: 'CoBrother Helper Service', amount: 1000 });
     }
 
-    // Add-on services purchased alongside or after the software
-    if (addonOrders.length > 0) {
-      // Flatten all service keys from all addon orders for this purchase
-      const ADDON_PRICE_MAP = {
-        GST_REGISTRATION:    1499,
-        MSME_REGISTRATION:   999,
-        TRADEMARK:           2499,
-        COMPANY_FORMATION:   4999,
-        LOGO_DESIGN:         1999,
-        WEBSITE_SETUP:       2999,
-        SOCIAL_MEDIA_SETUP:  1499,
-        DOMAIN_SETUP:        499,
-        EMAIL_SETUP:         299,
-        // Fallback — contact-only services have price 0
-      };
-      const ADDON_LABEL_MAP = {
-        GST_REGISTRATION:    'GST Registration',
-        MSME_REGISTRATION:   'MSME Registration',
-        TRADEMARK:           'Trademark Filing',
-        COMPANY_FORMATION:   'Company Formation',
-        LOGO_DESIGN:         'Logo Design',
-        WEBSITE_SETUP:       'Website Setup',
-        SOCIAL_MEDIA_SETUP:  'Social Media Setup',
-        DOMAIN_SETUP:        'Domain Setup',
-        EMAIL_SETUP:         'Email Setup',
-      };
-
-      addonOrders.forEach(order => {
-        (order.services || []).forEach(key => {
-          const label  = ADDON_LABEL_MAP[key] || key.replace(/_/g, ' ');
-          const amount = ADDON_PRICE_MAP[key] || 0;
-          // Only show paid add-ons on invoice (skip contact-only / 0-price)
-          if (amount > 0) {
-            extraLines.push({ label, amount });
-          }
-        });
-      });
-    }
+    extraLines.push(...addonLinesToExtraRows(addonOrders));
   }
 
   const subtotal = baseAmount + extraLines.reduce((s, l) => s + l.amount, 0);

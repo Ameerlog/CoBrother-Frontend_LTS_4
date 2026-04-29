@@ -103,7 +103,8 @@ export default function PurchasesPage() {
                   key={'d-' + item.id}
                   domain={item}
                   addonOrders={addonOrders.filter(o => o.purchaseType === 'DOMAIN' && String(o.purchaseId) === String(item.id))}
-                  onDownloadInvoice={() => generateInvoice({ type: 'domain', item, user })}
+                  onDownloadInvoice={() => generateInvoice({ type: 'domain', item, user,
+                    addonOrders: addonOrders.filter(o => o.purchaseType === 'DOMAIN' && String(o.purchaseId) === String(item.id)) })}
                 />
               ) : (
                 <SoftwarePurchaseRow

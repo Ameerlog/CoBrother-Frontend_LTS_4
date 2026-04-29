@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Plus, Gavel, ShoppingCart, MessageSquare, Trash2, CheckCircle, Share2, ArrowUpRight } from 'lucide-react';
-import { domainAPI, domainEnquiryAPI, auctionAPI, addonAPI } from '../api/services';
+import { domainAPI, domainEnquiryAPI, auctionAPI } from '../api/services';
 import { useAuth } from '../context/AuthContext';
 import AppLayout from '../components/layout/AppLayout';
 import { useLikes } from '../hooks/useLikes';
@@ -789,74 +789,26 @@ function DomainForm({ onSaved, onCancel }) {
 
 // ─── Buy Domain Modal ─────────────────────────────────────────────────────────
 function BuyDomainModal({ domain, onClose, onSuccess }) {
-  const [loading, setLoading]       = useState(false);
-  const [error, setError]           = useState('');
-  const [addons, setAddons]         = useState([]);   // selected addon keys
-  const [addonDone, setAddonDone]   = useState(false);// track if addon payment finished
- 
-  const addonExtra = addonTotal(addons);
+  const [loading, setLoading] = useState(false);
+  const [error, setError]     = useState('');
+  const [addons, setAddons]   = useState([]);
+
+  const addonExtra  = addonTotal(addons);
   const domainPrice = Number(domain.askingPrice);
-  const totalDisplay = domainPrice + addonExtra;
- 
-  // After domain payment succeeds, pay for addons if any were selected
-  const payAddons = async (domainPurchaseId) => {
-    if (addons.length === 0) return;
-    try {
-      const { data: addonOrder } = await addonAPI.createOrder({
-        purchaseType: 'DOMAIN',
-        purchaseId:   domainPurchaseId,
-        services:     addons,
-        buyerEmail:   domain._buyerEmail || '',
-        buyerName:    domain._buyerName  || '',
-        buyerPhone:   domain._buyerPhone || '',
-      });
- 
-      if (addonOrder.contactOnly) {
-        // No payment needed — contact-only services recorded
-        setAddonDone(true);
-        return;
-      }
- 
-      // Open second Razorpay checkout for addons
-      await new Promise((resolve, reject) => {
-        const opts = {
-          key:         addonOrder.keyId,
-          amount:      addonOrder.amount * 100,
-          currency:    addonOrder.currency,
-          name:        'CoBrother',
-          description: 'Business Registration Add-ons',
-          order_id:    addonOrder.orderId,
-          handler: async (resp) => {
-            try {
-              await addonAPI.verifyPayment({
-                razorpayPaymentId: resp.razorpay_payment_id,
-                razorpayOrderId:   resp.razorpay_order_id,
-                razorpaySignature: resp.razorpay_signature,
-              });
-              setAddonDone(true);
-              resolve();
-            } catch { reject(new Error('Addon payment verification failed')); }
-          },
-          modal: { ondismiss: () => resolve() }, // soft-fail: addon dismissed = ok
-          theme: { color: '#6366f1' },
-        };
-        const rzp = new window.Razorpay(opts);
-        rzp.on('payment.failed', () => resolve()); // soft-fail
-        rzp.open();
-      });
-    } catch (e) {
-      // Addon payment failure is non-blocking — domain purchase still succeeded
-      console.warn('Addon payment issue:', e);
-    }
-  };
- 
+  const totalPrice  = domainPrice + addonExtra;
+
   const handleBuy = async () => {
     setLoading(true); setError('');
     try {
-      const { data: orderData } = await domainAPI.createOrder(domain.id);
+      const { data: orderData } = await domainAPI.createOrder(domain.id, {
+        services: addons,
+      });
       const options = {
-        key: orderData.keyId, amount: orderData.amount * 100, currency: orderData.currency,
-        name: 'CoBrother', description: `Purchase ${domain.domainName}${domain.domainExtension}`,
+        key:      orderData.keyId,
+        amount:   orderData.amount * 100,
+        currency: orderData.currency,
+        name:     'CoBrother',
+        description: `Purchase ${domain.domainName}${domain.domainExtension}`,
         order_id: orderData.orderId,
         handler: async response => {
           try {
@@ -865,13 +817,11 @@ function BuyDomainModal({ domain, onClose, onSuccess }) {
               razorpayOrderId:   response.razorpay_order_id,
               razorpaySignature: response.razorpay_signature,
             });
-            // Domain paid — now handle addons
-            await payAddons(domain.id);
             onSuccess({
               ...domain,
               domainStatus:  'SOLD',
               paymentStatus: 'COMPLETED',
-              _addons:       addons,  // pass to success modal for display
+              _addons:       addons,
             });
           } catch { setError('Payment verification failed. Contact support.'); setLoading(false); }
         },
@@ -887,68 +837,58 @@ function BuyDomainModal({ domain, onClose, onSuccess }) {
       rzp.open();
     } catch (err) { setError(err.response?.data || 'Failed to initiate payment.'); setLoading(false); }
   };
- 
+
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={e => e.target === e.currentTarget && onClose()}>
       <div className="relative w-full max-w-[520px] bg-white border border-gray-200 rounded-[18px] shadow-[0_20px_60px_rgba(0,0,0,0.2)] p-8 max-h-[90vh] overflow-y-auto">
         <div className="absolute -top-24 -right-24 w-[300px] h-[300px] rounded-full bg-indigo-100/30 blur-3xl pointer-events-none" />
         <button className="absolute top-4 right-4 z-20 bg-transparent border-none text-gray-400 text-xl cursor-pointer transition-colors hover:text-gray-700" onClick={onClose}>✕</button>
- 
+
         <div className="mb-5">
           <div className="inline-flex items-center px-2.5 py-0.5 bg-indigo-50 border border-indigo-200 rounded-full text-[0.72rem] font-semibold text-indigo-600 uppercase tracking-wide mb-2">Domain Purchase</div>
           <h2 className="font-display text-[1.75rem] font-semibold text-gray-900 mb-1">{domain.domainName}{domain.domainExtension}</h2>
           <p className="text-sm text-gray-500">{domain.pricingDemand}</p>
         </div>
- 
-        {/* Domain price summary */}
-        <div className="p-3.5 bg-green-50 border border-green-200 rounded-lg text-[0.82rem] text-green-800 leading-relaxed mb-3">
-          ✅ Domain price: <strong>₹{domainPrice.toLocaleString('en-IN')}</strong>
-        </div>
+
         <div className="p-3.5 bg-amber-50 border border-amber-200 rounded-lg text-[0.82rem] text-amber-800 leading-relaxed mb-4">
           ⏳ After payment, you will be updated within <strong>24 hours</strong> with transfer details.
         </div>
- 
+
         {/* ── Add-on selector ── */}
         <AddonSelector selected={addons} onChange={setAddons} />
- 
-        {/* Total */}
-        {addons.length > 0 && (
-          <div className="mt-4 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm">
-            <div className="flex justify-between text-gray-600 mb-1">
-              <span>Domain</span>
-              <span>₹{domainPrice.toLocaleString('en-IN')}</span>
-            </div>
-            {addons.filter(k => !ADDON_SERVICES.find(s=>s.key===k)?.contactOnly).map(k => {
-              const svc = ADDON_SERVICES.find(s => s.key === k);
-              return svc ? (
-                <div key={k} className="flex justify-between text-gray-600 mb-1">
-                  <span className="truncate mr-2">{svc.label}</span>
-                  <span>₹{svc.price.toLocaleString('en-IN')}</span>
-                </div>
-              ) : null;
-            })}
-            {addons.some(k => ADDON_SERVICES.find(s=>s.key===k)?.contactOnly) && (
-              <div className="text-xs text-amber-600 mb-1">+ contact-based services (no charge now)</div>
-            )}
-            <div className="flex justify-between font-bold text-gray-900 border-t border-gray-200 pt-2 mt-1">
-              <span>Total payable now</span>
-              <span>₹{totalDisplay.toLocaleString('en-IN')}</span>
-            </div>
-            {addonExtra > 0 && (
-              <p className="text-xs text-indigo-600 mt-1">
-                Domain will be charged first (₹{domainPrice.toLocaleString('en-IN')}), then add-ons (₹{addonExtra.toLocaleString('en-IN')}) in a second step.
-              </p>
-            )}
+
+        {/* ── Billing breakdown ── */}
+        <div className="mt-4 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm">
+          <div className="text-[0.72rem] font-semibold text-gray-400 uppercase tracking-wider mb-2">Billing Breakdown</div>
+          <div className="flex justify-between text-gray-600 mb-1">
+            <span>{domain.domainName}{domain.domainExtension}</span>
+            <span>₹{domainPrice.toLocaleString('en-IN')}</span>
           </div>
-        )}
- 
+          {addons.filter(k => !ADDON_SERVICES.find(s => s.key === k)?.contactOnly).map(k => {
+            const svc = ADDON_SERVICES.find(s => s.key === k);
+            return svc ? (
+              <div key={k} className="flex justify-between text-indigo-600 mb-1">
+                <span className="truncate mr-2">{svc.label}</span>
+                <span>₹{svc.price.toLocaleString('en-IN')}</span>
+              </div>
+            ) : null;
+          })}
+          {addons.some(k => ADDON_SERVICES.find(s => s.key === k)?.contactOnly) && (
+            <div className="text-xs text-amber-600 mb-1">+ contact-based services (no extra charge)</div>
+          )}
+          <div className="flex justify-between font-bold text-gray-900 border-t border-gray-200 pt-2 mt-1">
+            <span>Total</span>
+            <span>₹{totalPrice.toLocaleString('en-IN')}</span>
+          </div>
+        </div>
+
         {error && <div className="text-sm text-red-500 mt-4 mb-2">{error}</div>}
- 
+
         <div className="flex gap-3 mt-5">
           <button type="button" className="btn-glow flex-1" onClick={handleBuy} disabled={loading}>
             {loading
               ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" />
-              : `Pay ₹${domainPrice.toLocaleString('en-IN')}${addonExtra > 0 ? ` + ₹${addonExtra.toLocaleString('en-IN')} add-ons` : ''} →`}
+              : `Pay ₹${totalPrice.toLocaleString('en-IN')} →`}
           </button>
           <button type="button" className="btn-glow" onClick={onClose}>Cancel</button>
         </div>

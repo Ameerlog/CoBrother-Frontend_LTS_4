@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Plus } from 'lucide-react';
-import { cocreationAPI, addonAPI } from '../api/services';
+import { cocreationAPI } from '../api/services';
 import AddonSelector, { addonTotal, ADDON_SERVICES } from '../components/addon/AddonSelector';
 import { useAuth } from '../context/AuthContext';
 import AppLayout from '../components/layout/AppLayout';
@@ -554,55 +554,13 @@ function BuySoftwareModal({ item, user, onClose, onSuccess }) {
   const addonExtra   = addonTotal(addons);
   const totalPrice   = basePrice + coBrotherFee + addonExtra;
 
-  const payAddons = async (purchaseId, buyerInfo) => {
-    if (addons.length === 0) return;
-    try {
-      const { data: addonOrder } = await addonAPI.createOrder({
-        purchaseType: 'SOFTWARE',
-        purchaseId,
-        services:     addons,
-        buyerEmail:   buyerInfo.buyerEmail  || '',
-        buyerName:    buyerInfo.buyerFullName || '',
-        buyerPhone:   buyerInfo.buyerPhone  || '',
-      });
-      if (addonOrder.contactOnly) return;
-      await new Promise((resolve) => {
-        const opts = {
-          key:         addonOrder.keyId,
-          amount:      addonOrder.amount * 100,
-          currency:    addonOrder.currency,
-          name:        'CoBrother',
-          description: 'Add-on Services',
-          order_id:    addonOrder.orderId,
-          handler: async (resp) => {
-            try {
-              await addonAPI.verifyPayment({
-                razorpayPaymentId: resp.razorpay_payment_id,
-                razorpayOrderId:   resp.razorpay_order_id,
-                razorpaySignature: resp.razorpay_signature,
-              });
-            } catch { /* non-blocking */ }
-            resolve();
-          },
-          modal: { ondismiss: () => resolve() },
-          theme: { color: '#6366f1' },
-        };
-        const rzp = new window.Razorpay(opts);
-        rzp.on('payment.failed', () => resolve());
-        rzp.open();
-      });
-    } catch (e) {
-      console.warn('Addon payment issue:', e);
-    }
-  };
-
   const handlePay = async () => {
     setLoading(true); setError('');
     try {
-      // Pass both buyer info AND coBrotherOptIn to backend
       const { data: orderData } = await cocreationAPI.createOrder(item.id, {
         ...form,
         coBrotherOptIn,
+        services: addons,
       });
 
       const options = {
@@ -619,8 +577,6 @@ function BuySoftwareModal({ item, user, onClose, onSuccess }) {
               razorpayOrderId:   response.razorpay_order_id,
               razorpaySignature: response.razorpay_signature,
             });
-            // Software paid — now handle addons
-            await payAddons(verifyData.purchaseId ?? item.id, form);
             onSuccess({
               ...item,
               softwareStatus:   'SOLD',
@@ -763,7 +719,7 @@ function BuySoftwareModal({ item, user, onClose, onSuccess }) {
         <div className="flex gap-3">
           <button className="btn-glow flex-1" onClick={handlePay} disabled={loading}>
             {loading ? <span className="w-4 h-4 border-2 border-gray-400 border-t-gray-800 rounded-full animate-spin inline-block" /> :
-              `Pay ₹${Number(basePrice + coBrotherFee).toLocaleString('en-IN')}${addonExtra > 0 ? ` + ₹${addonExtra.toLocaleString('en-IN')} add-ons` : ''} →`}
+              `Pay ₹${Number(totalPrice).toLocaleString('en-IN')} →`}
           </button>
           <button className="btn-glow" onClick={onClose}>Cancel</button>
         </div>
