@@ -140,6 +140,7 @@ export default function AdminDashboardPage() {
             <HomepageFeatureSelector type="domain" />
             <HomepageFeatureSelector type="venture" />
             <HomepageFeatureSelector type="software" />
+            <HomepageFeatureSelector type="community" />
           </div>
         ) : tab === 'requests' ? (
           <RequestsTable requests={requests} />

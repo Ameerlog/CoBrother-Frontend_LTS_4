@@ -12,6 +12,7 @@ export default function HomepageFeatureSelector({ type }) {
       if (type === 'domain') response = await adminAPI.getDomains();
       else if (type === 'venture') response = await adminAPI.getVentures();
       else if (type === 'software') response = await adminAPI.getCoCreations();
+      else if (type === 'community') response = await adminAPI.getCommunities();
 
       setItems(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
@@ -26,13 +27,15 @@ export default function HomepageFeatureSelector({ type }) {
     fetchItems();
   }, [type]);
 
-  const handleToggle = async (id) => {
+  const handleToggle = async (id, currentFeatured) => {
     try {
-      if (type === 'domain') await adminAPI.toggleDomainHomepage(id);
-      else if (type === 'venture') await adminAPI.toggleVentureHomepage(id);
-      else if (type === 'software') await adminAPI.toggleSoftwareHomepage(id);
-
-      // Refresh the list after toggle
+      const typeMap = { 
+        domain: 'DOMAIN', 
+        venture: 'VENTURE',       // double-check this matches your AdminService
+        software: 'SOFTWARE',   // softwares are under cocreation in your backend
+        community: 'COMMUNITY'
+      };
+      await adminAPI.toggleFeatured(typeMap[type], id, !currentFeatured);
       await fetchItems();
     } catch (error) {
       console.error('Failed to toggle homepage feature:', error);
@@ -44,6 +47,7 @@ export default function HomepageFeatureSelector({ type }) {
     if (type === 'domain') return `${item.domainName || ''}${item.domainExtension || ''}`;
     if (type === 'venture') return item.brandDetails?.brandName || `Venture #${item.id}`;
     if (type === 'software') return item.name || `Software #${item.id}`;
+    if (type === 'community') return item.name || `Community #${item.id}`;
     return '';
   };
 
@@ -77,12 +81,12 @@ export default function HomepageFeatureSelector({ type }) {
                 <div className="text-sm text-gray-500">ID: {item.id}</div>
               </div>
               <label className="flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={item.featuredOnHomepage || item.featured_on_homepage || false}
-                  onChange={() => handleToggle(item.id)}
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
-                />
+              <input
+                type="checkbox"
+                checked={item.featured || false}
+                onChange={() => handleToggle(item.id, item.featured || false)}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+              />
                 <span className="ml-2 text-sm text-gray-700">Featured</span>
               </label>
             </div>

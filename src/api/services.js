@@ -138,6 +138,7 @@ export const adminAPI = {
   getVentures:          ()              => api.get('/api/v1/admin/ventures'),
   getDomains:           ()              => api.get('/api/v1/admin/domains'),
   getCoCreations:       ()              => api.get('/api/v1/admin/cocreations'),
+  getCommunities:       ()              => api.get('/api/v1/admin/communities'),
   getCoBrotherRequests: ()              => api.get('/api/v1/admin/cobrother-requests'),
   getCoBrothers:        ()              => api.get('/api/v1/admin/cobrothers'),
   forward:              (data)          => api.post('/api/v1/admin/forward', data),
@@ -147,10 +148,12 @@ export const adminAPI = {
   takeDown:  (type, id, reason) => api.post(`/api/v1/admin/takedown`, { type, entityId: id, reason }),
   restore:   (type, id)         => api.post(`/api/v1/admin/restore`,  { type, entityId: id }),
   getDomainEnquiries: ()        => api.get('/api/v1/domain-enquiry/all'),
-  toggleDomainHomepage:   (id)  => api.post(`/api/v1/admin/domain/${id}/toggle-homepage`),
-  toggleVentureHomepage:  (id)  => api.post(`/api/v1/admin/venture/${id}/toggle-homepage`),
-  toggleSoftwareHomepage: (id)  => api.post(`/api/v1/admin/software/${id}/toggle-homepage`),
-  getAddonOrders:       ()      => api.get('/api/v1/addon/admin/all'),
+  toggleFeatured: (type, id, featured) =>
+    api.post('/api/v1/admin/feature', { 
+      type: type, 
+      entityId: String(id), 
+      featured: String(featured)   // must be "true" or "false" as string
+    }),
 };
 
 export const coBrotherAPI = {
