@@ -3,6 +3,7 @@ import { ChevronDown, Menu, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
 import coBrotherLogo from '../../assets/Cobrother_logo.png';
+import coBrotherLogoHover from '../../assets/Cobrother_logo2.png';
 
 export default function HomeNavbar({
   navRef,
@@ -23,7 +24,24 @@ export default function HomeNavbar({
     <nav className="w-full bg-white border-b-0 sticky top-[40px] md:top-[45px] z-50" ref={navRef}>
       <div className="px-4 sm:px-6 lg:px-8 h-[60px] md:h-[70px] flex items-center justify-between relative">
         <div className="flex items-center gap-3 md:gap-6">
-          <img src={coBrotherLogo} alt="CoBrother" className="h-8 md:h-10 w-auto" />
+          <button
+            type="button"
+            onClick={() => navigate('/')}
+            className="group relative h-[46px] w-[196px] shrink-0 border-0 bg-transparent p-0 cursor-pointer"
+            aria-label="Go to home"
+          >
+            <img
+              src={coBrotherLogo}
+              alt="CoBrother"
+              className="absolute inset-0 h-full w-full object-contain object-left transition-opacity duration-200 group-hover:opacity-0"
+            />
+            <img
+              src={coBrotherLogoHover}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 h-full w-full object-contain object-left opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+            />
+          </button>
 
           <div className="hidden lg:flex items-center gap-1 lg:gap-4">
             <div className="relative">

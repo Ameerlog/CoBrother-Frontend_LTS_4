@@ -107,7 +107,7 @@ export default function Home() {
             Made with ❤️ in India.
           </p>
           <p className="text-gray-500 text-sm mt-4">
-            Email: <a href="mailto:cobrother.com@gmail.com" className="text-purple-600 hover:text-purple-700 transition-colors">cobrother.com@gmail.com</a> | Phone: 080 8575 8575
+            Email: <a href="mailto:contact@cobrother.com" className="text-purple-600 hover:text-purple-700 transition-colors">contact@cobrother.com</a> | Phone: +91 80 8575 8575
           </p>
         </div>
       </footer>

@@ -7,6 +7,7 @@ import DomainsIcon from '../assets/CoBranding.png';
 import TechnologyIcon from '../assets/CoCreation.png';
 import AuctionIcon from '../assets/Auction.png';
 import PurchaseIcon from '../assets/purchase.png';
+import ExploreButton from '../components/common/ExploreButton';
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -75,7 +76,9 @@ export default function DashboardPage() {
               </div>
               <h3 className="font-display text-xl font-bold text-gray-900 mb-2">{c.title}</h3>
               <p className="text-sm text-gray-600 mb-4 flex-1">{c.desc}</p>
-              <Link to={c.to} className="btn-glow btn-glow-sm">{c.cta} →</Link>
+              <ExploreButton as={Link} to={c.to} className="!text-sm">
+                {c.cta}
+              </ExploreButton>
             </div>
           ))}
         </div>

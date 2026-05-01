@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import AppLayout from '../components/layout/AppLayout';
 import { useLikes } from '../hooks/useLikes';
 import LikeButton from '../components/common/LikeButton';
+import CommunityProfileIcon from '../assets/cobrother_community_profil.png';
 
 
 const ROLES = [
@@ -184,9 +185,9 @@ export default function CommunityPage() {
           <div className="flex items-center justify-center py-20"><div className="w-12 h-12 border-4 border-gray-400 border-t-gray-800 rounded-full animate-spin" /></div>
         ) : profiles.length === 0 ? (
           <div className="text-center py-20">
-            <div className="text-6xl mb-4">◉</div>
-            <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">No community members yet</h3>
-            <p className="text-gray-600 mb-6">Connect your LinkedIn to join the community and be discovered.</p>
+            <img src={CommunityProfileIcon} alt="No disruptors" className="w-24 h-24 mx-auto mb-4 opacity-50" />
+            <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">No disruptors yet</h3>
+            <p className="text-gray-600 mb-6">Connect your LinkedIn to join the disruptors and be discovered.</p>
             <button className="px-5 py-2 bg-[#0077B5] text-white rounded-full text-sm font-semibold transition-all duration-200 hover:bg-[#006399] flex items-center gap-2 mx-auto" onClick={handleConnectLinkedIn}>
               <LinkedInIcon /> Connect with LinkedIn
             </button>

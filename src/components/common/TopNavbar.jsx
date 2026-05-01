@@ -73,6 +73,10 @@ export default function TopNavbar({ homeMobileMenu = false }) {
                 {languages.map((lang) => (
                   <button
                     key={lang.code}
+                    onClick={() => {
+                      i18n.changeLanguage(lang.code);
+                      setLanguageOpen(false);
+                    }}
                     className={`w-full px-4 py-2.5 bg-transparent border-none text-left text-sm cursor-pointer transition-colors duration-200 font-body ${
                       i18n.language === lang.code
                         ? 'bg-purple-50 text-purple font-semibold'

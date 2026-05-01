@@ -8,6 +8,7 @@ import CoVentureModal from '../components/venture/CoVentureModal';
 import { useLikes } from '../hooks/useLikes';
 import LikeButton from '../components/common/LikeButton';
 import { useFilterSort } from '../hooks/useFilterSort';
+import CoventureLogo from '../assets/Coventure_logo.png';
 import FilterBar from '../components/common/FilterBar';
 import Pagination from '../components/common/Pagination';
 import SkeletonCard from '../components/common/Skeleton';
@@ -147,7 +148,7 @@ export default function VenturesPage() {
           </div>
         ) : paginated.length === 0 ? (
           <div className="text-center py-20">
-            <div className="text-6xl mb-4">◈</div>
+            <img src={CoventureLogo} alt="No ventures" className="w-24 h-24 mx-auto mb-4 opacity-50" />
             <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">
               {activeFilterCount > 0 ? 'No ventures match your filters' :
                filterTab === 'mine' ? "You haven't listed any ventures yet" :

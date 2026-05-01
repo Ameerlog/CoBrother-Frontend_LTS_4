@@ -21,7 +21,7 @@ export default function DomainSearchBar() {
       domains.map(async (fullDomain) => {
         try {
           const res = await fetch(
-            `http://localhost:8080/api/v1/domain/check?name=${fullDomain}`
+            `https://backend.cobrother.com/api/v1/domain/check?name=${fullDomain}`
           );
           const data = await res.json();
           const status = data.status === "available" ? "available" : "taken";

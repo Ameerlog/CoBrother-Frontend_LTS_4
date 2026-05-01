@@ -1,7 +1,9 @@
 import { Mail, Phone, MapPin, MessageCircle, Clock, Send } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import coBrotherLogo from '../assets/Cobrother_logo.png';
+import coBrotherLogoHover from '../assets/Cobrother_logo2.png';
 import HomeFooter from '../components/common/HomeFooter';
+import BrandWordmark from '../components/common/BrandWordmark';
 
 export default function ContactPage() {
   const navigate = useNavigate();
@@ -10,8 +12,8 @@ export default function ContactPage() {
     {
       icon: Mail,
       title: 'Email Us',
-      details: 'support@cobrother.com',
-      link: 'mailto:support@cobrother.com',
+      details: 'contact@cobrother.com',
+      link: 'mailto:contact@cobrother.com',
       color: 'text-purple-600',
       bgColor: 'bg-purple-50'
     },
@@ -44,13 +46,25 @@ export default function ContactPage() {
       {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <img 
-            src={coBrotherLogo} 
-            alt="CoBrother" 
-            className="h-10 cursor-pointer" 
+          <button
+            type="button"
             onClick={() => navigate('/')}
-          />
-          <button 
+            className="group relative h-[46px] w-[196px] shrink-0 border-0 bg-transparent p-0 cursor-pointer"
+            aria-label="Go to home"
+          >
+            <img
+              src={coBrotherLogo}
+              alt="CoBrother"
+              className="absolute inset-0 h-full w-full object-contain object-left transition-opacity duration-200 group-hover:opacity-0"
+            />
+            <img
+              src={coBrotherLogoHover}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 h-full w-full object-contain object-left opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+            />
+          </button>
+          <button
             className="btn-glow btn-glow-sm"
             onClick={() => navigate('/')}
           >
@@ -70,7 +84,7 @@ export default function ContactPage() {
             Get in <span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">Touch</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto max-md:text-lg">
-            Have questions about CoBrother? We'd love to hear from you. Reach out to us through any of the channels below.
+            Have questions about <BrandWordmark inline className="h-6 w-auto mx-1" />We&apos;d love to hear from you. Reach out to us through any of the channels below.
           </p>
         </div>
       </section>
@@ -139,7 +153,7 @@ export default function ContactPage() {
               Ready to Get Started?
             </h2>
             <p className="text-purple-100 text-lg mb-8 max-md:text-base max-md:mb-6">
-              Join thousands of businesses already using CoBrother to grow their ventures.
+              Join thousands of businesses already using <BrandWordmark inline className="h-6 w-auto mx-1" /> to grow their ventures.
             </p>
             <div className="flex gap-4 justify-center max-md:flex-col">
               <button

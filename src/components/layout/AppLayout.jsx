@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { LogOut, Menu, X } from 'lucide-react';
+import { LogOut, Menu, MoreHorizontal, X } from 'lucide-react';
 import TopNavbar from '../common/TopNavbar';
+import HomeFooter from '../common/HomeFooter';
 import coBrotherLogo from '../../assets/Cobrother_logo.png';
+import coBrotherLogoHover from '../../assets/Cobrother_logo2.png';
 import { useAuth } from '../../context/AuthContext';
 import { notificationAPI } from '../../api/services';
 import DashboardIcon from '../../assets/Dashboard.png';
@@ -62,9 +64,11 @@ export default function AppLayout({ children }) {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [bellOpen, setBellOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const bellRef = useRef(null);
+  const moreRef = useRef(null);
 
   const navLinks = [
     { to: '/dashboard', label: 'Dashboard', icon: DashboardIcon },
@@ -87,6 +91,10 @@ export default function AppLayout({ children }) {
       : user?.role === 'ADMIN'
         ? adminLinks
         : navLinks;
+  const desktopPrimaryCount = user?.role === 'COBROTHER' ? visibleLinks.length : 6;
+  const desktopPrimaryLinks = visibleLinks.slice(0, desktopPrimaryCount);
+  const desktopMoreLinks = visibleLinks.slice(desktopPrimaryCount);
+  const isMoreActive = desktopMoreLinks.some((link) => location.pathname.startsWith(link.to));
 
   useEffect(() => {
     const fetchCount = () =>
@@ -105,6 +113,10 @@ export default function AppLayout({ children }) {
       if (bellRef.current && !bellRef.current.contains(e.target)) {
         setBellOpen(false);
       }
+
+      if (moreRef.current && !moreRef.current.contains(e.target)) {
+        setMoreOpen(false);
+      }
     };
 
     document.addEventListener('mousedown', handler);
@@ -113,6 +125,7 @@ export default function AppLayout({ children }) {
 
   useEffect(() => {
     setMobileOpen(false);
+    setMoreOpen(false);
   }, [location.pathname]);
 
   const handleBellOpen = async () => {
@@ -156,16 +169,26 @@ export default function AppLayout({ children }) {
       <TopNavbar />
 
       <nav className="sticky top-[40px] md:top-[45px] z-[100] flex items-center gap-3 md:gap-5 px-4 sm:px-6 xl:px-8 h-[60px] md:h-16 bg-white border-b border-gray-200 min-w-0">
-        <Link to="/" className="flex items-center gap-0 no-underline shrink-0">
+        <Link
+          to="/"
+          className="group relative h-[46px] w-[196px] shrink-0 no-underline"
+          aria-label="Go to home"
+        >
           <img
             src={coBrotherLogo}
             alt="CoBrother"
-            className="w-[122px] h-9 object-contain md:w-[140px] md:h-[42px]"
+            className="absolute inset-0 h-full w-full object-contain object-left transition-opacity duration-200 group-hover:opacity-0"
+          />
+          <img
+            src={coBrotherLogoHover}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-contain object-left opacity-0 transition-opacity duration-200 group-hover:opacity-100"
           />
         </Link>
 
-        <div className="hidden xl:flex items-center gap-1 flex-1 min-w-0">
-          {visibleLinks.map((link) => {
+        <div className="hidden xl:flex items-center gap-1 flex-1 min-w-0 overflow-visible">
+          {desktopPrimaryLinks.map((link) => {
             const isActive = location.pathname.startsWith(link.to);
             return (
               <Link
@@ -184,6 +207,49 @@ export default function AppLayout({ children }) {
               </Link>
             );
           })}
+
+          {desktopMoreLinks.length > 0 && (
+            <div className="relative" ref={moreRef}>
+              <button
+                type="button"
+                className={`flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-white text-sm font-semibold text-gray-800 no-underline transition-all duration-200 hover:text-gray-900 hover:border-gray-300 hover:shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.45),18px_0_28px_-8px_rgba(147,51,234,0.40),0_0_18px_-4px_rgba(120,80,220,0.24)] active:translate-y-[1px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300/60 ${
+                  isMoreActive
+                    ? 'text-gray-900 bg-white border-gray-300 shadow-[-18px_0_28px_-8px_rgba(0,195,255,0.45),18px_0_28px_-8px_rgba(147,51,234,0.40),0_0_18px_-4px_rgba(120,80,220,0.24)]'
+                    : ''
+                }`}
+                onClick={() => setMoreOpen((open) => !open)}
+                aria-expanded={moreOpen}
+                aria-haspopup="menu"
+              >
+                <MoreHorizontal size={20} />
+                <span className={isMoreActive ? 'bg-gradient-to-r from-indigo-600 to-fuchsia-500 text-transparent bg-clip-text' : ''}>
+                  More
+                </span>
+              </button>
+
+              {moreOpen && (
+                <div className="absolute top-[calc(100%+10px)] right-0 min-w-[220px] rounded-2xl border border-gray-200 bg-white p-2 shadow-[0_20px_60px_rgba(15,23,42,0.18)] z-[1000]">
+                  {desktopMoreLinks.map((link) => {
+                    const isActive = location.pathname.startsWith(link.to);
+                    return (
+                      <Link
+                        key={link.to}
+                        to={link.to}
+                        className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold text-gray-700 no-underline transition-colors hover:bg-gray-50 hover:text-gray-950 ${
+                          isActive ? 'bg-purple-50 text-purple' : ''
+                        }`}
+                        onClick={() => setMoreOpen(false)}
+                        role="menuitem"
+                      >
+                        {renderNavIcon(link.icon, link.label)}
+                        <span>{link.label}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="ml-auto flex items-center gap-2 md:gap-3 shrink-0">
@@ -361,6 +427,10 @@ export default function AppLayout({ children }) {
       <main className="flex-1 p-8 max-w-none m-0 w-full bg-gray-50 max-md:p-4">
         {children}
       </main>
+
+      <div className="bg-gray-50 pt-10">
+        <HomeFooter />
+      </div>
     </div>
   );
 }

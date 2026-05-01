@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { joinUsAPI } from '../api/services';
 import TopNavbar from '../components/common/TopNavbar';
 import Confetti from '../components/common/Confetti';
+import cobrotherLogo from '../assets/Cobrother_logo2.png';
 import {
   Network, Sparkles, Package, Store, ShieldCheck,
   Smartphone, MessageCircle, Laptop, MapPin, Workflow,
@@ -156,22 +157,14 @@ const JoinForm = () => {
             <ArrowLeft size={18} />
             <span className="font-semibold">Back to Home</span>
           </button>
-          <div className="flex items-center gap-2 text-purple-600 font-bold text-lg">
-            <Network size={20} />
-            <span>CoBrother Elite</span>
-          </div>
         </div>
       </header>
 
       {/* Hero Section */}
       <section className="py-10 sm:py-14 md:py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-2 bg-green-100 border border-green-300 rounded-full text-xs sm:text-sm font-semibold text-green-700 mb-5 sm:mb-6">
-            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            Be the <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent font-bold">Disruptive CoBrother</span>
-          </div>
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-4 sm:mb-6">
-            Be the <span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">Disruptive CoBrother</span>
+            Be the <img src={cobrotherLogo} alt="CoBrother" className="h-8 sm:h-10 md:h-12 w-auto inline-block" />
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 sm:mb-10 md:mb-12 max-w-3xl mx-auto leading-relaxed">
             Disruptive businesses are integrating <strong className="text-gray-900">AI and Technology</strong> but struggling to implement it.
@@ -206,7 +199,7 @@ const JoinForm = () => {
               <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-5 sm:p-7 lg:p-8">
                 <h3 className="flex items-center gap-3 text-xl sm:text-2xl font-bold text-gray-900 mb-5 sm:mb-6">
                   <Workflow size={20} className="text-purple-600" />
-                  The CoBrother Workflow
+                  The <img src={cobrotherLogo} alt="CoBrother" className="h-6 w-auto inline-block" /> Workflow
                 </h3>
                 <div className="space-y-4">
                   {[

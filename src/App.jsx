@@ -1,7 +1,8 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { ProtectedRoute, ProfileGuard } from './components/auth/ProtectedRoute';
+import { useEffect } from 'react';
 
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -31,16 +32,30 @@ import PurchasesPage from './pages/PurchasesPage';
 import AuctionsPage from './pages/AuctionsPage';
 import Home from './pages/Home';
 import JoinForm from './pages/JoinForm';
-import ContactPage from './pages/ContactPage';
+import ContactPage from './pages/Contact';
+import AboutUsPage from './pages/AboutUsPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsAndConditionsPage from './pages/TermsAndConditionsPage';
+import CancellationRefundPolicyPage from './pages/CancellationRefundPolicyPage';
 import InsightsPage from './pages/InsightsPage';
 import StartupValidatorPage from './pages/StartupValidatorPage';
 import NewsDigestPage from './pages/NewsDigestPage';
 import NewsSubscriptionsPage from './pages/NewsSubscriptionsPage';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 export default function App() {
   return (
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <ScrollToTop />
       <LanguageProvider>
         <AuthProvider>
           <Routes>
@@ -48,6 +63,11 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/join-form" element={<JoinForm />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/about" element={<AboutUsPage />} />
+          <Route path="/careers" element={<Navigate to="/contact" replace />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
+          <Route path="/cancellation-refund-policy" element={<CancellationRefundPolicyPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           {/* OAuth callback — path MUST match app.oauth2.redirect-uri in application.properties */}

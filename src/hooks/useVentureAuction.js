@@ -65,7 +65,7 @@ export function useVentureAuction(auctionId) {
     if (!auctionId) return;
 
     const client = new Client({
-      webSocketFactory: () => new SockJS('http://localhost:8080/ws'),
+      webSocketFactory: () => new SockJS('https://backend.cobrother.com/ws'),
       reconnectDelay: 3000,
       onConnect: () => {
         setConnected(true);

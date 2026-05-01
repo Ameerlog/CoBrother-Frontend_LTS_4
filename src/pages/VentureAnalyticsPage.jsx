@@ -6,6 +6,7 @@ import {
 } from 'recharts';
 import { analyticsAPI } from '../api/services';
 import AppLayout from '../components/layout/AppLayout';
+import CoventureLogo from '../assets/Coventure_logo.png';
 
 const StatCard = ({ label, value, sub, color = '#c8a96e' }) => (
   <div className="card-glow-hover p-6 bg-white border border-gray-200 rounded-xl flex flex-col gap-1.5">
@@ -222,7 +223,7 @@ export default function VentureAnalyticsPage() {
 
         {!fetching && ventures.length === 0 && (
           <div className="text-center py-20">
-            <div className="text-6xl mb-4">📊</div>
+            <img src={CoventureLogo} alt="No ventures" className="w-24 h-24 mx-auto mb-4 opacity-50" />
             <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">No ventures listed yet</h3>
             <p className="text-gray-600 mb-6">List a venture to start tracking analytics.</p>
             <button className="btn-glow" onClick={() => navigate('/ventures/new')}>List a Venture</button>

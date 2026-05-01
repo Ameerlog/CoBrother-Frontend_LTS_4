@@ -14,7 +14,7 @@ import HeroGlow from '../components/common/HeroGlow';
 import ExploreSection from '../components/common/ExploreSection';
 import DomainSearchBar from '../components/common/DomainSearchBar';
 import HomeFooter from '../components/common/HomeFooter';
-import GlowButton from '../components/common/GlowButton';
+import ExploreButton from '../components/common/ExploreButton';
 
 export const searchDomainRedirect = (domainQuery, selectedExtension = '.com') => {
   const value = domainQuery.trim().toLowerCase();
@@ -148,9 +148,9 @@ export default function Home() {
                 <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center text-purple mb-4 md:mb-5">{feature.icon}</div>
                 <h3 className="font-display text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3">{t(feature.titleKey)}</h3>
                 <p className="text-sm text-gray-600 mb-5 md:mb-6 flex-1 leading-relaxed">{t(feature.descKey)}</p>
-                <GlowButton onClick={() => navigate(feature.link)}>
-                  {t('exploreBtn')} →
-                </GlowButton>
+                <ExploreButton onClick={() => navigate(feature.link)}>
+                  {t('exploreBtn')}
+                </ExploreButton>
               </div>
             ))}
           </div>

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { coVentureAPI, likeAPI, ventureAPI, ventureAuctionAPI } from '../api/services';
 import AppLayout from '../components/layout/AppLayout';
 import VentureGstinVerificationModal from '../components/venture/VentureGstinVerificationModal';
+import CoventureLogo from '../assets/Coventure_logo.png';
 
 const STATUS_META = {
   PENDING:  { label: 'Pending',  color: '#c8a96e', bg: 'rgba(200,169,110,0.12)', icon: '⏳' },
@@ -109,7 +110,7 @@ function MyListings() {
 
   if (ventures.length === 0) return (
     <div className="text-center py-20">
-      <div className="text-6xl mb-4">📋</div>
+      <img src={CoventureLogo} alt="No ventures" className="w-24 h-24 mx-auto mb-4 opacity-50" />
       <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">No ventures listed yet</h3>
       <p className="text-gray-600 mb-4">List your first venture to start finding co-founders and collaborators.</p>
       <button className="btn-glow" onClick={() => navigate('/ventures')}>

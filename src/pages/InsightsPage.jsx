@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
 import { insightsAPI } from '../api/services';
+import approvedIcon from '../assets/approved.png';
+import artificialIntelligenceIcon from '../assets/artifical-intelligence.png';
+import auditIcon from '../assets/audit.png';
 
 const SCORE_COLORS = { STRONG: '#22c55e', MODERATE: '#f59e0b', CAUTION: '#f97316', RISKY: '#ef4444' };
 const SCORE_BG     = { STRONG: 'rgba(34,197,94,0.1)', MODERATE: 'rgba(245,158,11,0.1)', CAUTION: 'rgba(249,115,22,0.1)', RISKY: 'rgba(239,68,68,0.1)' };
@@ -39,7 +42,7 @@ export default function InsightsPage() {
         {/* Hero */}
         <div className="mb-10">
           <div className="flex items-center gap-3 mb-2">
-            <span className="text-3xl">⚡</span>
+            <img src={approvedIcon} alt="" className="w-11 h-11 object-contain" />
             <h1 className="font-display text-3xl font-bold text-gray-900 m-0">Insights</h1>
           </div>
           <p className="text-gray-500 text-base mt-1 max-w-xl">
@@ -57,8 +60,8 @@ export default function InsightsPage() {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             <div className="relative">
-              <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-5 text-2xl">
-                🔬
+              <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-5">
+                <img src={auditIcon} alt="" className="w-8 h-8 object-contain" />
               </div>
               <h2 className="text-xl font-bold text-gray-900 mb-2">Startup Validator</h2>
               <p className="text-gray-500 text-sm leading-relaxed mb-6">
@@ -84,8 +87,8 @@ export default function InsightsPage() {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-purple-50/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             <div className="relative">
-              <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-5 text-2xl">
-                📡
+              <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-5">
+                <img src={artificialIntelligenceIcon} alt="" className="w-8 h-8 object-contain" />
               </div>
               <h2 className="text-xl font-bold text-gray-900 mb-2">Intelligence Feed</h2>
               <p className="text-gray-500 text-sm leading-relaxed mb-6">
